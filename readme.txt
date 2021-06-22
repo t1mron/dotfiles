@@ -32,7 +32,7 @@ CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
 # Look and feel
 apt install neofetch zsh zsh-antigen
 
-git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
 
 # Utilities
 apt install man-db flameshot redshift mpv sxiv
