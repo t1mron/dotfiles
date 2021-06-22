@@ -26,9 +26,6 @@ apt install texlive-latex-recommended zathura
 apt install python3-pip
 pip3 install pynvim pylint
 
-PlugInstall
-CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
-
 # Look and feel
 apt install neofetch zsh zsh-antigen
 
@@ -60,6 +57,5 @@ sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
 
-
-wget 
-sudo dpkg -i
+PlugInstall
+CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
