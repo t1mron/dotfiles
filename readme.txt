@@ -20,7 +20,7 @@ apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-uti
 # wi-fi, sound, bluetooth, vpn (soon)
 
 # Office programs
-apt install texlive-full zathura
+apt install texlive-latex-recommended zathura
 
 # vim plugins
 apt install python3-pip
