@@ -1,5 +1,5 @@
 # basic 
-sudo apt install sysv-rc-conf network-manager iwd wget vim git ssh
+sudo apt install sysv-rc-conf network-manager iwd wget vim git
 
 # Window manager
 sudo apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils polybar ranger rxvt-unicode rofi fonts-font-awesome fonts-hack arandr autorandr
@@ -27,7 +27,7 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger
 sudo apt install timeshift man-db flameshot redshift mpv sxiv
 
 # System tools 
-sudo apt install htop 
+sudo apt install htop ssh
 
 # Multimedia
 sudo pacman -S firefox-esr telegram-desktop discord
