@@ -30,7 +30,7 @@ sudo apt install man-db flameshot redshift mpv sxiv
 sudo apt install htop ssh
 
 # Multimedia
-sudo pacman -S firefox-esr telegram-desktop discord
+sudo pacman -S firefox-esr telegram-desktop 
 
 # Virtualisation (soon)
 
