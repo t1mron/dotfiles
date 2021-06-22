@@ -1,6 +1,6 @@
 " auto-install vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('$HOME/.vim/autoload/plug.vim'))
+  silent !curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
@@ -9,7 +9,7 @@ endif
 " PLUGINS "
 """""""""""
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('$HOME/.vim/plugged')
   
   " Intellisense
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -174,7 +174,7 @@ set noshowmode
 """"""""""""
 
 " Directory
-let g:startify_session_dir = '~/.vim/session'
+let g:startify_session_dir = '$HOME/.vim/session'
 
 " Automatically restart sessions
 let g:startify_session_autoload = 1
@@ -195,12 +195,12 @@ let g:startify_lists = [
 
 " Bookmarks
 let g:startify_bookmarks = [
-            \ { 'c': '~/.config/i3/config' },
-            \ { 'i': '~/.config/nvim/init.vim' },
-            \ { 'z': '~/.zshrc' },
-            \ '~/Blog',
-            \ '~/Code',
-            \ '~/Pics',
+            \ { 'c': '$HOME/.config/i3/config' },
+            \ { 'i': '$HOME/.config/nvim/init.vim' },
+            \ { 'z': '$HOME/.zshrc' },
+            \ '$HOME/Blog',
+            \ '$HOME/Code',
+            \ '$HOME/Pics',
             \ ]
 
 
@@ -376,7 +376,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Explorer
 let g:coc_explorer_global_presets = {
 \   '.vim': {
-\     'root-uri': '~/.vim',
+\     'root-uri': '$HOME/.vim',
 \   },
 \   'tab': {
 \     'position': 'tab',
