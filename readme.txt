@@ -38,7 +38,7 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger
 apt install man-db flameshot redshift mpv sxiv
 
 # System tools 
-apt install htop ssh
+apt install htop 
 
 # Multimedia
 apt install firefox-esr telegram-desktop 
