@@ -13,7 +13,7 @@ apt install linux-image-5.10.0-7-amd64
 apt install sysv-rc-conf network-manager iwd wget vim git
 
 # Window manager
-apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils polybar ranger rxvt-unicode rofi fonts-font-awesome fonts-hack arandr autorandr
+apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils polybar ranger rofi fonts-font-awesome fonts-hack arandr autorandr
 
 # Laptop (soon)
 
