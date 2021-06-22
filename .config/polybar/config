@@ -5,7 +5,7 @@ primary= #cccccc
 
 
 [bar/top]
-monitor = eDP
+monitor = ${env:MONITOR:}
 enable-ipc = true
 
 # Dimensions
