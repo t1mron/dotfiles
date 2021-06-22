@@ -1,5 +1,5 @@
 # migrate from stable to sid
-apt install ssh
+apt install ssh sudo 
 
 cat << EOF > /etc/apt/sources.list
 deb     http://deb.devuan.org/merged ceres main
@@ -13,7 +13,7 @@ apt install linux-image-5.10.0-7-amd64
 apt install sysv-rc-conf network-manager iwd wget vim git
 
 # Window manager
-apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
+apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
 
 # Laptop (soon)
 
@@ -47,9 +47,19 @@ apt install firefox-esr telegram-desktop
 apt install ufw 
 ufw enable 
 
+# Create user
+useradd -G sudo -m -d /home/user user
+passwd user
+useradd -G sudo -m -d /home/help help
+passwd help
+
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
+
+
+wget 
+sudo dpkg -i
