@@ -1,3 +1,13 @@
+# migrate from stable to sid
+apt install ssh
+
+cat << EOF > /etc/apt/sources.list
+deb     http://deb.devuan.org/merged ceres main
+deb-src http://deb.devuan.org/merged ceres main
+EOF
+
+apt-get update && apt-get dist-upgrade && apt-get autoremove && reboot
+
 # basic 
 apt install sysv-rc-conf network-manager iwd wget vim git
 
