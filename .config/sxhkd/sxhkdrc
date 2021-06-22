@@ -23,10 +23,6 @@ super + {1-9,0}
 	desktop='^{1-9,10}'; \
 	bspc query -D -d "$desktop.focused" && bspc desktop -f last || bspc desktop -f "$desktop"
 
-
-
-
-
 # move focused container to workspace
 super + shift + {1-9,0}
 	bspc node -d '^{1-9,10}'
@@ -77,11 +73,11 @@ super + d
 
 # terminal emulator
 super + Return
-        alacritty
+        urxvt
 
 # File Manager - ranger
 super + Tab
-	alacritty --class ranger -e ranger
+	urxvt --class ranger -e ranger
 
 # File Manager - nautilus
 super + n
@@ -89,11 +85,11 @@ super + n
 
 # vim - code
 super + c
-	alacritty --class code  
+	urxvt --class code  
 
 # vim - latex
 super + w
-	alacritty --class latex
+	urxvt --class latex
 
 # Browser
 super + f
@@ -144,8 +140,8 @@ super + {Prior,Next}
 
 # show/hide polybar
 XF86Display
-	/home/user/.config/polybar/scripts/bar-toggle.sh {hide,show}
+	$HOME/.config/polybar/scripts/bar-toggle.sh {hide,show}
 
 # on/off touchpad
 F2
-	/home/user/.config/sxhkd/scripts/touchpad.sh
+	$HOME/.config/sxhkd/scripts/touchpad.sh
