@@ -6,7 +6,8 @@ deb     http://deb.devuan.org/merged ceres main
 deb-src http://deb.devuan.org/merged ceres main
 EOF
 
-apt-get update && apt-get dist-upgrade && apt-get autoremove && reboot
+apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove && reboot
+apt install linux-image-5.10.0-7-amd64
 
 # basic 
 apt install sysv-rc-conf network-manager iwd wget vim git
