@@ -1,7 +1,7 @@
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
 
 # Path
-export ZSH="/home/user/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 export TERM=xterm-256color
 
 ZSH_THEME="spaceship"
