@@ -10,7 +10,7 @@ apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove 
 apt install linux-image-5.10.0-7-amd64
 
 # basic 
-apt install sysv-rc-conf network-manager iwd wget vim git
+apt install sysv-rc-conf network-manager iwd wget curl vim git
 
 # Window manager
 apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
