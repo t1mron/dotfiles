@@ -24,7 +24,7 @@ sudo apt install neofetch zsh zsh-antigen
 git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
 
 # Utilities
-sudo apt install timeshift man-db flameshot redshift mpv sxiv
+sudo apt install man-db flameshot redshift mpv sxiv
 
 # System tools 
 sudo apt install htop ssh
