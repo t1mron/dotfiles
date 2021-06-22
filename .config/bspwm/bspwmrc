@@ -42,18 +42,18 @@ bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0
 #----------------------#
 
 # status bar
-/home/user/.config/polybar/scripts/launch.sh
+$HOME/.config/polybar/scripts/launch.sh
 
 # change keyboard layout
 setxkbmap -option grp:alt_shift_toggle us,ru &
 
 #color temperature
-redshift -c ~/.config/redshift/redshift.conf &
+redshift -c $HOME/.config/redshift/redshift.conf &
 
 #exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Disable touchpad
-xinput disable "SYNA30AC:00 06CB:CDEB Touchpad" &
+#xinput disable "SYNA30AC:00 06CB:CDEB Touchpad" &
 
 # Disable wi-fi
 sudo /sbin/ip link set wlan0 down &
@@ -70,6 +70,3 @@ xsetroot -solid "#cccccc" &
 
 # Disable screen blanking
 xset -dpms s off &
-
-# network manager tray
-nm-applet &
