@@ -32,8 +32,6 @@ CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
 # Look and feel
 apt install neofetch zsh zsh-antigen
 
-git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
-
 # Utilities
 apt install man-db flameshot redshift mpv sxiv
 
@@ -54,3 +52,4 @@ git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
+git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
