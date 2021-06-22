@@ -1,39 +1,45 @@
 # basic 
-sudo apt install sysv-rc-conf network-manager iwd wget vim git
+apt install sysv-rc-conf network-manager iwd wget vim git
 
 # Window manager
-sudo apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils polybar ranger rxvt-unicode rofi fonts-font-awesome fonts-hack arandr autorandr
+apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils polybar ranger rxvt-unicode rofi fonts-font-awesome fonts-hack arandr autorandr
 
 # Laptop (soon)
 
 # wi-fi, sound, bluetooth, vpn (soon)
 
 # Office programs
-sudo apt install texlive-full zathura
+apt install texlive-full zathura
 
 # vim plugins
-sudo apt install python3-pip
+apt install python3-pip
 pip3 install pynvim pylint
 
 PlugInstall
 CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
 
 # Look and feel
-sudo apt install neofetch zsh zsh-antigen
+apt install neofetch zsh zsh-antigen
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
 
 # Utilities
-sudo apt install man-db flameshot redshift mpv sxiv
+apt install man-db flameshot redshift mpv sxiv
 
 # System tools 
-sudo apt install htop ssh
+apt install htop ssh
 
 # Multimedia
-sudo apt install firefox-esr telegram-desktop 
+apt install firefox-esr telegram-desktop 
 
 # Virtualisation (soon)
 
 # Security 
-sudo apt install ufw 
-sudo ufw enable 
+apt install ufw 
+ufw enable 
+
+# dotfiles
+git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
+cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
+sudo cp -r $HOME/git/dotfiles_devuan/root/. /
+
