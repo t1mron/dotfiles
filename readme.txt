@@ -1,3 +1,125 @@
+apt install ssh
+wget https://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.124_all.deb
+
+dpkg -i debootstrap_1.0.124_all.deb
+
+
+# Wipe disk before install
+(echo g;echo w) | fdisk /dev/sda
+
+# /dev/nvme0n1p3 All Linux filesystem
+(echo n;echo ;echo ;echo ; echo w) | fdisk /dev/sda
+
+# Formatting the partitions
+mkfs.ext4 -L root /dev/sda1
+
+# Mount partition
+mount /dev/sda1 /mnt
+
+# Install base system
+debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged
+
+
+
+
+
+# Generate fstab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Enter the new system
+arch-chroot /mnt /bin/bash
+
+# Create user
+useradd -G wheel -m -d /home/user user
+passwd user
+useradd -G wheel -m -d /home/help help
+passwd help
+
+# Add sudo privileges
+echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+
+# Set the time zone and a system clock
+ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+hwclock --systohc --utc
+
+# Set default locale
+echo -e "en_US.UTF-8 UTF-8\nru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+
+# Update current locale
+locale-gen
+
+# Set system language
+echo LANG=en_US.UTF-8 >> /etc/locale.conf
+
+# Set keymap and font for console 
+echo -e "KEYMAP=ru\nFONT=cyr-sun16" >> /etc/vconsole.conf
+
+# Set the hostname
+echo arch >> /etc/hostname
+
+# Set the host
+cat << EOF | tee -a /etc/hosts
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    arch.localdomain arch
+EOF
+
+# Set systemd-networkd
+cat << EOF | tee -a /etc/systemd/network/20-wired.network
+[Match]
+Name=enp1s0
+
+[Network]
+DHCP=yes
+EOF
+
+# Add multilib repo for pacman 
+echo [multilib] >> /etc/pacman.conf 
+echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+
+# Setup grub
+sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
+sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT='loglevel=3 quiet acpi_backlight=vendor'|" /etc/default/grub
+sed -i "s|^GRUB_CMDLINE_LINUX=.*|GRUB_CMDLINE_LINUX='cryptdevice=/dev/nvme0n1p3:archlinux'|" /etc/default/grub
+
+# Configure mkinitcpio
+sed -i "s|^MODULES=.*|MODULES=(amdgpu)|" /etc/mkinitcpio.conf
+sed -i "s|^HOOKS=.*|HOOKS=(base udev autodetect keyboard modconf block encrypt lvm2 filesystems fsck)|" /etc/mkinitcpio.conf
+
+# Regenerate initrd image
+mkinitcpio -p linux
+
+# Install grub and create configuration
+grub-install --boot-directory=/boot --efi-directory=/boot/efi /dev/nvme0n1p2
+grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/efi/EFI/arch/grub.cfg
+
+# symlink resolv.conf
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+# Enable services at startup 
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
+
+# Exit new system and go into the cd shell
+exit
+
+# Reboot into the new system, don't forget to remove the usb
+reboot
+
+sudo pacman -Syu
+
+# Install AUR helper - yay
+git clone https://aur.archlinux.org/yay.git /home/user/git/yay
+cd /home/user/git/yay && makepkg -si
+
+# Clone my repo
+git clone https://github.com/t1mron/dotfiles_arch.git /home/user/git/dotfiles_arch
+cd /home/user/git/dotfiles_arch && sudo cp -r etc / && cp /user/. /home/user/
+
+
+
+
 # migrate from stable to sid
 apt install ssh sudo 
 
