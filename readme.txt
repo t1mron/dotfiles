@@ -103,6 +103,9 @@ sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
 # clean apt downloaded archives
 apt clean
 
+# Install grub and create configuration
+grub-install --root-directory=/ /dev/sda
+
 # exit the chroot environmen
 exit
 
@@ -111,14 +114,5 @@ umount /mnt/sys
 umount /mnt/dev
 umount /mnt/dev/pts
 
-# Install grub and create configuration
-grub-install --root-directory=/mnt /dev/sda
-
-
-
-
 PlugInstall
 CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
-
-
-
