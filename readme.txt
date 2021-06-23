@@ -13,7 +13,7 @@ mkfs.ext4 -L root /dev/sda1
 mount /dev/sda1 /mnt
 
 # Install base system
-debootstrap --variant=minbase --include=neovim --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
+debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
 # Chroot into installed system
 mount -t proc /proc /mnt/proc/
