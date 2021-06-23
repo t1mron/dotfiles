@@ -60,41 +60,32 @@ EOF
 
 ############################################################
 
-# basic 
-# apt-cache search linux-image
-apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd wget curl neovim git
+packagelist=(
+  # basic
+  linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd wget curl neovim git
+  # Window manager
+  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
+  # Laptop (soon)
+  # wi-fi, sound, bluetooth, vpn (soon)
+  # Office programs
+  texlive-latex-recommended zathura
+  # vim plugins
+  python3-pip
+  # Look and feel
+  neofetch zsh zsh-antigen
+  # Utilities
+  man-db flameshot redshift mpv sxiv
+  # System tools 
+  htop 
+  # Multimedia
+  firefox-esr telegram-desktop 
+  # Virtualisation (soon)
+  # Security 
+  ufw 
+)
 
-# Window manager
-apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
-
-# Laptop (soon)
-
-# wi-fi, sound, bluetooth, vpn (soon)
-
-# Office programs
-apt install texlive-latex-recommended zathura
-
-# vim plugins
-apt install python3-pip
+apt install ${packagelist[@]}
 pip3 install pynvim pylint
-
-# Look and feel
-apt install neofetch zsh zsh-antigen
-
-# Utilities
-apt install man-db flameshot redshift mpv sxiv
-
-# System tools 
-apt install htop 
-
-# Multimedia
-apt install firefox-esr telegram-desktop 
-
-# Virtualisation (soon)
-
-# Security 
-apt install ufw 
-ufw enable 
 
 # dotfiles
 su user
@@ -105,7 +96,6 @@ sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
 exit
 ############################################################
-
 
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
@@ -119,12 +109,10 @@ exit
 umount /mnt/proc
 umount /mnt/sys
 umount /mnt/dev
-umount  /mnt/dev/pts
-
+umount /mnt/dev/pts
 
 # Install grub and create configuration
 grub-install --root-directory=/mnt /dev/sda
-
 
 
 
