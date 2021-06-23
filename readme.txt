@@ -58,11 +58,34 @@ cat << EOF > /etc/hosts
 127.0.1.1    devuan.localdomain devuan
 EOF
 
-############################################################
+# basic
+apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh
+
+# Setup grub
+sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
+
+# clean apt downloaded archives
+apt clean
+
+# Install grub and create configuration
+grub-install -root-directory=/ --boot-directory=/boot /dev/sda
+
+# exit the chroot environmen
+exit
+
+umount /mnt/proc
+umount /mnt/sys
+umount /mnt/dev/pts
+
+
+
+
+
+
+
 
 packagelist=(
-  # basic
-  linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd wget curl neovim git
+  wget curl neovim git
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
   # Laptop (soon)
@@ -78,7 +101,7 @@ packagelist=(
   # System tools 
   htop 
   # Multimedia
-  firefox-esr telegram-desktop 
+  telegram-desktop 
   # Virtualisation (soon)
   # Security 
   ufw 
@@ -88,31 +111,19 @@ apt install ${packagelist[@]}
 pip3 install pynvim pylint
 
 # dotfiles
-su user
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
-exit
 ############################################################
 
-# Setup grub
-sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
 
-# clean apt downloaded archives
-apt clean
 
-# Install grub and create configuration
-grub-install --root-directory=/ /dev/sda
 
-# exit the chroot environmen
-exit
 
-umount /mnt/proc
-umount /mnt/sys
-umount /mnt/dev
-umount /mnt/dev/pts
+
+
 
 PlugInstall
 CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
