@@ -1,8 +1,4 @@
-apt install ssh
-wget https://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.124_all.deb
-
-dpkg -i debootstrap_1.0.124_all.deb
-
+sudo apt install ssh debootstrap
 
 # Wipe disk before install
 (echo g;echo w) | fdisk /dev/sda
@@ -17,9 +13,7 @@ mkfs.ext4 -L root /dev/sda1
 mount /dev/sda1 /mnt
 
 # Install base system
-debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged
-
-
+debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
 
 
