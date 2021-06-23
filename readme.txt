@@ -21,9 +21,7 @@ mount -t sysfs /sys /mnt/sys/
 mount -o bind /dev /mnt/dev/
 mount -t devpts /devpts /mnt/dev/pts
 
-
 chroot /mnt /bin/bash
-
 
 # Edit fstab
 cat << EOF > /etc/fstab
@@ -60,58 +58,11 @@ cat << EOF > /etc/hosts
 127.0.1.1    devuan.localdomain devuan
 EOF
 
-# Install kernel
-# apt-cache search linux-image
-apt install linux-image-5.10.0-7-amd64
-
-apt install grub2
-
-
-# Setup grub
-sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
-
-
-
-
-
-
-# Install grub and create configuration
-grub-install --root-directory=/mnt /dev/sda
-
-
-
-# Exit new system and go into the cd shell
-exit
-
-# Reboot into the new system, don't forget to remove the usb
-reboot
-
-sudo pacman -Syu
-
-# Install AUR helper - yay
-git clone https://aur.archlinux.org/yay.git /home/user/git/yay
-cd /home/user/git/yay && makepkg -si
-
-# Clone my repo
-git clone https://github.com/t1mron/dotfiles_arch.git /home/user/git/dotfiles_arch
-cd /home/user/git/dotfiles_arch && sudo cp -r etc / && cp /user/. /home/user/
-
-
-
-
-# migrate from stable to sid
-apt install ssh sudo 
-
-cat << EOF > /etc/apt/sources.list
-deb     http://deb.devuan.org/merged ceres main
-deb-src http://deb.devuan.org/merged ceres main
-EOF
-
-apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove && reboot
-apt install linux-image-5.10.0-7-amd64
+############################################################
 
 # basic 
-apt install sysv-rc-conf network-manager iwd wget curl vim git
+# apt-cache search linux-image
+apt install install linux-image-5.10.0-7-amd64 grub2 sysv-rc-conf network-manager iwd wget curl neovim git
 
 # Window manager
 apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
@@ -145,12 +96,6 @@ apt install firefox-esr telegram-desktop
 apt install ufw 
 ufw enable 
 
-# Create user
-useradd -G sudo -m -d /home/user user
-passwd user
-useradd -G sudo -m -d /home/help help
-passwd help
-
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
@@ -158,5 +103,26 @@ sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
 
+############################################################
+
+
+# Setup grub
+sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
+
+# Install grub and create configuration
+grub-install --root-directory=/mnt /dev/sda
+
+
+
+# Exit new system and go into the cd shell
+exit
+
+# Reboot into the new system, don't forget to remove the usb
+reboot
+
+
 PlugInstall
 CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
+
+
+
