@@ -13,15 +13,19 @@ mkfs.ext4 -L root /dev/sda1
 mount /dev/sda1 /mnt
 
 # Install base system
-debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
+debootstrap --variant=minbase --include=neovim --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
+# Chroot into installed system
+mount -t proc /proc /mnt/proc/
+mount -t sysfs /sys /mnt/sys/
+mount -o bind /dev /mnt/dev/
+chroot /mnt /bin/bash
 
-
-# Generate fstab
-genfstab -U /mnt >> /mnt/etc/fstab
-
-# Enter the new system
-arch-chroot /mnt /bin/bash
+# Edit fstab
+cat << EOF > /etc/fstab
+# <file system>        <dir>         <type>    <options>             <dump> <pass>
+/dev/sda1              /             ext4      rw,noatime              1      1
+EOF
 
 # Create user
 useradd -G wheel -m -d /home/user user
