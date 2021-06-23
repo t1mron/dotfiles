@@ -13,13 +13,14 @@ mkfs.ext4 -L root /dev/sda1
 mount /dev/sda1 /mnt
 
 # Install base system
-debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
+debootstrap --variant=minbase --include=locales --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
 # Chroot into installed system
 mount -t proc /proc /mnt/proc/
 mount -t sysfs /sys /mnt/sys/
 mount -o bind /dev /mnt/dev/
-mount -o pts /dev/pts /mnt/dev/pts/
+mount -t devpts /devpts /mnt/dev/pts
+
 
 chroot /mnt /bin/bash
 
@@ -52,39 +53,30 @@ echo LANG=en_US.UTF-8 >> /etc/locale.conf
 # Set keymap and font for console 
 echo -e "KEYMAP=ru\nFONT=cyr-sun16" >> /etc/vconsole.conf
 
-# Set the hostname
-echo arch >> /etc/hostname
-
 # Set the host
-cat << EOF | tee -a /etc/hosts
+cat << EOF > /etc/hosts
 127.0.0.1    localhost
 ::1          localhost
-127.0.1.1    arch.localdomain arch
+127.0.1.1    devuan.localdomain devuan
 EOF
 
+# Install kernel
+# apt-cache search linux-image
+apt install linux-image-5.10.0-7-amd64
 
-
-
+apt install grub2
 
 
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
-sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT='loglevel=3 quiet acpi_backlight=vendor'|" /etc/default/grub
-sed -i "s|^GRUB_CMDLINE_LINUX=.*|GRUB_CMDLINE_LINUX='cryptdevice=/dev/nvme0n1p3:archlinux'|" /etc/default/grub
 
-# Configure mkinitcpio
-sed -i "s|^MODULES=.*|MODULES=(amdgpu)|" /etc/mkinitcpio.conf
-sed -i "s|^HOOKS=.*|HOOKS=(base udev autodetect keyboard modconf block encrypt lvm2 filesystems fsck)|" /etc/mkinitcpio.conf
 
-# Regenerate initrd image
-mkinitcpio -p linux
+
+
+
 
 # Install grub and create configuration
-grub-install --boot-directory=/boot --efi-directory=/boot/efi /dev/nvme0n1p2
-grub-mkconfig -o /boot/grub/grub.cfg
-grub-mkconfig -o /boot/efi/EFI/arch/grub.cfg
-
-
+grub-install --root-directory=/mnt /dev/sda
 
 
 
