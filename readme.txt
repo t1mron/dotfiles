@@ -4,7 +4,7 @@ sudo apt install ssh debootstrap
 (echo o;echo w) | fdisk /dev/sda
 
 # /dev/sda1 All Linux filesystem
-(echo n;echo ;echo ;echo ;echo ;echo w) | fdisk /dev/sda
+(echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
 
 # Formatting the partitions
 mkfs.ext4 -L root /dev/sda1
