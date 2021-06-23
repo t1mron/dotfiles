@@ -3,7 +3,7 @@ sudo apt install ssh debootstrap
 # Wipe disk before install
 (echo g;echo w) | fdisk /dev/sda
 
-# /dev/nvme0n1p3 All Linux filesystem
+# /dev/sda1 All Linux filesystem
 (echo n;echo ;echo ;echo ; echo w) | fdisk /dev/sda
 
 # Formatting the partitions
