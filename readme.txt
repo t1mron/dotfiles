@@ -19,7 +19,10 @@ debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merg
 mount -t proc /proc /mnt/proc/
 mount -t sysfs /sys /mnt/sys/
 mount -o bind /dev /mnt/dev/
+mount -o pts /dev/pts /mnt/dev/pts/
+
 chroot /mnt /bin/bash
+
 
 # Edit fstab
 cat << EOF > /etc/fstab
@@ -28,16 +31,13 @@ cat << EOF > /etc/fstab
 EOF
 
 # Create user
-useradd -G wheel -m -d /home/user user
+useradd -G sudo -m -d /home/user user
 passwd user
-useradd -G wheel -m -d /home/help help
+useradd -G sudo -m -d /home/help help
 passwd help
 
-# Add sudo privileges
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-
 # Set the time zone and a system clock
-ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 hwclock --systohc --utc
 
 # Set default locale
@@ -62,18 +62,10 @@ cat << EOF | tee -a /etc/hosts
 127.0.1.1    arch.localdomain arch
 EOF
 
-# Set systemd-networkd
-cat << EOF | tee -a /etc/systemd/network/20-wired.network
-[Match]
-Name=enp1s0
 
-[Network]
-DHCP=yes
-EOF
 
-# Add multilib repo for pacman 
-echo [multilib] >> /etc/pacman.conf 
-echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+
+
 
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
@@ -92,12 +84,9 @@ grub-install --boot-directory=/boot --efi-directory=/boot/efi /dev/nvme0n1p2
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-mkconfig -o /boot/efi/EFI/arch/grub.cfg
 
-# symlink resolv.conf
-sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-# Enable services at startup 
-systemctl enable systemd-networkd
-systemctl enable systemd-resolved
+
+
 
 # Exit new system and go into the cd shell
 exit
