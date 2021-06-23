@@ -62,7 +62,7 @@ EOF
 
 # basic 
 # apt-cache search linux-image
-apt install linux-image-5.10.0-7-amd64 grub2 sysv-rc-conf network-manager iwd wget curl neovim git
+apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd wget curl neovim git
 
 # Window manager
 apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
@@ -97,28 +97,36 @@ apt install ufw
 ufw enable 
 
 # dotfiles
+su user
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
-
+exit
 ############################################################
 
 
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
 
+# clean apt downloaded archives
+apt clean
+
+# exit the chroot environmen
+exit
+
+umount /mnt/proc
+umount /mnt/sys
+umount /mnt/dev
+umount  /mnt/dev/pts
+
+
 # Install grub and create configuration
 grub-install --root-directory=/mnt /dev/sda
 
 
 
-# Exit new system and go into the cd shell
-exit
-
-# Reboot into the new system, don't forget to remove the usb
-reboot
 
 
 PlugInstall
