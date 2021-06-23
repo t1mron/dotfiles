@@ -62,7 +62,7 @@ EOF
 
 # basic 
 # apt-cache search linux-image
-apt install install linux-image-5.10.0-7-amd64 grub2 sysv-rc-conf network-manager iwd wget curl neovim git
+apt install linux-image-5.10.0-7-amd64 grub2 sysv-rc-conf network-manager iwd wget curl neovim git
 
 # Window manager
 apt install bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
