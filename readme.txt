@@ -19,7 +19,6 @@ debootstrap --variant=minbase --include=locales --arch amd64 ceres /mnt http://d
 mount -t proc /proc /mnt/proc/
 mount -t sysfs /sys /mnt/sys/
 mount -o bind /dev /mnt/dev/
-mount -t devpts /devpts /mnt/dev/pts
 
 chroot /mnt /bin/bash
 
@@ -68,14 +67,14 @@ sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
 apt clean
 
 # Install grub and create configuration
-grub-install -root-directory=/ --boot-directory=/boot /dev/sda
+grub-install --root-directory=/ --boot-directory=/boot /dev/sda
 
 # exit the chroot environmen
 exit
 
 umount /mnt/proc
 umount /mnt/sys
-umount /mnt/dev/pts
+
 
 
 
