@@ -51,7 +51,7 @@ cat << EOF > /etc/hosts
 EOF
 
 # basic
-apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh
+apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
 
 # clean apt downloaded archives
 apt clean
