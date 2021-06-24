@@ -73,7 +73,7 @@ reboot
 
 packagelist=(
   # Window manager
-  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
+  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr
   # Laptop (soon)
   # wi-fi, sound, bluetooth, vpn (soon)
   # Office programs
