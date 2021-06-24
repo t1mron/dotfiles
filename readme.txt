@@ -99,12 +99,6 @@ packagelist=(
 apt install ${packagelist[@]}
 pip3 install pynvim pylint
 
-# alacritty
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-
-
-
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
