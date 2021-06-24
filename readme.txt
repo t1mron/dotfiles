@@ -98,6 +98,7 @@ packagelist=(
 
 apt install ${packagelist[@]}
 pip3 install pynvim pylint
+sudo npm i -g yarn bash-language-server
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
@@ -108,4 +109,5 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ra
 
 
 :PlugInstall
-:CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
+:CocInstall coc-pyright coc-sh coc-vimtex coc-explorer
+#coc-vimlsp 
