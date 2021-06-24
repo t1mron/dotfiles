@@ -53,6 +53,9 @@ EOF
 # basic
 apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
 
+# remove modemmanager
+sudo apt-get purge modemmanager
+
 # clean apt downloaded archives
 apt clean
 
@@ -66,10 +69,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # exit the chroot environmen
 exit
 
+# Reboot into the new system, don't forget to remove the usb
 reboot
 
-
-
+-------------------------------------------------------------------------
 
 packagelist=(
   # Window manager
@@ -102,14 +105,7 @@ cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE READM
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
-############################################################
 
 
-
-
-
-
-
-
-PlugInstall
-CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
+:PlugInstall
+:CocInstall coc-vimlsp coc-python coc-sh coc-vimtex coc-explorer
