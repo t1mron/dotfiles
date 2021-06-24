@@ -1,4 +1,4 @@
-sudo apt install ssh debootstrap
+sudo apt install ssh debootstrap arch-install-scripts
 
 # Wipe disk before install
 (echo o;echo w) | fdisk /dev/sda
@@ -15,18 +15,11 @@ mount /dev/sda1 /mnt
 # Install base system
 debootstrap --variant=minbase --include=locales --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
-# Chroot into installed system
-mount -t proc /proc /mnt/proc/
-mount -t sysfs /sys /mnt/sys/
-mount -o bind /dev /mnt/dev/
+# Generate fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
-chroot /mnt /bin/bash
-
-# Edit fstab
-cat << EOF > /etc/fstab
-# <file system>        <dir>         <type>    <options>             <dump> <pass>
-/dev/sda1              /             ext4      rw,noatime              1      1
-EOF
+# Enter the new system
+arch-chroot /mnt /bin/bash
 
 # Create user
 useradd -G sudo -m -d /home/user user
@@ -68,16 +61,10 @@ apt clean
 
 # Install grub and create configuration
 grub-install --root-directory=/ --boot-directory=/boot /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # exit the chroot environmen
 exit
-
-umount /mnt/proc
-umount /mnt/sys
-
-
-
-
 
 
 
