@@ -82,7 +82,7 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Coding
-  python3-pip git
+  git python3-pip nodejs npm
   # Look and feel
   neofetch zsh zsh-antigen
   # Utilities
@@ -98,7 +98,7 @@ packagelist=(
 
 apt install ${packagelist[@]}
 pip3 install pynvim pylint
-
+sudo npm install --global yarn
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
