@@ -84,7 +84,7 @@ packagelist=(
   # Coding
   python3-pip git
   # Look and feel
-  neofetch zsh zsh-antigen
+  neofetch zsh
   # Utilities
   man-db redshift 
   # System tools 
@@ -98,6 +98,10 @@ packagelist=(
 
 apt install ${packagelist[@]}
 pip3 install pynvim pylint
+
+curl -L git.io/antigen > $HOME/antigen.zsh
+
+
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
