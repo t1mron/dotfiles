@@ -1,15 +1,20 @@
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
+#[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
 
-# Path
-export ZSH="$HOME/.oh-my-zsh"
-export TERM=xterm-256color
+source /usr/share/zsh-antigen/antigen.zsh
 
-ZSH_THEME="spaceship"
-DEFAULT_USER=$USER
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
 
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+# Plugins
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle git
 
-source $ZSH/oh-my-zsh.sh
+# Load the theme.
+antigen theme spaceship-prompt/spaceship-prompt
+
+# Tell Antigen that you're done.
+antigen apply
 
 # User configuration
 spaceship_prompt() {
@@ -20,6 +25,3 @@ spaceship_prompt() {
   SPACESHIP_PROMPT_NEED_NEWLINE=true
   spaceship::compose_prompt $SPACESHIP_PROMPT_ORDER
 }
-
-# aliases
-alias ls='lsd'
