@@ -71,7 +71,7 @@ exit
 
 
 packagelist=(
-  wget curl neovim git
+  wget curl git
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
   # Laptop (soon)
