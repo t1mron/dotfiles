@@ -66,28 +66,28 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # exit the chroot environmen
 exit
 
+reboot
 
 
 
 
 packagelist=(
-  wget curl git
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi fonts-font-awesome fonts-hack arandr autorandr
   # Laptop (soon)
   # wi-fi, sound, bluetooth, vpn (soon)
   # Office programs
   texlive-latex-recommended zathura
-  # vim plugins
-  python3-pip
+  # Coding
+  python3-pip git
   # Look and feel
   neofetch zsh zsh-antigen
   # Utilities
-  man-db flameshot redshift mpv sxiv
+  man-db redshift 
   # System tools 
-  htop 
+  htop wget curl ping
   # Multimedia
-  telegram-desktop 
+  telegram-desktop flameshot mpv sxiv
   # Virtualisation (soon)
   # Security 
   ufw 
