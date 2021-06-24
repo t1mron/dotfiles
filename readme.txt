@@ -98,7 +98,6 @@ packagelist=(
 
 apt install ${packagelist[@]}
 pip3 install pynvim pylint
-sudo npm install --global yarn
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
