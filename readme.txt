@@ -53,11 +53,11 @@ EOF
 # basic
 apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh
 
-# Setup grub
-sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
-
 # clean apt downloaded archives
 apt clean
+
+# Setup grub
+sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
 
 # Install grub and create configuration
 grub-install --root-directory=/ --boot-directory=/boot /dev/sda
