@@ -84,7 +84,7 @@ packagelist=(
   # Coding
   python3-pip git
   # Look and feel
-  neofetch zsh
+  neofetch zsh zsh-antigen
   # Utilities
   man-db redshift 
   # System tools 
