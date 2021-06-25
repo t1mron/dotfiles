@@ -54,7 +54,7 @@ EOF
 apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
 
 # remove modemmanager
-sudo apt-get purge modemmanager
+#sudo apt-get purge modemmanager
 
 # clean apt downloaded archives
 apt clean
@@ -86,9 +86,9 @@ packagelist=(
   # Look and feel
   neofetch zsh zsh-antigen
   # Utilities
-  man-db redshift 
-  # System tools 
-  htop wget curl ping
+  redshift 
+  # Terminal tools 
+  man-db htop wget curl ping
   # Multimedia
   telegram-desktop flameshot mpv sxiv
   # Virtualisation (soon)
@@ -97,8 +97,7 @@ packagelist=(
 )
 
 apt install ${packagelist[@]}
-pip3 install pynvim pylint
-sudo npm i -g yarn bash-language-server
+pip3 install pynvim
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
@@ -109,5 +108,4 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ra
 
 
 :PlugInstall
-:CocInstall coc-pyright coc-sh coc-vimtex coc-explorer
-#coc-vimlsp 
+:CocInstall coc-explorer
