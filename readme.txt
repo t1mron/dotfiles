@@ -84,7 +84,7 @@ packagelist=(
   # Coding
   git python3-pip nodejs npm
   # Look and feel
-  neofetch zsh zsh-antigen
+  neofetch zsh
   # Utilities
   redshift 
   # Terminal tools 
@@ -101,7 +101,7 @@ pip3 install pynvim
 
 # dotfiles
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
-cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/root .git LICENSE README.md readme.txt
+cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
