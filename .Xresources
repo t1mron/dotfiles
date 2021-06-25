@@ -1,0 +1,34 @@
+! Appearance
+URxvt.font: xft:Hack:regular:size=16
+URxvt.boldFont: xft:Hack:bold:size=16
+URxvt.italicFont: xft:Hack:italic:size=16
+
+URxvt.scrollBar: false
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+! Copy Paste 
+URxvt.clipboard.autocopy: true
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
+! Atom One Light theme
+urxvt*background: #f9f9f9
+urxvt*foreground: #383a42
+urxvt*cursorColor: #d0d0d0
+urxvt*color0: #000000
+urxvt*color1: #E45649
+urxvt*color2: #50A14F
+urxvt*color3: #986801
+urxvt*color4: #4078F2
+urxvt*color5: #A626A4
+urxvt*color6: #0184BC
+urxvt*color7: #A0A1A7
+urxvt*color8: #5c6370
+urxvt*color9: #e06c75
+urxvt*color10: #50A14F
+urxvt*color11: #986801
+urxvt*color12: #4078F2
+urxvt*color13: #A626A4
+urxvt*color14: #0184BC
+urxvt*color15: #ffffff
