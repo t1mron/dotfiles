@@ -1,18 +1,17 @@
+# create usb os
 sudo apt install ssh f2fs-tools debootstrap arch-install-scripts
 
-# Wipe disk before install
-head -c 3145728 /dev/urandom > /dev/sda; sync 
-(echo o;echo w) | fdisk /dev/sda
+head -c 3145728 /dev/urandom > /dev/sdb; sync 
+(echo o;echo w) | fdisk /dev/sdb
 
-# /dev/sda1 All Linux filesystem
-(echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
+# /dev/sdb1 All Linux filesystem
+(echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sdb
 
 # Formatting the partitions
-mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/sda1
-
+mkfs.f2fs -l root -O extra_attr /dev/sdb1
 
 # Mount partition
-mount /dev/sda1 /mnt
+mount /dev/sdb1 /mnt
 
 # Install base system
 debootstrap --variant=minbase --include=locales --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
@@ -55,14 +54,26 @@ cat << EOF > /etc/hosts
 127.0.1.1    devuan.localdomain devuan
 EOF
 
-# basic
-apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
+packagelist=(
+  # basic
+  linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
+  # Window manager
+  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar rofi
+  # Terminal tools 
+  man-db htop wget curl ping
+  # Multimedia
+  flameshot mpv sxiv
+)
 
-# remove modemmanager
-#sudo apt-get purge modemmanager
+apt install ${packagelist[@]}
 
 # clean apt downloaded archives
 apt clean
+
+# dotfiles
+git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
+cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
+sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
@@ -77,40 +88,4 @@ exit
 # Reboot into the new system, don't forget to remove the usb
 reboot
 
--------------------------------------------------------------------------
 
-packagelist=(
-  # Window manager
-  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi arandr
-  # Laptop (soon)
-  # wi-fi, sound, bluetooth, vpn (soon)
-  # Office programs
-  texlive-latex-recommended zathura
-  # Coding
-  git python3-pip nodejs npm
-  # Look and feel
-  neofetch zsh
-  # Utilities
-  redshift 
-  # Terminal tools 
-  man-db htop wget curl ping
-  # Multimedia
-  telegram-desktop flameshot mpv sxiv
-  # Virtualisation (soon)
-  # Security 
-  ufw 
-)
-
-apt install ${packagelist[@]}
-pip3 install pynvim
-
-# dotfiles
-git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
-cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
-sudo cp -r $HOME/git/dotfiles_devuan/root/. /
-
-git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
-
-
-:PlugInstall
-:CocInstall coc-explorer
