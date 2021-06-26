@@ -7,7 +7,8 @@ sudo apt install ssh f2fs-tools debootstrap arch-install-scripts
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
 
 # Formatting the partitions
-mkfs.f2fs /dev/sda1
+mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/sda1
+
 
 # Mount partition
 mount /dev/sda1 /mnt
