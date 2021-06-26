@@ -17,6 +17,8 @@ antigen theme spaceship-prompt/spaceship-prompt
 antigen apply
 
 # User configuration
+alias ls='lsd'
+
 spaceship_prompt() {
   RETVAL=$?
 
