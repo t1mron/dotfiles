@@ -28,9 +28,6 @@ passwd user
 useradd -G sudo -m -d /home/help help
 passwd help
 
-# default shell zsh
-chsh -s /bin/zsh user
-
 # Set the time zone and a system clock
 ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 hwclock --systohc --utc
