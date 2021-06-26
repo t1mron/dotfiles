@@ -167,7 +167,7 @@ set noshowmode
 """"""""""""
 
 " Directory
-let g:startify_session_dir = '$HOME/.vim/session'
+let g:startify_session_dir = '$HOME/.config/nvim/session'
 
 " Automatically restart sessions
 let g:startify_session_autoload = 1
