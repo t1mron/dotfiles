@@ -64,7 +64,7 @@ set autoindent                          " Good auto indent
 set laststatus=0                        " Always display the status line
 set number                              " Line numbers
 set cursorline                          " Enable highlighting of the current line
-"set background=dark                    " tell vim what the background color looks like
+set background=light                    " tell vim what the background color looks like
 set showtabline=2                       " Always show tabs
 set noshowmode                          " We don't need to see things like -- INSERT -- anymore
 set nobackup                            " This is recommended by coc
@@ -134,13 +134,6 @@ nnoremap <S-TAB> :bprevious<CR>
 
 syntax on
 colorscheme onehalflight
-
-" checks if your terminal has 24-bit color support
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
 
 
 """""""""""
