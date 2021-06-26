@@ -1,6 +1,7 @@
 sudo apt install ssh f2fs-tools debootstrap arch-install-scripts
 
 # Wipe disk before install
+head -c 3145728 /dev/urandom > /dev/sda; sync 
 (echo o;echo w) | fdisk /dev/sda
 
 # /dev/sda1 All Linux filesystem
