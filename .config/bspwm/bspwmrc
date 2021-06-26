@@ -23,8 +23,6 @@ bspc config normal_border_color  \#cccccc
 # RULES #
 #-------#
 
-#bspc rule -a Alacritty           desktop='^1' follow=true
-#bspc rule -a "*:ranger"          desktop='^1' follow=true
 bspc rule -a firefox         	    desktop='^2'
 bspc rule -a "*:code"             desktop='^3' follow=true
 bspc rule -a "*:latex"            desktop='^4' follow=true
