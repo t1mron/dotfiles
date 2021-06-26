@@ -1,4 +1,4 @@
-sudo apt install ssh debootstrap arch-install-scripts
+sudo apt install ssh f2fs-tools debootstrap arch-install-scripts
 
 # Wipe disk before install
 (echo o;echo w) | fdisk /dev/sda
@@ -7,7 +7,7 @@ sudo apt install ssh debootstrap arch-install-scripts
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
 
 # Formatting the partitions
-mkfs.ext4 -L root /dev/sda1
+mkfs.f2fs /dev/sda1
 
 # Mount partition
 mount /dev/sda1 /mnt
