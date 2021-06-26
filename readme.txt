@@ -1,5 +1,5 @@
 # create usb os
-sudo apt install ssh f2fs-tools debootstrap arch-install-scripts
+sudo apt install ssh debootstrap arch-install-scripts
 
 head -c 3145728 /dev/urandom > /dev/sdb; sync 
 (echo o;echo w) | fdisk /dev/sdb
@@ -8,7 +8,7 @@ head -c 3145728 /dev/urandom > /dev/sdb; sync
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sdb
 
 # Formatting the partitions
-mkfs.f2fs -l root -O extra_attr /dev/sdb1
+mkfs.ext4 /dev/sdb1
 
 # Mount partition
 mount /dev/sdb1 /mnt
