@@ -73,11 +73,11 @@ super + d
 
 # terminal emulator
 super + Return
-        urxvt
+        xterm
 
 # File Manager - ranger
 super + Tab
-	urxvt --class ranger -e ranger
+	xterm -e ranger
 
 # File Manager - nautilus
 super + n
@@ -85,11 +85,11 @@ super + n
 
 # vim - code
 super + c
-	urxvt --class code  
+	xterm -name code -e nvim  
 
 # vim - latex
 super + w
-	urxvt --class latex
+	xterm -name latex -e nvim
 
 # Browser
 super + f
@@ -104,8 +104,8 @@ super + t
 	telegram-desktop
 
 # reload autorandr
-super + Home
-	autorandr -c
+#super + Home
+#	autorandr -c
 
 # kill lag window
 super + Escape
