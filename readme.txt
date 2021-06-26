@@ -53,11 +53,11 @@ EOF
 
 packagelist=(
   # basic
-  linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
+  linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim 
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar rofi
   # Terminal tools 
-  man-db htop wget curl ping
+  f2fs-tools debootstrap arch-install-scripts man-db htop wget curl ping 
   # Multimedia
   flameshot mpv sxiv
 )
