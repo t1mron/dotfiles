@@ -56,7 +56,7 @@ cat << EOF > /etc/hosts
 EOF
 
 # basic
-apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager iwd ssh neovim
+apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager network-manager-gnome iwd ssh neovim
 
 # remove modemmanager
 #sudo apt-get purge modemmanager
