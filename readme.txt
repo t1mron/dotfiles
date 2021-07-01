@@ -8,13 +8,13 @@ head -c 3145728 /dev/urandom > /dev/sda; sync
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | sudo fdisk /dev/sda
 
 # Formatting the partitions
-mkfs.ext4 /dev/sda1
+sudo mkfs.ext4 /dev/sda1
 
 # Mount partition
 mount /dev/sda1 /mnt
 
 # Install base system
-debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
+sudo debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
