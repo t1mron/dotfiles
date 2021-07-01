@@ -46,7 +46,7 @@ packagelist=(
   # Locale
   locales
   # Multimedia
-  firefox telegram-desktop flameshot mpv sxiv
+  telegram-desktop flameshot mpv sxiv
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
