@@ -38,7 +38,7 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
-  debootstrap arch-install-scripts git wget man-db htop inetutils-ping
+  debootstrap arch-install-scripts git wget man-db htop inetutils-ping iproute2
   # Network
   network-manager network-manager-gnome iwd 
   # Fonts
