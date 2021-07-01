@@ -1,4 +1,4 @@
-sudo apt install ssh f2fs-tools debootstrap arch-install-scripts
+sudo apt install ssh debootstrap arch-install-scripts
 
 # Wipe disk before install
 head -c 3145728 /dev/urandom > /dev/sda; sync 
@@ -8,20 +8,67 @@ head -c 3145728 /dev/urandom > /dev/sda; sync
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
 
 # Formatting the partitions
-mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/sda1
-
+mkfs.ext4 /dev/sda1
 
 # Mount partition
 mount /dev/sda1 /mnt
 
 # Install base system
-debootstrap --variant=minbase --include=locales --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
+debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
+# sources list
+cat << EOF > /mnt/etc/apt/sources.list 
+deb http://deb.devuan.org/merged ceres main 
+deb http://deb.devuan.org/merged beowulf main non-free contrib
+EOF
+
 # Enter the new system
 arch-chroot /mnt /bin/bash
+
+packagelist=(
+  # basic
+  linux-image-amd64 grub2 cryptsetup lvm2 sysv-rc-conf ssh 
+  # Window manager
+  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi arandr
+  # Laptop (soon)
+  # wi-fi, sound, bluetooth, vpn (soon)
+  # Office programs
+  texlive-latex-recommended zathura
+  # Terminal tools 
+  debootstrap arch-install-scripts git wget man-db htop inetutils-ping
+  # Network
+  network-manager network-manager-gnome iwd 
+  # Fonts
+  fonts-font-awesome
+  # Locale
+  locales
+  # Multimedia
+  firefox telegram-desktop flameshot mpv sxiv
+  # Coding
+  neovim git python3-pip nodejs npm
+  # Look and feel
+  neofetch zsh
+  # Utilities
+  redshift 
+  # Security 
+  sudo ufw 
+  # Firmware
+  firmware-iwlwifi
+)
+
+DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
+
+apt install ${packagelist[@]}
+pip3 install pynvim
+
+# Delete modem manager
+apt-get --assume-yes purge modemmanager
+
+# clean apt downloaded archives
+apt clean
 
 # Create user
 useradd -G sudo -m -d /home/user user
@@ -31,6 +78,7 @@ passwd help
 
 # default shell zsh
 chsh -s /bin/zsh user
+chsh -s /bin/bash help
 
 # Set the time zone and a system clock
 ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
@@ -42,12 +90,6 @@ echo -e "en_US.UTF-8 UTF-8\nru_RU.UTF-8 UTF-8" >> /etc/locale.gen
 # Update current locale
 locale-gen
 
-# Set system language
-echo LANG=en_US.UTF-8 >> /etc/locale.conf
-
-# Set keymap and font for console 
-echo -e "KEYMAP=ru\nFONT=cyr-sun16" >> /etc/vconsole.conf
-
 # Set the host
 cat << EOF > /etc/hosts
 127.0.0.1    localhost
@@ -55,14 +97,15 @@ cat << EOF > /etc/hosts
 127.0.1.1    devuan.localdomain devuan
 EOF
 
-# basic
-apt install linux-image-5.10.0-7-amd64 grub2 sudo sysv-rc-conf network-manager network-manager-gnome iwd ssh neovim
+# dotfiles
+su user
+git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
+cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
+sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
-# remove modemmanager
-#sudo apt-get purge modemmanager
+git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
 
-# clean apt downloaded archives
-apt clean
+exit
 
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
@@ -78,38 +121,6 @@ exit
 reboot
 
 -------------------------------------------------------------------------
-
-packagelist=(
-  # Window manager
-  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils rxvt-unicode polybar suckless-tools ranger rofi arandr
-  # Laptop (soon)
-  # wi-fi, sound, bluetooth, vpn (soon)
-  # Office programs
-  texlive-latex-recommended zathura
-  # Coding
-  git python3-pip nodejs npm
-  # Look and feel
-  neofetch zsh
-  # Utilities
-  redshift 
-  # Terminal tools 
-  man-db htop wget curl ping
-  # Multimedia
-  telegram-desktop flameshot mpv sxiv
-  # Virtualisation (soon)
-  # Security 
-  ufw 
-)
-
-apt install ${packagelist[@]}
-pip3 install pynvim
-
-# dotfiles
-git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
-cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
-sudo cp -r $HOME/git/dotfiles_devuan/root/. /
-
-git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
 
 
 :PlugInstall
