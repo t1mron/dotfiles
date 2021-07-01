@@ -18,23 +18,6 @@ bspc config gapless_monocle      true
 bspc config focused_border_color \#00bfff
 bspc config normal_border_color  \#cccccc
 
-
-#-------#
-# RULES #
-#-------#
-
-bspc rule -a firefox         	    desktop='^2'
-bspc rule -a "*:code"             desktop='^3' follow=true
-bspc rule -a "*:latex"            desktop='^4' follow=true
-bspc rule -a Zathura 	     	      desktop='^4' state=tiled follow=on
-bspc rule -a TelegramDesktop 	    desktop='^5' follow=on
-bspc rule -a discord              desktop='^5' state=tiled
-bspc rule -a zoom                 desktop='^5' state=tiled follow=on
-bspc rule -a Virt-manager         desktop='^6'
-
-bspc rule -a Pavucontrol          state=floating center=true rectangle=900x500+0+0
-bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
-
 #----------------------#
 # STARTUP APPLICATIONS #
 #----------------------#
@@ -45,26 +28,11 @@ $HOME/.config/polybar/scripts/launch.sh
 # change keyboard layout
 setxkbmap -option grp:alt_shift_toggle us,ru &
 
-#color temperature
-redshift -c $HOME/.config/redshift/redshift.conf &
-
-#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-# Disable touchpad
-#xinput disable "SYNA30AC:00 06CB:CDEB Touchpad" &
-
-# Disable wi-fi
-sudo /sbin/ip link set wlan0 down &
-
-# Disable eth
-#exec --no-startup-id sudo /sbin/ip link set enp1s0 down &
-
-# Disable volume/mic
-pactl set-sink-mute @DEFAULT_SINK@ 1 &
-pactl set-source-mute @DEFAULT_SOURCE@ 1 &
-
 # Solid color background
 xsetroot -solid "#cccccc" &
 
 # Disable screen blanking
 xset -dpms s off &
+
+# Network manager tray
+nm-applet &
