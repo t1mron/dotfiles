@@ -2,10 +2,10 @@ sudo apt install ssh debootstrap arch-install-scripts
 
 # Wipe disk before install
 head -c 3145728 /dev/urandom > /dev/sda; sync 
-(echo o;echo w) | fdisk /dev/sda
+(echo o;echo w) | sudo fdisk /dev/sda
 
 # /dev/sda1 All Linux filesystem
-(echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
+(echo n;echo ;echo ;echo ;echo ;echo a;echo w) | sudo fdisk /dev/sda
 
 # Formatting the partitions
 mkfs.ext4 /dev/sda1
