@@ -34,6 +34,7 @@ packagelist=(
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi arandr
   # Laptop (soon)
+  tlp powertop
   # wi-fi, sound, bluetooth, vpn (soon)
   # Office programs
   texlive-latex-recommended zathura
