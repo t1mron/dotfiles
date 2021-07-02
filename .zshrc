@@ -17,8 +17,7 @@ antigen theme spaceship-prompt/spaceship-prompt
 antigen apply
 
 # User configuration
-alias ls='lsd'
-alias sudo='doas'
+alias ls='exa'
 
 spaceship_prompt() {
   RETVAL=$?
