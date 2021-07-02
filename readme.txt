@@ -36,12 +36,11 @@ packagelist=(
   # Laptop (soon)
   tlp powertop
   # wi-fi, sound, bluetooth, vpn (soon)
+  iwd wireless-tools bc
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
   debootstrap arch-install-scripts git wget man-db htop inetutils-ping iproute2
-  # Network
-  iwd 
   # Fonts
   fonts-font-awesome
   # Locale
@@ -55,7 +54,7 @@ packagelist=(
   # Utilities
   redshift 
   # Security 
-  sudo ufw 
+  doas ufw 
   # Firmware
   firmware-iwlwifi
 )
