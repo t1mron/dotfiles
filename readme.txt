@@ -40,7 +40,7 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
-  debootstrap arch-install-scripts git wget man-db htop inetutils-ping iproute2
+  debootstrap arch-install-scripts git wget man-db htop iputils-ping iproute2
   # Fonts
   fonts-font-awesome
   # Locale
