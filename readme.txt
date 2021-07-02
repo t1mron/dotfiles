@@ -54,7 +54,7 @@ packagelist=(
   # Utilities
   redshift 
   # Security 
-  doas ufw 
+  sudo ufw 
   # Firmware
   firmware-iwlwifi
 )
