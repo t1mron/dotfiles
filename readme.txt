@@ -32,7 +32,7 @@ packagelist=(
   # basic
   linux-image-amd64 grub2 cryptsetup lvm2 sysv-rc-conf ssh 
   # Window manager
-  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi arandr
+  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar arandr
   # Laptop (soon)
   tlp powertop
   # wi-fi, sound, bluetooth, vpn (soon)
@@ -41,7 +41,7 @@ packagelist=(
   # Terminal tools 
   debootstrap arch-install-scripts git wget man-db htop inetutils-ping iproute2
   # Network
-  network-manager network-manager-gnome iwd 
+  iwd 
   # Fonts
   fonts-font-awesome
   # Locale
