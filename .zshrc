@@ -18,6 +18,7 @@ antigen apply
 
 # User configuration
 alias ls='lsd'
+alias sudo='doas'
 
 spaceship_prompt() {
   RETVAL=$?
