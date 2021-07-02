@@ -35,8 +35,6 @@ packagelist=(
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
   tlp powertop lm-sensors
-  sudo sensors-detect
-  sudo powertop -c 
   # wi-fi, sound, bluetooth, vpn (soon)
   iwd openresolv wireless-tools bc 
   # Office programs
@@ -65,9 +63,6 @@ DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
 
 apt install ${packagelist[@]}
 #pip3 install pynvim
-
-# Delete modem manager
-apt-get --assume-yes purge modemmanager
 
 # clean apt downloaded archives
 apt clean
@@ -124,6 +119,8 @@ reboot
 
 -------------------------------------------------------------------------
 
+sudo sensors-detect
+sudo powertop -c 
 
 :PlugInstall
 :CocInstall coc-explorer
