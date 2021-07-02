@@ -32,11 +32,11 @@ packagelist=(
   # basic
   linux-image-amd64 grub2 cryptsetup lvm2 sysv-rc-conf ssh 
   # Window manager
-  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar arandr
+  bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
   tlp powertop
   # wi-fi, sound, bluetooth, vpn (soon)
-  iwd wireless-tools bc
+  iwd openresolv wireless-tools bc 
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
@@ -62,7 +62,7 @@ packagelist=(
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
 
 apt install ${packagelist[@]}
-pip3 install pynvim
+#pip3 install pynvim
 
 # Delete modem manager
 apt-get --assume-yes purge modemmanager
