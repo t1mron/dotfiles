@@ -34,7 +34,7 @@ packagelist=(
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
-  tlp powertop lm-sensors
+  tlp powertop lm-sensors tp-smapi-dkms thinkfan
   # wi-fi, sound, bluetooth, vpn (soon)
   iwd openresolv wireless-tools bc 
   # Office programs
