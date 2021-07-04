@@ -50,7 +50,7 @@ packagelist=(
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
-  neofetch zsh exa
+  neofetch zsh
   # Utilities
   redshift 
   # Security 
