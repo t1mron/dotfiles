@@ -36,7 +36,7 @@ packagelist=(
   # Laptop (soon)
   tlp powertop acpi lm-sensors thinkfan
   # wi-fi, sound, bluetooth, vpn (soon)
-  iwd openresolv wireless-tools bc 
+  iwd openresolv wireless-tools bc alsa-utils
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
