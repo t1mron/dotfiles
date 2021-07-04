@@ -99,6 +99,7 @@ su user
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
+fc-cache -fv
 
 exit
 
