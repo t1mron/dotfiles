@@ -30,7 +30,7 @@ arch-chroot /mnt /bin/bash
 
 packagelist=(
   # basic
-  linux-image-amd64 grub2 cryptsetup lvm2 sysv-rc-conf ssh 
+  linux-image-amd64 grub2 cryptsetup lvm2 sysv-rc-conf
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
@@ -40,7 +40,7 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
-  debootstrap arch-install-scripts git wget man-db htop iputils-ping iproute2
+  git wget man-db htop iputils-ping iproute2
   # Fonts
   fonts-font-awesome
   # Locale
