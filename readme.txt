@@ -34,7 +34,7 @@ packagelist=(
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
-  tlp powertop acpi lm-sensors tp-smapi-dkms thinkfan
+  tlp powertop acpi lm-sensors thinkfan
   # wi-fi, sound, bluetooth, vpn (soon)
   iwd openresolv wireless-tools bc 
   # Office programs
@@ -100,8 +100,6 @@ git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 
-git clone https://github.com/alexanderjeurissen/ranger_devicons $HOME/.config/ranger/plugins/ranger_devicons
-
 exit
 
 # Setup grub
@@ -120,7 +118,6 @@ reboot
 -------------------------------------------------------------------------
 
 sudo sensors-detect
-sudo powertop -c 
 
 :PlugInstall
 :CocInstall coc-explorer
