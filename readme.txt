@@ -30,7 +30,7 @@ arch-chroot /mnt /bin/bash
 
 packagelist=(
   # basic
-  linux-image-amd64 grub2 cryptsetup lvm2 sysv-rc-conf
+  linux-image-amd64 grub2 lvm2 sysv-rc-conf
   # Window manager
   bspwm sxhkd xserver-xorg-core xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
@@ -46,15 +46,14 @@ packagelist=(
   # Locale
   locales
   # Multimedia
-  telegram-desktop flameshot mpv sxiv
+  librewolf telegram-desktop mpv maim sxiv
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
   neofetch zsh
   # Utilities
-  redshift 
   # Security 
-  sudo ufw 
+  sudo
   # Firmware
   firmware-iwlwifi
 )
