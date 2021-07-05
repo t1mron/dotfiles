@@ -107,6 +107,9 @@ fc-cache -fv
 
 exit
 
+update-rc.d zram defaults
+update-rc.d zram enable
+
 # Setup grub
 sed -i "s|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=1|" /etc/default/grub
 
