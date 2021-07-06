@@ -35,7 +35,7 @@ apt update
 
 packagelist=(
   # basic
-  linux-image-amd64 grub2 lvm2 sysv-rc-conf
+  linux-image-amd64 grub2 lvm2 sysv-rc-conf zram-tools
   # Window manager
   bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm polybar ranger suckless-tools rofi thunar
   # Laptop (soon)
