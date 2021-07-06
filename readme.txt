@@ -25,9 +25,6 @@ deb http://deb.devuan.org/merged ceres main
 deb http://deb.devuan.org/merged beowulf main non-free contrib
 EOF
 
-echo 'deb http://download.opensuse.org/repositories/home:/bgstack15:/aftermozilla/Debian_Unstable/ /' | tee /mnt/etc/apt/sources.list.d/home:bgstack15:aftermozilla.list
-curl -fsSL https://download.opensuse.org/repositories/home:bgstack15:aftermozilla/Debian_Unstable/Release.key | gpg --dearmor | tee /mnt/etc/apt/trusted.gpg.d/home_bgstack15_aftermozilla.gpg > /mnt/dev/null
-
 # Enter the new system
 arch-chroot /mnt /bin/bash
 
@@ -51,7 +48,7 @@ packagelist=(
   # Locale
   locales
   # Multimedia
-  librewolf telegram-desktop mpv maim sxiv
+  firefox telegram-desktop mpv maim sxiv
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
