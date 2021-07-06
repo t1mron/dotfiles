@@ -128,4 +128,4 @@ reboot
 sudo sensors-detect
 
 :PlugInstall
-:CocInstall coc-explorer
+:CocInstall coc-explorer coc-pyright
