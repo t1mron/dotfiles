@@ -42,13 +42,13 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
-  git wget curl man-db htop iputils-ping iproute2
+  git wget man-db htop iputils-ping iproute2
   # Fonts
   fonts-font-awesome
   # Locale
   locales
   # Multimedia
-  firefox telegram-desktop mpv maim sxiv
+  firefox telegram-desktop mpv scrot sxiv
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
@@ -63,7 +63,6 @@ packagelist=(
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
 
 apt install ${packagelist[@]}
-#pip3 install pynvim
 
 # clean apt downloaded archives
 apt clean
