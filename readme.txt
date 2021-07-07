@@ -42,7 +42,7 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
-  git wget man-db htop iputils-ping iproute2
+  git curl man-db htop iputils-ping iproute2
   # Fonts
   fonts-font-awesome
   # Locale
@@ -96,7 +96,7 @@ EOF
 
 # dotfiles
 su user
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles_devuan
