@@ -104,6 +104,9 @@ cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,READ
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 fc-cache -fv
 
+git clone --depth=1 https://github.com/woodruffw/ff2mpv.git $HOME/git/ff2mpv
+cd $HOME/git/ff2mpv/ && ./install.sh
+
 exit
 
 update-rc.d zram defaults
