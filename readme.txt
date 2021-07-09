@@ -42,7 +42,7 @@ packagelist=(
   # Office programs
   texlive-latex-recommended zathura
   # Terminal tools 
-  git curl man-db htop iputils-ping iproute2
+  git wget curl man-db htop iputils-ping iproute2
   # Fonts
   fonts-font-awesome
   # Locale
