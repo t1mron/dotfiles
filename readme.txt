@@ -34,7 +34,7 @@ packagelist=(
   # basic
   linux-image-amd64 grub2 lvm2 sysv-rc-conf zram-tools
   # Window manager
-  bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm xtitle lemonbar nnn suckless-tools rofi thunar
+  bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm xtitle polybar nnn suckless-tools rofi thunar
   # Laptop (soon)
   tlp powertop acpi lm-sensors thinkfan
   # wi-fi, sound, bluetooth, vpn (soon)
@@ -57,7 +57,7 @@ packagelist=(
   # Security 
   sudo
   # Firmware
-  firmware-iwlwifi
+  firmware-iwlwifi mesa-utils vainfo
 )
 
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
