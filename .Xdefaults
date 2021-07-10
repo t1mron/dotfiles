@@ -2,6 +2,7 @@
 XTerm*renderFont: true
 XTerm*faceName: xft:Hack Nerd Font
 XTerm*faceSize: 12
+Xcursor.theme: Adwaita
 XTerm*utf8: 2
 XTerm*locale: true
 
