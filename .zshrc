@@ -8,7 +8,7 @@ DEFAULT_USER=$USER
 
 unsetopt PROMPT_SP
 
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
