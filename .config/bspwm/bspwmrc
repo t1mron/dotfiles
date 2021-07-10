@@ -48,6 +48,9 @@ setxkbmap -option grp:alt_shift_toggle us,ru &
 # Solid color background
 xsetroot -solid "#cccccc" &
 
+# 60 fps cursor 
+xset r rate 500 60 &
+
 # Disable screen blanking
 xset -dpms s off &
 
