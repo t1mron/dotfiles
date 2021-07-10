@@ -13,4 +13,4 @@ plugins=(git zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 local ret_status="%(?:%{$fg[green]%}➜ :%{$fg[red]%}➜ )"
-PROMPT=$'%{$fg[cyanhttps://www.youtube.com/watch?v=HoCPBrEB3SM]%}%~%{$reset_color%} $(git_prompt_info)\n${ret_status}'
+PROMPT=$'%{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)\n${ret_status}'
