@@ -48,8 +48,11 @@ setxkbmap -option grp:alt_shift_toggle us,ru &
 # Solid color background
 xsetroot -solid "#cccccc" &
 
-# 60 fps cursor 
-xset r rate 500 60 &
+# Add mouse cursor support 
+xsetroot -cursor_name left_ptr &
+
+# increase keyboard speed
+xset r rate 150 50 &
 
 # Disable screen blanking
 xset -dpms s off &
