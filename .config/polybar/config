@@ -2,6 +2,7 @@
 foreground = #333333
 background = #FFFFFF
 primary= #cccccc
+warn = #f00
 
 
 [bar/top]
@@ -23,16 +24,38 @@ foreground = ${colors.foreground}
 fixed-center = true
 padding= 1
 module-margin = 1
-tray-position = right
 wm-restack = bspwm
 
 # Modules
-modules-left = cpu memory filesystem
+modules-left = battery cpu memory temp filesystem
 modules-center = bspwm
-modules-right = wi-fi keyboard time  
+modules-right = wi-fi alsa-master mic backlight keyboard time  
 
 
 # LEFT
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+adapter = AC
+
+full-at = 100
+
+format-full = <ramp-capacity> <label-full>
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = %{F#999999}<ramp-capacity>%{F-} <label-discharging>
+
+label-full = 99%
+label-charging = %percentage%%
+label-discharging = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 =  
+
 
 [module/cpu]
 type = internal/cpu
@@ -42,12 +65,24 @@ label =  %percentage:3%%
 [module/memory]
 type = internal/memory
 label =  %gb_used%
-interval = 3
+
+
+[module/temp]
+type = internal/temperature
+
+thermal-zone = 0
+
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp3_input
+
+warn-temperature = 60
+
+label =  %temperature-c%
+label-warn =  %temperature-c%
+label-warn-foreground = ${colors.warn}
 
 
 [module/filesystem]
 type = internal/fs
-interval = 25
 mount-0 = /
 
 label-mounted =  %free%
@@ -58,19 +93,19 @@ label-mounted =  %free%
 [module/bspwm]
 type = internal/bspwm
 
-ws-icon-0 = I;I
-ws-icon-1 = II;II
-ws-icon-2 = III;III
-ws-icon-3 = IV;IV
-ws-icon-4 = V;V
-ws-icon-5 = VI;VI
-ws-icon-6 = VII;VII
-ws-icon-7 = VIII;VIII
-ws-icon-8 = IX;IX
-ws-icon-9 = X;X
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;
+ws-icon-5 = VI;
+ws-icon-6 = VII;
+ws-icon-7 = VIII;
+ws-icon-8 = IX;
+ws-icon-9 = X;
 
 pin-workspaces = true
-enable-click = true
+enable-click = false
 enable-scroll = false
 
 format = <label-state> <label-mode>
@@ -92,6 +127,45 @@ label-empty =
 
 
 # RIGHT
+
+[module/wi-fi]
+type = internal/network
+
+interface = wlan0
+
+label-connected = %essid% 
+label-disconnected = 
+label-disconnected-foreground = ${colors.primary}
+
+
+[module/alsa-master]
+type = internal/alsa
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+master-mixer = Master
+
+label-volume = %{A1::} %percentage:3%%%{A}
+label-muted = %{A1::} %percentage:3%%%{A}
+label-muted-foreground = ${colors.primary}
+
+
+[module/mic]
+type = custom/script
+
+interval = 1 
+
+exec = $HOME/.config/polybar/scripts/mic.sh
+
+
+[module/backlight]
+type = internal/backlight
+card = acpi_video0
+
+label =  %percentage:3%%
+
 
 [module/keyboard]
 type = internal/xkeyboard

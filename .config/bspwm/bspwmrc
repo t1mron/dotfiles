@@ -18,6 +18,23 @@ bspc config gapless_monocle      true
 bspc config focused_border_color \#00bfff
 bspc config normal_border_color  \#cccccc
 
+
+#-------#
+# RULES #
+#-------#
+
+bspc rule -a Firefox        	    desktop='^2' state=tiled follow=on
+bspc rule -a "*:code"             desktop='^3' state=tiled follow=on
+bspc rule -a "*:latex"            desktop='^4' state=tiled follow=on 
+bspc rule -a Zathura 	     	      desktop='^4' state=tiled follow=on
+bspc rule -a TelegramDesktop 	    desktop='^5' state=tiled follow=on
+bspc rule -a discord              desktop='^5' state=tiled follow=on
+bspc rule -a mpv                  desktop='^6' state=tiled follow=on
+bspc rule -a Virt-manager         desktop='^7' state=tiled follow=on
+
+#bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
+
+
 #----------------------#
 # STARTUP APPLICATIONS #
 #----------------------#
@@ -34,5 +51,12 @@ xsetroot -solid "#cccccc" &
 # Disable screen blanking
 xset -dpms s off &
 
-# Network manager tray
-nm-applet &
+# Disable wi-fi
+#sudo /sbin/ip link set wlan0 down &
+
+# Disable eth
+#sudo /sbin/ip link set enp1s0 down &
+
+# Disable headphone/mic
+amixer set Master mute
+amixer set Capture 0%

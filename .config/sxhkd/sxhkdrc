@@ -36,7 +36,7 @@ super + shift + s
 	bspc node focused -t \~floating
 
 # expand/contract a tiled window
-super + ctrl + {h,j,k,l}
+#super + ctrl + {h,j,k,l}
 	bspc node -z {left -20 0 || bspc node -z right -20 0, \
 		bottom 0 20 || bspc node -z top 0 20,\
 		top 0 -20 || bspc node -z bottom 0 -20,\
@@ -61,51 +61,47 @@ super + shift + {End,r}
 
 # rofi
 super + r
-	rofi -modi run,drun -show drun -location 2 -yoffset 150 -line-padding 4 -columns 1 -width 25 -lines 10 -padding 15 -hide-scrollbar -show-icons -drun-icon-theme
+	rofi -modi run,drun -show drun -display-drun "run" -location 2 -yoffset 100 -width 38 -lines 12 -show-icons -drun-icon-theme
 
-# flameshoft
+# PrtSc
 Print
-	flameshot gui
+	scrot -s "$HOME/Pictures/%d-%m-%y_%H:%M:%S.png" -e 'xclip -selection clipboard -target image/png -i $f'
 
 # discord
 super + d
-	discord
+	apulse discord
 
 # terminal emulator
 super + Return
-        xterm
+  xterm
 
-# File Manager - ranger
+# CLI File Manager
 super + Tab
-	xterm -e ranger
+	xterm -e nnn
 
-# File Manager - nautilus
+# GUI File Manager 
 super + n
-	nautilus
+	thunar
 
 # vim - code
 super + c
-	xterm -name code -e nvim  
+	xterm -name code -e vim  
 
 # vim - latex
 super + w
-	xterm -name latex -e nvim
+	xterm -name latex -e vim
 
 # Browser
 super + f
 	firefox
 
-# Virtual Box
-super + v
-	VirtualBox
-
 # Telegram
 super + t
 	telegram-desktop
 
-# reload autorandr
-#super + Home
-#	autorandr -c
+# Copy url from firefox
+super + m
+	bash $HOME/.config/sxhkd/scripts/mpv.sh
 
 # kill lag window
 super + Escape
@@ -118,30 +114,23 @@ super + Escape
 
 # audio controls
 XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume @DEFAULT_SINK@ {+10%,-10%}
+	amixer set Master {10%+,10%-}
 
 XF86AudioMute
-	pactl set-sink-mute @DEFAULT_SINK@ toggle
+  amixer set Master toggle
 
 # mic controls
-super + XF86Audio{Raise,Lower}Volume
-	pactl set-source-volume @DEFAULT_SOURCE@ {+10%,-10%}
-
-XF86AudioMicMute
-	pactl set-source-mute @DEFAULT_SOURCE@ toggle
-
-# screen brightness controls
-XF86MonBrightness{Up,Down}
-	sudo /sbin/light {-A 10,-U 10}
+super + XF86AudioMute
+	$HOME/.config/sxhkd/scripts/mic-toggle.sh
 
 # wi-fi controls
 super + {Prior,Next}
 	sudo /sbin/ip link set wlan0 {up,down}
 
+# wi-fi menu
+super + Home
+  $HOME/.config/sxhkd/scripts/rofi-wifi-menu.sh wlan0 3 27 -47
+
 # show/hide polybar
 XF86Display
-	$HOME/.config/polybar/scripts/bar-toggle.sh {hide,show}
-
-# on/off touchpad
-F2
-	$HOME/.config/sxhkd/scripts/touchpad.sh
+	$HOME/.config/sxhkd/scripts/bar-toggle.sh {hide,show}

@@ -1,29 +1,16 @@
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
 
-source $HOME/antigen.zsh
+export ZSH="/home/user/.oh-my-zsh"
+export PATH=$PATH:/sbin:/usr/sbin
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+ZSH_THEME="robbyrussell"
+DEFAULT_USER=$USER
 
-# Plugins
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle git
+unsetopt PROMPT_SP
 
-# Load the theme.
-antigen theme spaceship-prompt/spaceship-prompt
+plugins=(git zsh-syntax-highlighting)
 
-# Tell Antigen that you're done.
-antigen apply
+source $ZSH/oh-my-zsh.sh
 
-# User configuration
-alias ls='exa'
-
-spaceship_prompt() {
-  RETVAL=$?
-
-  [[ $UID == 0 ]] && SPACESHIP_PROMPT_NEED_NEWLINE=true
-  [[ $SPACESHIP_PROMPT_ADD_NEWLINE == true && $SPACESHIP_PROMPT_NEED_NEWLINE == true ]] && echo -n "$NEWLINE"
-  SPACESHIP_PROMPT_NEED_NEWLINE=true
-  spaceship::compose_prompt $SPACESHIP_PROMPT_ORDER
-}
+local ret_status="%(?:%{$fg[green]%}➜ :%{$fg[red]%}➜ )"
+PROMPT=$'%{$fg[cyanhttps://www.youtube.com/watch?v=HoCPBrEB3SM]%}%~%{$reset_color%} $(git_prompt_info)\n${ret_status}'

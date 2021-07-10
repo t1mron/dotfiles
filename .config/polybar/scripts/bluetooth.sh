@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]
 then
