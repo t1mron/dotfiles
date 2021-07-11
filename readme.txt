@@ -60,7 +60,7 @@ packagelist=(
   firmware-iwlwifi mesa-utils vainfo
 )
 
-wine wine64 winetricks libwine fonts-wine
+wine winetricks
 
 
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
