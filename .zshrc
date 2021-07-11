@@ -16,8 +16,8 @@ autoload -U colors && colors
 # BASIC #
 #########
 
-export ZSH="$HOME/.zsh"
-export PATH=$PATH:/sbin:/usr/sbin
+export ZSH=$HOME/.zsh
+export PATH=/sbin:/usr/sbin:$HOME/.npm-global/bin:$PATH
 
 DEFAULT_USER=$USER
 
