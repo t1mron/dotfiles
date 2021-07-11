@@ -67,6 +67,8 @@ apt install ${packagelist[@]}
 # clean apt downloaded archives
 apt clean
 
+npm install -g neovim
+
 # Create user
 useradd -G sudo -m -d /home/user user
 passwd user
