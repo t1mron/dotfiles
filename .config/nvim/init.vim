@@ -13,12 +13,6 @@ call plug#begin('$HOME/.config/nvim/autoload/plugged')
   
   " Intellisense
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " Auto pairs for '(' '[' '{'
-  Plug 'jiangmiao/auto-pairs' 
-  " Better Syntax Support
-  Plug 'sheerun/vim-polyglot'
-  " Start screen
-  Plug 'mhinz/vim-startify'
     
   " Latex
   Plug 'lervag/vimtex'  
@@ -63,6 +57,7 @@ set laststatus=0                        " Always display the status line
 set number                              " Line numbers
 set background=light                    " tell vim what the background color looks like
 set noshowmode                          " We don't need to see things like -- INSERT -- anymore
+set noswapfile                          " Don't like swaps files
 set nobackup                            " This is recommended by coc
 set nowritebackup                       " This is recommended by coc
 set updatetime=300                      " Faster completion
@@ -156,45 +151,16 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 
 " Switch to your current theme
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'bubblegum'
+
+" Disable trailing whitespace check
+let g:airline#extensions#whitespace#enabled = 0
 
 " Always show tabs
 set showtabline=2
 
 " We don't need to see things like -- INSERT -- anymore
 set noshowmode
-
-
-""""""""""""
-" STARTIFY "
-""""""""""""
-
-" Directory
-let g:startify_session_dir = '$HOME/.config/nvim/session'
-
-" Automatically restart sessions
-let g:startify_session_autoload = 1
-
-" Automatically update Sessions
-let g:startify_session_persistence = 1
-
-" Custom header
-let g:startify_custom_header = []
-
-" Lists
-let g:startify_lists = [
-          \ { 'type': 'sessions',  'header': ['   Sessions']       }, 
-          \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-          \ { 'type': 'files',     'header': ['   Files']            },
-          \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-          \ ]
-
-" Bookmarks
-let g:startify_bookmarks = [
-            \ { 'i': '$HOME/.config/nvim/init.vim' },
-            \ { 'z': '$HOME/.zshrc' },
-            \ '$HOME/Code',
-            \ ]
 
 
 """""""

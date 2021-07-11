@@ -1,16 +1,47 @@
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
 
-export ZSH="/home/user/.oh-my-zsh"
+
+###########
+# PLUGINS #
+###########
+
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.zsh/git-prompt/git-prompt.zsh
+
+autoload -U colors && colors
+
+
+#########
+# BASIC #
+#########
+
+export ZSH="$HOME/.zsh"
 export PATH=$PATH:/sbin:/usr/sbin
 
-ZSH_THEME="robbyrussell"
 DEFAULT_USER=$USER
 
-unsetopt PROMPT_SP
 
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+#########
+# ALIAS #
+#########
 
-source $ZSH/oh-my-zsh.sh
+alias ls='ls --color=auto' # colorize the ls output
 
+
+##########
+# CUSTOM #
+##########
+
+# command history
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
+unsetopt PROMPT_SP  # disable % buffer sybmol
+setopt PROMPT_SUBST # use $ variables
+
+# prompt theme
 local ret_status="%(?:%{$fg[green]%}➜ :%{$fg[red]%}➜ )"
-PROMPT=$'%{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)\n${ret_status}'
+PROMPT=$'%{$fg[cyan]%}%~%{$reset_color%} $(gitprompt)\n${ret_status}'
