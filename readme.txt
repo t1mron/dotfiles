@@ -48,7 +48,7 @@ packagelist=(
   # Locale
   locales
   # Multimedia
-  firefox telegram-desktop mpv youtube-dl scrot sxiv
+  firefox telegram-desktop qbittorrent mpv youtube-dl scrot sxiv
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
