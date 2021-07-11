@@ -60,7 +60,6 @@ packagelist=(
   firmware-iwlwifi mesa-utils vainfo
 )
 
-
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
 
 apt install ${packagelist[@]}
@@ -68,6 +67,7 @@ apt install ${packagelist[@]}
 # clean apt downloaded archives
 apt clean
 
+npm config set prefix $HOME/.npm-global
 npm install -g neovim
 
 # Create user
