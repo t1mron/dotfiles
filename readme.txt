@@ -40,7 +40,7 @@ packagelist=(
   # wi-fi, sound, bluetooth, vpn (soon)
   iwd openresolv wireless-tools bc alsa-utils apulse
   # Office programs
-  texlive-latex-recommended zathura
+  libreoffice libreoffice-gtk3 texlive-latex-recommended zathura
   # Terminal tools 
   git wget curl man-db htop iputils-ping iproute2
   # Fonts
@@ -59,8 +59,6 @@ packagelist=(
   # Firmware
   firmware-iwlwifi mesa-utils vainfo
 )
-
-wine winetricks
 
 
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
