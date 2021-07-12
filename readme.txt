@@ -70,6 +70,8 @@ apt clean
 npm config set prefix $HOME/.npm-global
 npm install -g neovim
 
+pip3 install neovim-remote
+
 # Create user
 useradd -G sudo -m -d /home/user user
 passwd user
