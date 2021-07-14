@@ -134,4 +134,4 @@ reboot
 sudo sensors-detect
 
 :PlugInstall
-:CocInstall coc-explorer coc-pyright coc-vimtex
+:CocInstall coc-explorer coc-pyright coc-vimtex coc-pairs
