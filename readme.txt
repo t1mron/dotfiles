@@ -111,6 +111,8 @@ cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,READ
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 fc-cache -fv
 
+sudo rm -rf /etc/fonts/conf.d/70-no-bitmaps.conf
+
 exit
 
 update-rc.d zram defaults
