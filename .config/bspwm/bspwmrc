@@ -4,9 +4,18 @@
 # BASICS #
 #--------#
 
-pgrep -x sxhkd > /dev/null || sxhkd &
+ws1='' # terminal
+ws2='' # browser
+ws3='' # coding
+ws4='' # office
+ws5='' # social network
+ws6='' # media
+ws7='' # virtualization
+ws8='' # external monitor
+ws9='' # external monitor
+ws10='' # external monitor
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d $ws1 $ws2 $ws3 $ws4 $ws5 $ws6 $ws7 $ws8 $ws9 $ws10
 
 bspc config border_width         2
 bspc config window_gap         	 0
@@ -23,36 +32,46 @@ bspc config normal_border_color  \#cccccc
 # RULES #
 #-------#
 
-bspc rule -a Firefox        	    desktop='^2' state=tiled follow=on
-bspc rule -a "*:code"             desktop='^3' state=tiled follow=on
-bspc rule -a "*:latex"            desktop='^4' state=tiled follow=on 
-bspc rule -a Zathura 	     	      desktop='^4' state=tiled follow=on
-bspc rule -a TelegramDesktop 	    desktop='^5' state=tiled follow=on
-bspc rule -a discord              desktop='^5' state=tiled follow=on
-bspc rule -a mpv                  desktop='^6' state=tiled follow=on
-bspc rule -a Virt-manager         desktop='^7' state=tiled follow=on
+bspc rule -a Firefox        	       desktop='^2' state=tiled follow=on
+bspc rule -a code                    desktop='^3' state=tiled follow=on
+bspc rule -a latex                   desktop='^4' state=tiled follow=on 
+bspc rule -a Soffice                 desktop='^4' state=tiled follow=on
+bspc rule -a libreoffice-startcenter desktop='^4' state=tiled follow=on
+bspc rule -a Zathura 	     	         desktop='^4' state=tiled follow=on focus=off split_ratio=0.65
+bspc rule -a TelegramDesktop 	       desktop='^5' state=tiled follow=on
+bspc rule -a discord                 desktop='^5' state=tiled follow=on
+bspc rule -a mpv                     desktop='^6' state=tiled follow=on
+bspc rule -a Virt-manager            desktop='^7' state=tiled follow=on
+bspc rule -a qBittorrent             desktop='^7' state=tiled follow=on
 
 #bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
+bspc rule -a Sxiv      state=floating center=true 
 
 
 #----------------------#
 # STARTUP APPLICATIONS #
 #----------------------#
 
-# status bar
-$HOME/.config/polybar/scripts/launch.sh
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# enable siji bitmap font
+xset +fp $HOME/.fonts/Siji/ &
+xset fp rehash &
+
+# lemonbar
+PANEL=$HOME/.config/lemonbar
+
+pkill -f $PANEL/panel.sh
+setsid $PANEL/panel.sh & 
 
 # change keyboard layout
-setxkbmap -option grp:alt_shift_toggle us,ru &
+#setxkbmap -option grp:alt_shift_toggle us,ru &
 
 # Solid color background
 xsetroot -solid "#cccccc" &
 
 # Add mouse cursor support 
 xsetroot -cursor_name left_ptr &
-
-# increase keyboard speed
-xset r rate 300 50 &
 
 # Disable screen blanking
 xset -dpms s off &
@@ -64,5 +83,5 @@ xset -dpms s off &
 #sudo /sbin/ip link set enp1s0 down &
 
 # Disable headphone/mic
-amixer set Master mute
+#amixer set Master mute
 amixer set Capture 0%
