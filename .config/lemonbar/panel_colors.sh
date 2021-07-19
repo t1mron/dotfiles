@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 theme="light"
 
 case $theme in
-  "light")
+  "light"*)
     COLOR_DEFAULT_FG="#333333"
     COLOR_DEFAULT_BG="#FFFFFF"
     COLOR_OCCUPIED_FG="#333333"

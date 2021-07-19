@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 . $HOME/.config/lemonbar/panel_colors.sh
 
 num_mon=$(bspc query -M | wc -l)
-
 
 while read -r line; do
   case $line in
@@ -72,22 +71,31 @@ while read -r line; do
 								;;
 						esac
 
-            wm="${wm}%{F${FG}}%{B${BG}} ${name} %{B-}%{F-}"
+            wm="${wm}%{F${FG}}%{B${BG}}  ${name}  %{B-}%{F-}"
 						;;
 				esac
 				shift
 			done
 			;;
+    WIFI*)
+      wifi="${line#????}"
+      ;;
+    HEAD*)
+      head="${line#????}"
+      ;;
+    MIC*)
+      mic="${line#???}"
+      ;;
+    LGHT*)
+      lght="${line#????}"
+      ;;
     KBD*)
       kbd="${line#???}"
-      ;;
-    VOL*)
-      volume="${line#???}"
       ;;
     DATE*)
       date="${line#????}"
       ;;
   esac
 
-  printf "%s\n" "%{l} ${bat} ${cpu} ${mem} ${temp} ${fs}%{c}${wm}%{r}${kbd} ${date} "
+  printf "%s\n" "%{l} ${bat}  ${cpu}  ${mem}  ${temp}  ${fs}%{c}${wm}%{r}${wifi}  ${head}  ${mic}  ${lght}  ${kbd}  ${date} "
 done
