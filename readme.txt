@@ -34,7 +34,7 @@ packagelist=(
   # basic
   linux-image-amd64 grub2 lvm2 sysv-rc-conf zram-tools
   # Window manager
-  bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm polybar nnn suckless-tools rofi thunar
+  bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm lemonbar nnn suckless-tools rofi thunar
   # Laptop (soon)
   tlp powertop acpi lm-sensors thinkfan
   # wi-fi, sound, bluetooth, vpn (soon)
@@ -43,12 +43,10 @@ packagelist=(
   libreoffice libreoffice-gtk3 texlive-latex-recommended latexmk zathura
   # Terminal tools 
   git wget curl man-db htop iputils-ping iproute2
-  # Fonts
-  fonts-font-awesome
   # Locale
   locales
   # Multimedia
-  firefox telegram-desktop qbittorrent mpv youtube-dl scrot sxiv imagemagick
+  firefox telegram-desktop mpv scrot sxiv youtube-dl 
   # Coding
   neovim git python3-pip nodejs npm
   # Look and feel
@@ -111,7 +109,7 @@ cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,READ
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 fc-cache -fv
 
-sudo rm -rf /etc/fonts/conf.d/70-no-bitmaps.conf
+sudo rm -rf /etc/fonts/conf.d/70-no-bitmaps.conf    (????)
 
 exit
 
