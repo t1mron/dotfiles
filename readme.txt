@@ -111,6 +111,14 @@ cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,READ
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 fc-cache -fv
 
+
+git clone --depth=1 --single-branch --branch release-0.5 https://github.com/neovim/neovim
+
+make CMAKE_BUILD_TYPE=Release
+sudo make install
+
+
+
 sudo rm -rf /etc/fonts/conf.d/70-no-bitmaps.conf    (????)
 
 exit
