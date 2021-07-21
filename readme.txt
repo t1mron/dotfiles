@@ -48,7 +48,7 @@ packagelist=(
   # Multimedia
   firefox telegram-desktop mpv scrot sxiv youtube-dl 
   # Coding
-  vim-gtk git python3-pip nodejs npm
+  git python3-pip nodejs npm
   # Look and feel
   neofetch zsh
   # Utilities
@@ -56,6 +56,8 @@ packagelist=(
   sudo
   # Firmware
   firmware-iwlwifi mesa-utils vainfo
+  # Neovim from source
+  autoconf automake cmake g++ gettext libncurses5-dev libtool libtool-bin libunibilium-dev libunibilium4 ninja-build pkg-config software-properties-common unzip
 )
 
 DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
@@ -108,6 +110,17 @@ git clone --depth=1 https://github.com/t1mron/dotfiles_devuan $HOME/git/dotfiles
 cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,README.md,readme.txt}
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 fc-cache -fv
+
+
+git clone --depth=1 --single-branch --branch release-0.5 https://github.com/neovim/neovim
+
+make CMAKE_BUILD_TYPE=Release
+sudo make install
+
+git clone --depth=1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+
+
 
 
 sudo rm -rf /etc/fonts/conf.d/70-no-bitmaps.conf    (????)
