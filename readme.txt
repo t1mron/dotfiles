@@ -68,7 +68,7 @@ apt install ${packagelist[@]}
 apt clean
 
 npm config set prefix $HOME/.npm-global
-npm install -g neovim pyright
+npm install -g pyright tree-sitter-cli
 
 #pip3 install neovim-remote
 
