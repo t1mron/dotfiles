@@ -70,6 +70,7 @@ apt clean
 npm config set prefix $HOME/.npm-global
 npm install -g pyright tree-sitter-cli
 
+pip3 install pynvim
 #pip3 install neovim-remote
 
 # Create user
