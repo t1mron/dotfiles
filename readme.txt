@@ -68,9 +68,9 @@ apt install ${packagelist[@]}
 apt clean
 
 npm config set prefix $HOME/.npm-global
-npm install -g neovim
+npm install -g neovim pyright
 
-pip3 install neovim-remote
+#pip3 install neovim-remote
 
 # Create user
 useradd -G sudo -m -d /home/user user
@@ -148,4 +148,4 @@ reboot
 sudo sensors-detect
 
 :PlugInstall
-:CocInstall coc-explorer coc-pyright coc-json coc-vimtex coc-pairs
+
