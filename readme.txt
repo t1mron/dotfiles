@@ -40,7 +40,7 @@ packagelist=(
   # wi-fi, sound, bluetooth, vpn (soon)
   iwd openresolv wireless-tools bc alsa-utils apulse
   # Office programs
-  libreoffice libreoffice-gtk3 texlive-latex-recommended latexmk zathura
+  libreoffice libreoffice-gtk3 texlive-latex-recommended latexmk chktex zathura
   # Terminal tools 
   git wget curl man-db htop iputils-ping iproute2
   # Locale
