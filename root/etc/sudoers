@@ -7,6 +7,7 @@ root	ALL=(ALL:ALL) ALL
 
 user ALL=(ALL) NOPASSWD: /usr/bin/iwctl
 user ALL=(ALL) NOPASSWD: /sbin/iwgetid
+user ALL=(ALL) NOPASSWD: /sbin/iw
 user ALL=(ALL) NOPASSWD: /sbin/ip
 
 @includedir /etc/sudoers.d

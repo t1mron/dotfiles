@@ -17,17 +17,15 @@ autoload -U colors && colors
 #########
 
 export ZSH=$HOME/.zsh
-export PATH=/sbin:/usr/sbin:$HOME/.npm-global/bin:$PATH
-
-DEFAULT_USER=$USER
-
+export PATH=$PATH:/sbin:/usr/sbin:$HOME/.npm-global/bin
+export TERM="xterm-256color"
 
 #########
 # ALIAS #
 #########
 
 alias ls='ls --color=auto' # colorize the ls output
-
+alias vim='nvim'
 
 ##########
 # CUSTOM #

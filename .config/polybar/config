@@ -15,6 +15,7 @@ height = 22
 # Fonts
 font-0 = DejaVu Sans Mono:size=9;2
 font-1 = FontAwesome:size=12;2
+font-2 = siji:pixelsize=10;2
 
 # Colors
 background = ${colors.background}
@@ -93,7 +94,7 @@ label-mounted =  %free%
 [module/bspwm]
 type = internal/bspwm
 
-ws-icon-0 = I;
+ws-icon-0 = I;
 ws-icon-1 = II;
 ws-icon-2 = III;
 ws-icon-3 = IV;
@@ -133,7 +134,9 @@ type = internal/network
 
 interface = wlan0
 
-label-connected = %essid% 
+interval = 1
+
+label-connected =  %signal% %essid% 
 label-disconnected = 
 label-disconnected-foreground = ${colors.primary}
 
@@ -164,7 +167,7 @@ exec = $HOME/.config/polybar/scripts/mic.sh
 type = internal/backlight
 card = acpi_video0
 
-label =  %percentage:3%%
+label =   "\ue2ff" %percentage:3%%
 
 
 [module/keyboard]

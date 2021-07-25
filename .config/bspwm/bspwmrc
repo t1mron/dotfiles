@@ -1,5 +1,43 @@
 #! /bin/sh
 
+#----------------------#
+# STARTUP APPLICATIONS #
+#----------------------#
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# enable siji bitmap font
+xset +fp $HOME/.fonts/siji/ &
+xset fp rehash &
+
+# lemonbar
+if pgrep panel.sh; then
+  killall panel.sh
+fi
+
+PANEL=$HOME/.config/lemonbar
+setsid $PANEL/panel.sh & 
+
+# Solid color background
+xsetroot -solid "#cccccc" &
+
+# Add mouse cursor support 
+xsetroot -cursor_name left_ptr &
+
+# Disable screen blanking
+xset -dpms s off &
+
+# Disable wi-fi
+sudo /sbin/ip link set wlan0 down &
+
+# Disable eth
+#sudo /sbin/ip link set enp1s0 down &
+
+# Disable headphone/mic
+#amixer set Master mute
+amixer set Capture 0%
+
+
 #--------#
 # BASICS #
 #--------#
@@ -37,51 +75,11 @@ bspc rule -a code                    desktop='^3' state=tiled follow=on
 bspc rule -a latex                   desktop='^4' state=tiled follow=on 
 bspc rule -a Soffice                 desktop='^4' state=tiled follow=on
 bspc rule -a libreoffice-startcenter desktop='^4' state=tiled follow=on
-bspc rule -a Zathura 	     	         desktop='^4' state=tiled follow=on focus=off split_ratio=0.65
+bspc rule -a Zathura 	     	         desktop='^4' state=tiled follow=off focus=off split_ratio=0.65
 bspc rule -a TelegramDesktop 	       desktop='^5' state=tiled follow=on
 bspc rule -a discord                 desktop='^5' state=tiled follow=on
 bspc rule -a mpv                     desktop='^6' state=tiled follow=on
 bspc rule -a Virt-manager            desktop='^7' state=tiled follow=on
-bspc rule -a qBittorrent             desktop='^7' state=tiled follow=on
 
 #bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
 bspc rule -a Sxiv      state=floating center=true 
-
-
-#----------------------#
-# STARTUP APPLICATIONS #
-#----------------------#
-
-pgrep -x sxhkd > /dev/null || sxhkd &
-
-# enable siji bitmap font
-xset +fp $HOME/.fonts/Siji/ &
-xset fp rehash &
-
-# lemonbar
-PANEL=$HOME/.config/lemonbar
-
-pkill -f $PANEL/panel.sh
-setsid $PANEL/panel.sh & 
-
-# change keyboard layout
-#setxkbmap -option grp:alt_shift_toggle us,ru &
-
-# Solid color background
-xsetroot -solid "#cccccc" &
-
-# Add mouse cursor support 
-xsetroot -cursor_name left_ptr &
-
-# Disable screen blanking
-xset -dpms s off &
-
-# Disable wi-fi
-#sudo /sbin/ip link set wlan0 down &
-
-# Disable eth
-#sudo /sbin/ip link set enp1s0 down &
-
-# Disable headphone/mic
-#amixer set Master mute
-amixer set Capture 0%
