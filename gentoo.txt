@@ -24,7 +24,7 @@ cd /mnt/gentoo && tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owne
 
 # edit make.conf   
 cat << EOF > /mnt/gentoo/etc/portage/make.conf
-COMMON_FLAGS="-march=native -O2 -pipe"
+COMMON_FLAGS="-march=core2 -O2 -pipe"
 CFLAGS="${COMMON_FLAGS}"
 CXXFLAGS="${COMMON_FLAGS}"
 FCFLAGS="${COMMON_FLAGS}"
@@ -36,8 +36,9 @@ DISTDIR="/var/cache/distfiles"
 PKGDIR="/var/cache/binpkgs"
 
 LC_MESSAGES=C
-MAKEOPTS="-j3"
-USE="X bluetooth alsa unicode logrotate elogind -gnome -firmware -gpm -dvd -cdr"
+MAKEOPTS="-j21 -l2"
+FEATURES="distcc"
+USE="X bluetooth alsa unicode elogind -gnome -firmware -gpm -dvd -cdr"
 ACCEPT_LICENSE="-* @FREE"
 VIDEO_CARDS="intel i915"
 EOF
