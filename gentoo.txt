@@ -81,7 +81,7 @@ emerge --sync
 
 export PATH="/usr/lib/ccache/bin:/usr/lib/distcc/bin:${PATH}"
 
-USE='-*' emerge --nodeps sys-devel/distcc
+USE='-* python_single_target_python3_9' emerge --nodeps sys-devel/distcc
 
 /usr/bin/distcc-config --set-hosts "localhost host1 host2 host3 ..."
 
