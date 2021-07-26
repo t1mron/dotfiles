@@ -1,0 +1,209 @@
+rc-service sshd start
+passwd
+
+# Wipe disk before install
+head -c 3145728 /dev/urandom > /dev/sda; sync 
+(echo o;echo w) | fdisk /dev/sda
+
+# /dev/sda1 All Linux filesystem
+(echo n;echo ;echo ;echo ;echo ;echo a;echo w) | fdisk /dev/sda
+
+# Formatting the partitions
+mkfs.ext4 /dev/sda1
+
+# Mount partition
+mount /dev/sda1 /mnt/gentoo
+
+# Download stage - multilib_64bit/openrc
+wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20210722T095939Z/stage3-amd64-openrc-20210722T095939Z.tar.xz -P /mnt/gentoo
+
+# Check sha512sum (soon)
+
+# unpack archive
+cd /mnt/gentoo && tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
+
+# edit make.conf   
+cat << EOF > /mnt/gentoo/etc/portage/make.conf
+COMMON_FLAGS="-march=native -O2 -pipe"
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+FCFLAGS="${COMMON_FLAGS}"
+FFLAGS="${COMMON_FLAGS}"
+
+# NOTE: This stage was built with the bindist Use flag enabled
+PORTDIR="/var/db/repos/gentoo"
+DISTDIR="/var/cache/distfiles"
+PKGDIR="/var/cache/binpkgs"
+
+LC_MESSAGES=C
+MAKEOPTS="-j3"
+USE="X bluetooth alsa unicode logrotate elogind -gnome -firmware -gpm -dvd -cdr"
+ACCEPT_LICENSE="-* @FREE"
+VIDEO_CARDS="intel i915"
+EOF
+
+# create repos.conf directory
+mkdir --parents /mnt/gentoo/etc/portage/repos.conf
+
+# copy ebuild-files repository 
+cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+
+# copy resolv.conf
+cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+
+# mount partitions for chroot
+mount --types proc /proc /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+
+# chroot
+chroot /mnt/gentoo /bin/bash
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+
+# edit fstab 
+cat << EOF > /etc/fstab
+/dev/sda1   /                 ext4  noatime                                               0 1
+tmpfs /var/tmp         tmpfs rw,nosuid,noatime,nodev,size=16G,mode=1777 0 0
+tmpfs /var/tmp/portage tmpfs rw,nosuid,noatime,nodev,size=16G,mode=775,uid=portage,gid=portage,x-mount.mkdir=775 0 0
+EOF
+
+# mount tmpfs
+mount /var/tmp/portage
+
+# sync portage
+emerge-webrsync
+emerge --sync
+
+# update @word
+emerge --ask --verbose --update --deep --newuse @world
+
+# set timezone
+echo "Europe/Moscow" > /etc/timezone
+emerge --config sys-libs/timezone-data
+
+# Set default locale
+cat << EOF > /etc/locale.gen
+en_US.UTF-8 UTF-8
+ru_RU.UTF-8 UTF-8
+EOF
+
+# update locale
+locale-gen
+
+# set system locale
+cat << EOF > /etc/env.d/02locale
+LANG="en_US.UTF-8"
+LC_COLLATE="C"
+EOF
+
+# reload environment
+env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+
+# install the sources
+emerge --ask sys-kernel/gentoo-sources
+ln -s /usr/src/linux-5.* /usr/src/linux
+
+# configuration kernel
+cd /usr/src/linux && make -j3 menuconfig
+
+Memory Management options  --->
+    <M> Memory allocator for compressed pages
+    [*]   Export zsmalloc statistics
+Device Drivers  --->
+    [*] Block devices --->
+        <M> Compressed RAM block device support
+        [*]     Write back incompressible or idle page to backing device
+        [*]     Track zRam block status
+Cryptographic API --->
+    *** Compression ***
+    <*> LZ4 compression algorithm
+
+# compile and install kernel
+make -j3 && make -j3 modules_install && make -j3 install
+
+# set hostname
+cat << EOF > /etc/conf.d/hostname
+hostname="gentoo"
+EOF
+
+# set the host
+cat << EOF > /etc/hosts
+127.0.0.1     gentoo.homenetwork gentoo localhost
+EOF
+--------------
+emerge --ask app-admin/logrotate
+emerge --ask app-admin/sysklogd
+rc-update add sysklogd default
+
+emerge --ask sys-process/cronie
+rc-update add cronie default
+
+# индексирование файлов
+emerge --ask sys-apps/mlocate
+
+rc-update add sshd default
+
+# DHCP
+emerge --ask --noreplace net-misc/netifrc
+emerge --ask net-misc/dhcpcd
+
+cat << EOF > /etc/conf.d/net
+config_enp0s25="dhcp"
+EOF
+
+ln -s /etc/init.d/net.lo /etc/init.d/net.enp0s25
+rc-update add net.enp0s25 default
+
+-----------------------------------
+#########
+# basic #
+#########
+
+emerge --ask dev-lang/rust-bin
+
+# zswap
+echo 1 > /sys/module/zswap/parameters/enabled
+echo lz4 > /sys/module/zswap/parameters/compressor
+
+grub2 
+
+##################
+# Window manager #
+##################
+
+emerge --ask x11-base/xorg-server
+
+emerge --ask x11-wm/bspwm
+emerge --ask x11-misc/sxhkd
+emerge --ask x11-misc/slock
+
+
+xterm lemonbar nnn  rofi thunar
+
+xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xinput xorg-xsetroot xorg-xkill arandr autorandr
+ 
+
+xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils 
+  # Laptop (soon)
+  tlp powertop acpi lm-sensors thinkfan
+  # wi-fi, sound, bluetooth, vpn (soon)
+  iwd openresolv wireless-tools bc alsa-utils apulse
+  # Office programs
+  libreoffice libreoffice-gtk3 texlive-latex-recommended latexmk chktex zathura
+  # Terminal tools 
+  git wget curl man-db htop iputils-ping iproute2
+  # Locale
+  locales
+  # Multimedia
+  firefox telegram-desktop mpv scrot sxiv youtube-dl 
+  # Coding
+  git python3-pip nodejs npm
+  # Look and feel
+  neofetch zsh
+  # Utilities
+  # Security 
+  sudo
+  # Firmware
+  firmware-iwlwifi mesa-utils vainfo
+
