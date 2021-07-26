@@ -65,9 +65,11 @@ source /etc/profile
 export PS1="(chroot) ${PS1}"
 
 # edit fstab 
+
 cat << EOF > /etc/fstab
-/dev/sda1   /                 ext4  noatime,discard                                              0 1
+/dev/sda1   /                 ext4  noatime                                               0 1
 tmpfs /var/tmp         tmpfs rw,nosuid,noatime,nodev,size=4G,mode=1777 0 0
+tmpfs /var/tmp/portage tmpfs rw,nosuid,noatime,nodev,size=4G,mode=775,uid=portage,gid=portage,x-mount.mkdir=775 0 0
 EOF
 
 # mount tmpfs
