@@ -72,7 +72,7 @@ packagelist=(
   neofetch zsh
   # Utilities
   # Network
-  dhcpcd5 iwd openresolv wireless-tools bc
+  dhcpcd5 iwd wireless-tools bc
   # Security 
   sudo
   # Firmware
