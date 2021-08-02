@@ -1,44 +1,65 @@
-sudo apt install ssh debootstrap arch-install-scripts
-
 # Wipe disk before install
+dd if=/dev/zero of=/dev/sda bs=446 count=1; sync
+dd if=/dev/urandom of=/dev/sda bs=2M; sync
+
 head -c 3145728 /dev/urandom > /dev/sda; sync 
 (echo o;echo w) | sudo fdisk /dev/sda
 
 # /dev/sda1 All Linux filesystem
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | sudo fdisk /dev/sda
 
+# Load encrypt modules
+modprobe dm-mod
+
+# Encrypt and open /dev/sda1
+cryptsetup -v --cipher serpent-xts-plain64 --key-size 512 --hash whirlpool --use-random --verify-passphrase luksFormat --type luks1 /dev/sda1
+
+cryptsetup open /dev/sda1 lvm
+
+rc-service lvm start
+
+pvcreate /dev/mapper/lvm
+vgcreate matrix /dev/mapper/lvm
+lvcreate -l +100%FREE matrix -n rootvol
+
 # Formatting the partitions
-sudo mkfs.ext4 /dev/sda1
+mkfs.ext4 /dev/mapper/matrix-rootvol
 
 # Mount partition
-mount /dev/sda1 /mnt
+mount /dev/matrix/rootvol /mnt/devuan
 
 # Install base system
-sudo debootstrap --variant=minbase --arch amd64 ceres /mnt http://deb.devuan.org/merged/ 
+debootstrap --variant=minbase --arch amd64 ceres /mnt/devuan http://deb.devuan.org/merged/ 
 
-# Generate fstab
-genfstab -U /mnt >> /mnt/etc/fstab
+# mount partitions for chroot
+mount --types proc /proc /mnt/devuan/proc
+mount --rbind /sys /mnt/devuan/sys
+mount --make-rslave /mnt/devuan/sys
+mount --rbind /dev /mnt/devuan/dev
+mount --make-rslave /mnt/devuan/dev
 
-# sources list
-cat << EOF > /mnt/etc/apt/sources.list 
-deb http://deb.devuan.org/merged ceres main 
-deb http://deb.devuan.org/merged beowulf main non-free contrib
+# chroot
+chroot /mnt/devuan /bin/bash
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+
+# edit fstab 
+cat << EOF > /etc/fstab
+/dev/mapper/matrix-rootvol / ext4 noatime 0 1
 EOF
 
-# Enter the new system
-arch-chroot /mnt /bin/bash
-
+# install packages
 apt update
 
 packagelist=(
   # basic
-  linux-image-amd64 grub2 lvm2 sysv-rc-conf zram-tools
+  linux-image-amd64 lvm2 sysv-rc-conf zram-tools
   # Window manager
-  bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm lemonbar nnn suckless-tools rofi thunar
+  bspwm sxhkd xserver-xorg-core xserver-xorg-input-evdev xinit xinput x11-utils x11-xserver-utils xterm lemonbar nnn suckless-tools rofi spacefm-gtk3
   # Laptop (soon)
-  tlp powertop acpi lm-sensors thinkfan
+  tlp powertop lm-sensors thinkfan
   # wi-fi, sound, bluetooth, vpn (soon)
-  iwd openresolv wireless-tools bc alsa-utils apulse
+  alsa-utils apulse
   # Office programs
   libreoffice libreoffice-gtk3 texlive-latex-recommended latexmk chktex zathura
   # Terminal tools 
@@ -48,14 +69,16 @@ packagelist=(
   # Multimedia
   firefox telegram-desktop mpv scrot sxiv youtube-dl 
   # Coding
-  git python3-pip nodejs npm
+  git python3-pip
   # Look and feel
   neofetch zsh
   # Utilities
+  # Network
+  dhcpcd5 iwd openresolv wireless-tools bc
   # Security 
   sudo
   # Firmware
-  firmware-iwlwifi mesa-utils vainfo
+  mesa-utils vainfo
   # Neovim from source
   autoconf automake cmake g++ gettext libncurses5-dev libtool libtool-bin libunibilium-dev libunibilium4 ninja-build pkg-config software-properties-common unzip
 )
@@ -66,11 +89,6 @@ apt install ${packagelist[@]}
 
 # clean apt downloaded archives
 apt clean
-
-npm config set prefix $HOME/.npm-global
-npm install -g neovim pyright tree-sitter-cli
-
-pip3 install pynvim
 
 # Create user
 useradd -G sudo -m -d /home/user user
@@ -111,17 +129,9 @@ cp -r $HOME/git/dotfiles_devuan/. $HOME/ && rm -rf $HOME/{root,.git,LICENSE,READ
 sudo cp -r $HOME/git/dotfiles_devuan/root/. /
 fc-cache -fv
 
-
 git clone --depth=1 --single-branch --branch release-0.5 https://github.com/neovim/neovim
-
 make CMAKE_BUILD_TYPE=Release
 sudo make install
-
-git clone --depth=1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-
-
-
 
 sudo rm -rf /etc/fonts/conf.d/70-no-bitmaps.conf    (????)
 
