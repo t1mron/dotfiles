@@ -81,7 +81,7 @@ packagelist=(
   autoconf automake cmake g++ gettext libncurses5-dev libtool libtool-bin libunibilium-dev libunibilium4 ninja-build pkg-config software-properties-common unzip
 )
 
-DEBIAN_FRONTEND=noninteractive apt --assume-yes install ${packagelist[@]}
+DEBIAN_FRONTEND=noninteractive apt --no-install-recommends --assume-yes install ${packagelist[@]}
 
 apt install ${packagelist[@]}
 
