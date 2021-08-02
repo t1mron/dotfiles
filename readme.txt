@@ -9,37 +9,35 @@ head -c 3145728 /dev/urandom > /dev/sda; sync
 (echo n;echo ;echo ;echo ;echo ;echo a;echo w) | sudo fdisk /dev/sda
 
 # Load encrypt modules
-modprobe dm-mod
+sudo modprobe dm-mod
 
 # Encrypt and open /dev/sda1
-cryptsetup -v --cipher serpent-xts-plain64 --key-size 512 --hash whirlpool --use-random --verify-passphrase luksFormat --type luks1 /dev/sda1
+sudo cryptsetup -v --cipher serpent-xts-plain64 --key-size 512 --hash whirlpool --use-random --verify-passphrase luksFormat --type luks1 /dev/sda1
 
-cryptsetup open /dev/sda1 lvm
+sudo cryptsetup open /dev/sda1 lvm
 
-rc-service lvm start
-
-pvcreate /dev/mapper/lvm
-vgcreate matrix /dev/mapper/lvm
-lvcreate -l +100%FREE matrix -n rootvol
+sudo pvcreate /dev/mapper/lvm
+sudo vgcreate matrix /dev/mapper/lvm
+sudo lvcreate -l +100%FREE matrix -n rootvol
 
 # Formatting the partitions
-mkfs.ext4 /dev/mapper/matrix-rootvol
+sudo mkfs.ext4 /dev/mapper/matrix-rootvol
 
 # Mount partition
-mount /dev/matrix/rootvol /mnt/devuan
+sudo mount /dev/matrix/rootvol /mnt/
 
 # Install base system
-debootstrap --variant=minbase --arch amd64 ceres /mnt/devuan http://deb.devuan.org/merged/ 
+debootstrap --variant=minbase --arch amd64 ceres /mnt/ http://deb.devuan.org/merged/ 
 
 # mount partitions for chroot
-mount --types proc /proc /mnt/devuan/proc
-mount --rbind /sys /mnt/devuan/sys
-mount --make-rslave /mnt/devuan/sys
-mount --rbind /dev /mnt/devuan/dev
-mount --make-rslave /mnt/devuan/dev
+mount --types proc /proc /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --make-rslave /mnt/sys
+mount --rbind /dev /mnt/dev
+mount --make-rslave /mnt/dev
 
 # chroot
-chroot /mnt/devuan /bin/bash
+chroot /mnt/ /bin/bash
 source /etc/profile
 export PS1="(chroot) ${PS1}"
 
