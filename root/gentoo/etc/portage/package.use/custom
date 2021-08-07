@@ -1,0 +1,16 @@
+sys-boot/grub:2 device-mapper
+app-admin/doas persist
+x11-misc/lemonbar xft 
+x11-terms/rxvt-unicode xft 24-bit-color 256-color unicode3
+
+# zathura-meta
+app-text/poppler cairo
+# spacefm 
+media-libs/freetype harfbuzz
+# latex
+media-libs/harfbuzz icu
+# neovim
+app-editors/neovim LUA_SINGLE_TARGET: luajit -lua5-1
+dev-lua/luv LUA_SINGLE_TARGET: luajit -lua5-1
+dev-lua/lpeg LUA_TARGETS: luajit -lua5-1
+dev-lua/mpack LUA_TARGETS: luajit -lua5-1 

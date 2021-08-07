@@ -1,0 +1,9 @@
+app-misc/nnn 
+app-admin/doas 
+x11-misc/xdo 
+lxde-base/lxappearance 
+app-editors/neovim 
+
+# tlp
+app-laptop/tlp 
+sys-power/linux-x86-power-tools 
