@@ -1,0 +1,3 @@
+GRUB_DISTRIBUTOR="Gentoo"
+GRUB_CMDLINE_LINUX="dolvm crypt_root=UUID=8f5e5f89-400c-44e6-b0b0-dfd6353d0943"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet clocksource=hpet tsc=unstable thinkpad_acpi.fan_control=1 i915.modeset=1"
