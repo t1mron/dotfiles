@@ -13,7 +13,8 @@ super + shift + {1-9,0}
 
 # close and kill focused window
 super + q
-  bspc node -{c,k}
+  bspc node -c
+#bspc node -{c,k}
 
 # change focus / move focused window
 super + {_,shift + }{h,j,k,l}
@@ -50,7 +51,7 @@ super + r
 
 # PrtSc
 Print
-  scrot -s "$HOME/Pictures/%d-%m-%y_%H:%M:%S.png" -e 'xclip -selection clipboard -target image/png -i $f'
+  sleep 0.1 && scrot -s "$HOME/Pictures/%d-%m-%y_%H:%M:%S.png" -e 'ls $f | xsel -ib'
 
 # discord
 super + d
@@ -58,19 +59,19 @@ super + d
 
 # terminal emulator
 super + Return
-  xterm
+  urxvtc
 
 # CLI File Manager
 super + Tab
-  xterm -e nnn
+  urxvtc -e nnn -C
 
 # GUI File Manager 
-super + n
-  thunar
+super + s
+  spacefm
 
 # vim - code
 super + c
-  xterm -class code -e 'cd $HOME/code/ && nvim' 
+  urxvtc -name code -e "cd /home/user/code/ && /usr/bin/vim" 
 
 # vim - latex
 super + w
@@ -82,7 +83,7 @@ super + o
 
 # Browser
 super + f
-  firefox
+  firefox &
 
 # Telegram
 super + t
@@ -96,6 +97,9 @@ super + m
 super + Escape
   xkill
 
+# suspend with lock
+X86Sleep
+  xset dpms force suspend && slock
 
 #------------#
 # MEDIA KEYS #
@@ -105,17 +109,19 @@ super + Escape
 XF86Audio{Raise,Lower}Volume
   amixer set Master {10%+,10%-}
 
-XF86AudioMute
-  amixer set Master toggle
+# audio/mic mute
+super + XF86AudioLowerVolume
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-# mic controls
-super + XF86AudioMute
-  $HOME/.config/sxhkd/scripts/mic-toggle.sh
-
-# wi-fi controls
-super + {Prior,Next}
-  sudo /sbin/ip link set wlan0 {up,down}
+super + XF86AudioRaiseVolume
+  pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # wi-fi menu
+super + Insert
+  . $HOME/.config/sxhkd/scripts/rofi-wifi-menu.sh wlan0 3 27 -47
+
 super + Home
-  bash $HOME/.config/sxhkd/scripts/menu.sh wlan0 3 27 -47
+  blueman-manager
+
+super + Prior
+  pavucontrol -t 1

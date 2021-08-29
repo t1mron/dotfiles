@@ -6,10 +6,6 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-# enable siji bitmap font
-xset +fp $HOME/.fonts/siji/ &
-xset fp rehash &
-
 # lemonbar
 if pgrep panel.sh; then
   killall panel.sh
@@ -28,14 +24,14 @@ xsetroot -cursor_name left_ptr &
 xset -dpms s off &
 
 # Disable wi-fi
-sudo /sbin/ip link set wlan0 down &
+#sudo /sbin/ip link set wlan0 down &
 
 # Disable eth
 #sudo /sbin/ip link set enp1s0 down &
 
 # Disable headphone/mic
-#amixer set Master mute
-amixer set Capture 0%
+pactl set-sink-mute @DEFAULT_SINK@ 1 &
+pactl set-source-mute @DEFAULT_SOURCE@ 1 &
 
 
 #--------#
@@ -51,7 +47,7 @@ ws6='' # media
 ws7='' # virtualization
 ws8='' # external monitor
 ws9='' # external monitor
-ws10='' # external monitor
+ws10='' # external monitor
 
 bspc monitor -d $ws1 $ws2 $ws3 $ws4 $ws5 $ws6 $ws7 $ws8 $ws9 $ws10
 
@@ -71,7 +67,7 @@ bspc config normal_border_color  \#cccccc
 #-------#
 
 bspc rule -a Firefox        	       desktop='^2' state=tiled follow=on
-bspc rule -a code                    desktop='^3' state=tiled follow=on
+bspc rule -a URxvt:code                    desktop='^3' state=tiled follow=on
 bspc rule -a latex                   desktop='^4' state=tiled follow=on 
 bspc rule -a Soffice                 desktop='^4' state=tiled follow=on
 bspc rule -a libreoffice-startcenter desktop='^4' state=tiled follow=on
@@ -81,5 +77,6 @@ bspc rule -a discord                 desktop='^5' state=tiled follow=on
 bspc rule -a mpv                     desktop='^6' state=tiled follow=on
 bspc rule -a Virt-manager            desktop='^7' state=tiled follow=on
 
-#bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
-bspc rule -a Sxiv      state=floating center=true 
+bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
+bspc rule -a Pavucontrol          state=floating center=true rectangle=900x500+0+0
+bspc rule -a Sxiv                 state=floating center=true 

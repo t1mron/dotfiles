@@ -4,82 +4,20 @@
 # BASIC #
 #########
 
-export EDITOR="nvim"
-export PF_INFO="ascii title host kernel shell pkgs wm editor memory"
-
+export PF_INFO="ascii title host kernel shell pkgs wm memory"
+export EDITOR="/usr/bin/vim"
 
 #########
 # ALIAS #
 #########
 
 alias ls='ls --color=auto' # colorize the ls output
-alias vim='nvim'
 alias pfetch='$HOME/.config/pfetch/pfetch'
 
 
 ##########
 # CUSTOM #
 ##########
-
-CLR_GREEN="\[\033[0;32m\]"
-CLR_CYAN="\[\033[0;36m\]"
-CLR_MAGENTA="\[\033[0;35m\]"
-CLR_RED="\[\033[0;31m\]"
-CLR_CLEAR="\[\033[0m\]"
-
-###---PS---###
-function we_are_in_git_work_tree {
-  printf "%s" $(git rev-parse --is-inside-work-tree 2>/dev/null) 
-}
-
-function git_branch {
-  if [[ "true" == $(we_are_in_git_work_tree) ]]; then
-    local BR=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2> /dev/null)
-    if [ "$BR" == HEAD ]; then
-      local NM=$(git name-rev --name-only HEAD 2> /dev/null)
-      if [ "$NM" != undefined ]; then 
-        printf $NM
-      else 
-        git rev-parse --short HEAD 2> /dev/null
-      fi
-    else
-      printf $BR
-    fi
-  fi
-  if [[ "$?" != 0 ]]; then
-    return 127
-  fi
-}
-
-function git_status {
-  if [[ "true" == $(we_are_in_git_work_tree) ]]; then
-    local ST=$(git status --short 2> /dev/null)
-    if [[ -n "$ST" ]]; then 
-      printf "+"
-    fi
-  fi
-  if [[ "$?" != 0 ]]; then
-    return 127
-  fi 
-}
-
-function ret_status {
-  if [[ "$?" == 0 ]]; then
-    printf ${CLR_GREEN:2:10} 
-  else 
-    printf ${CLR_RED:2:10}
-    return 127
-  fi
-}
-
-function command_not_found_handle {
-  tput setaf 1;
-  printf "command not found\n"
-  tput sgr0;
-  return 127
-}
-
-PS1="$CLR_CYAN\w $CLR_MAGENTA\$(git_branch) $CLR_GREEN\$(git_status)\n\[\$(ret_status)\]➜$CLR_CLEAR "
 
 ###---HSTR---###
 alias hh=hstr                    # hh to be alias for hstr
@@ -98,3 +36,73 @@ if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
 
 # bash suggestions !<command> + space
 bind Space:magic-space
+
+###---PS---###
+export PS1='$(EXIT=${PIPESTATUS[-1]};prompt)'   
+
+function prompt() {
+  local L="\001\033"
+  local R="\002"
+
+  local RCol="$L[0m$R"  # Text Reset
+
+  # Regular          
+  local Bla="$L[0;30m$R"
+  local Red="$L[0;31m$R"
+  local Gre="$L[0;32m$R"
+  local Yel="$L[0;33m$R"
+  local Blu="$L[0;34m$R"
+  local Pur="$L[0;35m$R"
+  local Cya="$L[0;36m$R"
+  local Whi="$L[0;37m$R"
+
+  function we_are_in_git_work_tree() {
+    printf "%s" $(git rev-parse --is-inside-work-tree 2>/dev/null) 
+  }
+
+  function git_branch() {
+    if [[ "true" == $(we_are_in_git_work_tree) ]]; then
+      local BR=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2> /dev/null)
+      if [[ "$BR" == HEAD ]]; then
+       local NM=$(git name-rev --name-only HEAD 2> /dev/null)
+        if [[ "$NM" != undefined ]]; then 
+          printf "%s" $Pur $NM
+        else 
+          git rev-parse --short HEAD 2> /dev/null
+        fi
+      else
+        printf "%s" $Pur $BR
+      fi
+    fi
+  }
+
+  function git_status() {
+    if [[ "true" == $(we_are_in_git_work_tree) ]]; then
+      local ST=$(git status --short 2> /dev/null)
+      if [[ -n "$ST" ]]; then 
+        printf "%s+" $Gre 
+      fi
+    fi
+  }
+
+  function ret_status() {
+    case "$EXIT" in
+      0)
+        printf "%s➜" $Gre ;;
+      *)
+        printf "%s➜" $Red ;;
+    esac
+  }
+
+  local PWD="$Cya~${PWD/$HOME}"
+  local CMD="$PWD $(git_branch) $(git_status)\n$(ret_status)$RCol"
+
+  printf "%b " $CMD
+}
+
+function command_not_found_handle() {
+  tput setaf 1;
+  printf "command not found\n"
+  tput sgr0;
+  return 127
+}

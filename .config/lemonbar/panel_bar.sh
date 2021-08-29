@@ -80,6 +80,9 @@ while read -r line; do
     WIFI*)
       wifi="${line#????}"
       ;;
+    BLTH*)
+      blth="${line#????}"
+      ;;
     HEAD*)
       head="${line#????}"
       ;;
@@ -97,5 +100,5 @@ while read -r line; do
       ;;
   esac
 
-  printf "%s\n" "%{l} ${bat}  ${cpu}  ${mem}  ${temp}  ${fs}%{c}${wm}%{r}${wifi}  ${head}  ${mic}  ${lght}  ${kbd}  ${date} "
+  printf "%s\n" "%{l} ${bat}  ${cpu}  ${mem}  ${temp}  ${fs}%{c}${wm}%{r}${wifi} ${blth} ${head}  ${mic}${lght}  ${kbd}  ${date} "
 done
