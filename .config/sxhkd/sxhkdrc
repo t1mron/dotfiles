@@ -14,7 +14,6 @@ super + shift + {1-9,0}
 # close and kill focused window
 super + q
   bspc node -c
-#bspc node -{c,k}
 
 # change focus / move focused window
 super + {_,shift + }{h,j,k,l}
@@ -51,11 +50,11 @@ super + r
 
 # PrtSc
 Print
-  sleep 0.1 && scrot -s "$HOME/Pictures/%d-%m-%y_%H:%M:%S.png" -e 'ls $f | xsel -ib'
+  sleep 0.1 && scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'
 
 # discord
 super + d
-  apulse discord
+  discord
 
 # terminal emulator
 super + Return
@@ -63,11 +62,15 @@ super + Return
 
 # CLI File Manager
 super + Tab
-  urxvtc -e nnn -C
+  urxvtc -e lf
 
 # GUI File Manager 
+super + n
+  thunar
+
+# spotify
 super + s
-  spacefm
+  spotify --no-zygote
 
 # vim - code
 super + c
@@ -77,13 +80,13 @@ super + c
 super + w
   xterm -class latex -e 'cd $HOME/latex/ && nvim'
 
-# libre ms office :)
+# Office 
 super + o
   libreoffice
 
 # Browser
 super + f
-  firefox &
+  firefox
 
 # Telegram
 super + t
@@ -97,17 +100,14 @@ super + m
 super + Escape
   xkill
 
-# suspend with lock
-X86Sleep
-  xset dpms force suspend && slock
 
 #------------#
 # MEDIA KEYS #
 #------------#
 
 # audio controls
-XF86Audio{Raise,Lower}Volume
-  amixer set Master {10%+,10%-}
+XF86Audio{Lower,Raise}Volume
+  pactl -- set-sink-volume 0 {-10%,+10%}
 
 # audio/mic mute
 super + XF86AudioLowerVolume
@@ -116,9 +116,21 @@ super + XF86AudioLowerVolume
 super + XF86AudioRaiseVolume
   pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
+# Toggle play/pause state
+XF86AudioPlay 
+  playerctl play-pause
+
+# Skip to the next song in the play list
+XF86AudioNext
+  playerctl next
+
+# Play the previous song in the play list
+XF86AudioPrev
+  playerctl previous
+
 # wi-fi menu
 super + Insert
-  . $HOME/.config/sxhkd/scripts/rofi-wifi-menu.sh wlan0 3 27 -47
+  iwgtk 
 
 super + Home
   blueman-manager

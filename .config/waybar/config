@@ -1,0 +1,79 @@
+{
+  "modules-left": ["battery","cpu","memory","temperature","disk"],
+  "modules-center": ["sway/workspaces","sway/mode"],
+  "modules-right": ["custom/wifi","pulseaudio","backlight","sway/language","clock"],
+
+  // Left
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "cpu": {
+    "interval": 1,
+    "format": " {usage:3}%",
+    "tooltip": false
+  },
+  "memory": {
+    "interval": 1,
+    "format": " {used:0.1f}G"
+  },
+  "temperature": {
+    "interval": 1,
+    "critical-threshold": 70,
+    "format": " {temperatureC}°C",
+  },
+  "disk": {
+    "interval": 30,
+    "format": " {free}",
+    "path": "/"
+  },
+  
+  // Center
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "format": "{icon}",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": "",
+    }
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+
+  // Right
+  "custom/wifi": {
+    "format": "{}",
+    "interval": 1,
+    "exec": "$HOME/.config/waybar/scripts/wifi.sh"
+  },
+  "pulseaudio": {
+    "format": " {volume:3}% {format_source}",
+    "format-muted": " {volume:3}% {format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+  },
+  "sway/language":{
+    "format": " {}",
+  },
+  "keyboard-state": {
+    "format": "{}",
+  },
+  "backlight": {
+    "interval": 1,
+    "format": " {percent}%",
+  },
+  "clock": {
+    "interval": 60,
+    "format": " {:%H:%M}",
+  },
+}

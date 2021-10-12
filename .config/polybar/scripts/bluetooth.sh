@@ -1,12 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 
-if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]
-then
-  echo "%{F#cccccc}"
-else
-  if [ $(echo info | bluetoothctl | grep 'Device' | wc -c) -eq 0 ]
-  then
-    echo ""
-  fi
-  echo "%{F#2193ff}"
-fi
+case "$(bluetoothctl show | grep "Powered: yes" | wc -c)" in
+  0)
+    BLUETOOTH_ICON="%{F#cccccc}%{F-}" ;;
+  *)
+    case "$(echo info | bluetoothctl | grep 'Device' | wc -c)" in
+      0)
+        BLUETOOTH_ICON="" ;;
+      *)
+        BLUETOOTH_ICON="%{F#2193ff}%{F-}" ;;
+    esac ;;
+esac 
+
+printf "%b" $BLUETOOTH_ICON

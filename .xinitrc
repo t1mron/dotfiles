@@ -1,7 +1,4 @@
-pipewire &
+#!/bin/sh
 
-# urxvt daemon mode
 urxvtd -q -f -o &
-
-# WM
-exec dbus-launch --exit-with-session bspwm
+exec bspwm

@@ -1,0 +1,8 @@
+rofi.theme: Arc
+rofi.modi: drun,run,window,ssh
+rofi.show: drun
+rofi.display-drun: run
+rofi.location: 2
+rofi.yoffset: 100
+rofi.width: 38
+rofi.lines: 12

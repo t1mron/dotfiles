@@ -6,19 +6,16 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-# lemonbar
-if pgrep panel.sh; then
-  killall panel.sh
-fi
+$HOME/.config/polybar/scripts/launch.sh
 
-PANEL=$HOME/.config/lemonbar
-setsid $PANEL/panel.sh & 
-
-# Solid color background
-xsetroot -solid "#cccccc" &
+# Background
+feh --bg-fill $HOME/Pictures/life.jpg &
 
 # Add mouse cursor support 
 xsetroot -cursor_name left_ptr &
+
+# Screen color calibration
+xcalib -d :0 $HOME/.config/icc/x200.icc
 
 # Disable screen blanking
 xset -dpms s off &
@@ -38,18 +35,7 @@ pactl set-source-mute @DEFAULT_SOURCE@ 1 &
 # BASICS #
 #--------#
 
-ws1='' # terminal
-ws2='' # browser
-ws3='' # coding
-ws4='' # office
-ws5='' # social network
-ws6='' # media
-ws7='' # virtualization
-ws8='' # external monitor
-ws9='' # external monitor
-ws10='' # external monitor
-
-bspc monitor -d $ws1 $ws2 $ws3 $ws4 $ws5 $ws6 $ws7 $ws8 $ws9 $ws10
+bspc monitor -d I II III IV V VI VII VIII IX X
 
 bspc config border_width         2
 bspc config window_gap         	 0
@@ -66,8 +52,8 @@ bspc config normal_border_color  \#cccccc
 # RULES #
 #-------#
 
-bspc rule -a Firefox        	       desktop='^2' state=tiled follow=on
-bspc rule -a URxvt:code                    desktop='^3' state=tiled follow=on
+bspc rule -a firefox                 desktop='^2' state=tiled follow=on
+bspc rule -a URxvt:code              desktop='^3' state=tiled follow=on
 bspc rule -a latex                   desktop='^4' state=tiled follow=on 
 bspc rule -a Soffice                 desktop='^4' state=tiled follow=on
 bspc rule -a libreoffice-startcenter desktop='^4' state=tiled follow=on
@@ -75,8 +61,10 @@ bspc rule -a Zathura 	     	         desktop='^4' state=tiled follow=off focus=o
 bspc rule -a TelegramDesktop 	       desktop='^5' state=tiled follow=on
 bspc rule -a discord                 desktop='^5' state=tiled follow=on
 bspc rule -a mpv                     desktop='^6' state=tiled follow=on
+bspc rule -a Spotify                 desktop='^6' state=tiled follow=on
 bspc rule -a Virt-manager            desktop='^7' state=tiled follow=on
 
+bspc rule -a Iwgtk                state=floating center=true rectangle=900x500+0+0
 bspc rule -a Blueman-manager      state=floating center=true rectangle=900x500+0+0
 bspc rule -a Pavucontrol          state=floating center=true rectangle=900x500+0+0
 bspc rule -a Sxiv                 state=floating center=true 

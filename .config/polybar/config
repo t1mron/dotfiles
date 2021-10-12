@@ -10,12 +10,13 @@ monitor = ${env:MONITOR:}
 enable-ipc = true
 
 # Dimensions
-height = 22
+height = 18
 
 # Fonts
 font-0 = DejaVu Sans Mono:size=9;2
-font-1 = FontAwesome:size=12;2
-font-2 = siji:pixelsize=10;2
+font-1 = Font Awesome 5 Free:style=Solid:size=9;2
+font-2 = Font Awesome 5 Brands:size=9;2
+font-3 = siji:style=Regular:size=9;2
 
 # Colors
 background = ${colors.background}
@@ -28,9 +29,9 @@ module-margin = 1
 wm-restack = bspwm
 
 # Modules
-modules-left = battery cpu memory temp filesystem
+modules-left = battery cpu memory temp filesystem update
 modules-center = bspwm
-modules-right = wi-fi alsa-master mic backlight keyboard time  
+modules-right = wifi bluetooth sound mic backlight keyboard time
 
 
 # LEFT
@@ -73,9 +74,9 @@ type = internal/temperature
 
 thermal-zone = 0
 
-hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp3_input
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input
 
-warn-temperature = 60
+warn-temperature = 70
 
 label =  %temperature-c%
 label-warn =  %temperature-c%
@@ -89,12 +90,20 @@ mount-0 = /
 label-mounted =  %free%
 
 
+[module/update]
+type = custom/script
+
+interval = 600 
+
+exec = $HOME/.config/polybar/scripts/update.sh
+
+
 # CENTER
 
 [module/bspwm]
 type = internal/bspwm
 
-ws-icon-0 = I;
+ws-icon-0 = I;
 ws-icon-1 = II;
 ws-icon-2 = III;
 ws-icon-3 = IV;
@@ -112,43 +121,41 @@ enable-scroll = false
 format = <label-state> <label-mode>
 
 label-mode = %mode%
-label-mode-padding = 1
+label-mode-padding = 2
 
 label-focused = %icon%
 label-focused-background = ${colors.primary}
-label-focused-padding = 1
+label-focused-padding = 2
 
 label-occupied = %icon%
-label-occupied-padding = 1
+label-occupied-padding = 2
 
 label-urgent = %icon%
-label-urgent-padding = 1
+label-urgent-padding = 2
 
 label-empty =
 
 
 # RIGHT
 
-[module/wi-fi]
-type = internal/network
+[module/wifi]
+type = custom/script
 
-interface = wlan0
+interval = 1 
 
-interval = 1
-
-label-connected =  %signal% %essid% 
-label-disconnected = 
-label-disconnected-foreground = ${colors.primary}
+exec = $HOME/.config/polybar/scripts/wifi.sh
 
 
-[module/alsa-master]
-type = internal/alsa
+[module/bluetooth]
+type = custom/script
 
-master-soundcard = default
-speaker-soundcard = default
-headphone-soundcard = default
+interval = 1 
 
-master-mixer = Master
+exec = $HOME/.config/polybar/scripts/bluetooth.sh
+
+
+[module/sound]
+type = internal/pulseaudio
 
 label-volume = %{A1::} %percentage:3%%%{A}
 label-muted = %{A1::} %percentage:3%%%{A}
@@ -167,7 +174,7 @@ exec = $HOME/.config/polybar/scripts/mic.sh
 type = internal/backlight
 card = acpi_video0
 
-label =   "\ue2ff" %percentage:3%%
+label =  %percentage:3%%
 
 
 [module/keyboard]
