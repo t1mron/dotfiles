@@ -28,34 +28,9 @@ mkfs.ext4 /dev/mapper/matrix-rootvol
 # Mount partition
 mount /dev/matrix/rootvol /mnt/
 
-# Bootstrap image
-cd /tmp
-LATEST=$(curl -s https://mirror.yandex.ru/archlinux/iso/latest/sha1sums.txt | tail -n 1 | cut -d " " -f 3)
-curl -O https://mirror.yandex.ru/archlinux/iso/latest/$LATEST
+pacstrap /mnt linux-lts base base-devel lvm2 grub
 
-# Check sha512sum (soon)
-CHECK=$(curl -s https://mirror.yandex.ru/archlinux/iso/latest/sha1sums.txt | tail -n 1 | cut -d " " -f 1)
-echo "$CHECK $LATEST" | sha1sum -c
-
-# unpack archive
-tar xzf archlinux-bootstrap-*.tar.gz 
-rm -rf archlinux-bootstrap-*.tar.gz
-cp -r ./root.x86_64/. /mnt
-rm -rf root.*
-
-# copy resolv.conf
-cp /etc/resolv.conf /mnt/etc/
-
-# mount partitions for chroot
-mount -t proc /proc /mnt/proc
-mount -t sysfs /sys /mnt/sys 
-mount --rbind /dev /mnt/dev
-mount --rbind /run /mnt/run
-
-# chroot
-chroot /mnt/ /bin/bash
-source /etc/profile
-export PS1="(chroot) $PS1"
+arch-chroot /mnt
 
 # edit fstab 
 cat << EOF > /etc/fstab
@@ -99,16 +74,11 @@ cat << EOF > /etc/hosts
 127.0.1.1    arch.localdomain arch
 EOF
 
-# update mirrors
-reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-
 # sync keys
 pacman-key --init
 pacman-key --populate archlinux
 
 packagelist=(
-  # basic
-  linux-lts base base-devel lvm2 grub
   # Xorg
   xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xsel xclip xcalib
   # Intel
