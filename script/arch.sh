@@ -32,6 +32,37 @@ pacstrap /mnt linux-lts base base-devel lvm2 grub
 
 arch-chroot /mnt
 
+packagelist=(
+  # Xorg
+  xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xsel xclip xcalib
+  # Intel
+  mesa libva-utils intel-ucode
+  # Window manager
+  bspwm sxhkd rofi thunar xdg-user-dirs slock
+  # Laptop
+  acpi acpid tlp powertop lm_sensors libimobiledevice xf86-input-libinput 
+  # Coreboot
+  flashrom
+  # sound, bluetooth, vpn
+  pipewire pipewire-alsa pipewire-pulse pavucontrol bluez bluez-utils blueberry
+  # Coding  
+  python-pip git gvim
+  # Office programs
+  libreoffice-still texlive-most zathura zathura-pdf-mupdf
+  # Terminal tools 
+  pacman-contrib htop openssh man-db gpm wget curl playerctl
+  # Multimedia
+  firefox sxiv scrot youtube-dl mpv telegram-desktop discord 
+  # Look and feel
+  zsh lxappearance feh neofetch ttf-dejavu ttf-font-awesome
+  # Security
+  cryptsetup
+  # Network
+  dhcpcd iwd reflector
+)
+
+pacman -Syu ${packagelist[@]}
+
 # edit fstab 
 cat << EOF > /etc/fstab
 /dev/mapper/matrix-rootvol / ext4 noatime 0 1
@@ -73,41 +104,6 @@ cat << EOF > /etc/hosts
 ::1          localhost
 127.0.1.1    arch.localdomain arch
 EOF
-
-# sync keys
-pacman-key --init
-pacman-key --populate archlinux
-
-packagelist=(
-  # Xorg
-  xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xsel xclip xcalib
-  # Intel
-  mesa libva-utils intel-ucode
-  # Window manager
-  bspwm sxhkd rofi thunar xdg-user-dirs slock
-  # Laptop
-  acpi acpid tlp powertop lm_sensors libimobiledevice xf86-input-libinput 
-  # Coreboot
-  flashrom
-  # sound, bluetooth, vpn
-  pipewire pipewire-alsa pipewire-pulse pavucontrol bluez bluez-utils blueberry
-  # Coding  
-  python-pip git gvim
-  # Office programs
-  libreoffice-still texlive-most zathura zathura-pdf-mupdf
-  # Terminal tools 
-  pacman-contrib htop openssh man-db gpm wget curl playerctl
-  # Multimedia
-  firefox sxiv scrot youtube-dl mpv telegram-desktop discord 
-  # Look and feel
-  lxappearance feh neofetch ttf-dejavu ttf-font-awesome
-  # Security
-  cryptsetup
-  # Network
-  dhcpcd iwd reflector
-)
-
-pacman -Syu ${packagelist[@]}
 
 su user 
 git clone https://aur.archlinux.org/yay.git $HOME/git/yay
