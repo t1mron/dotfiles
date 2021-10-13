@@ -36,8 +36,8 @@ packagelist=(
   # Xorg
   xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xsel xclip xcalib
   # Intel
-  mesa libva-utils intel-ucode
-  # Window manager
+  mesa libva-utils intel-ucode xf86-video-intel
+  # Window manager 
   bspwm sxhkd rofi thunar xdg-user-dirs slock
   # Laptop
   acpi acpid tlp powertop lm_sensors libimobiledevice xf86-input-libinput 
@@ -143,7 +143,7 @@ cat << EOF > /etc/default/grub
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX="iomem=relaxed cryptdevice=UUID=3014c533-4361-4358-8a97-fe6474733224:cryptlvm cryptkey=rootfs:/root/secrets/crypto_keyfile.bin"
+GRUB_CMDLINE_LINUX="iomem=relaxed cryptdevice=UUID=49891c4f-649e-4601-a0cc-6bb5b571617d:cryptlvm cryptkey=rootfs:/root/secrets/crypto_keyfile.bin"
 GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"
 EOF
 
@@ -159,7 +159,7 @@ mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Exit new system and go into the cd shell
-exit
+exit 
 
 # Reboot into the new system, don't forget to remove the usb
 reboot
