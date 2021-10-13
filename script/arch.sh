@@ -84,7 +84,7 @@ packagelist=(
   # Intel
   mesa libva-utils intel-ucode
   # Window manager
-  bspwm sxhkd rofi thunar slock
+  bspwm sxhkd rofi thunar xdg-user-dirs slock
   # Laptop
   acpi acpid tlp powertop lm_sensors libimobiledevice xf86-input-libinput 
   # Coreboot
