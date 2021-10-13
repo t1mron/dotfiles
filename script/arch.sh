@@ -148,8 +148,10 @@ packagelist=(
   rxvt-unicode-truecolor-wide-glyphs lf-bin alternating-layouts-git
   # Network
   iwgtk
+  # Coreboot
+  coreboot-utils
   # Thinkpad
-  coreboot-utils libva-intel-driver-g45-h264
+  libva-intel-driver-g45-h264
   # Multimedia
   spotify
 )
