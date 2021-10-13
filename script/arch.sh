@@ -69,7 +69,7 @@ cat << EOF > /etc/fstab
 EOF
 
 # Create user
-useradd -G wheel -m -d /home/user user
+useradd -G wheel,rfkill -m -d /home/user user
 passwd user
 useradd -G wheel -m -d /home/help help
 passwd help
