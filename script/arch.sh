@@ -111,7 +111,7 @@ cd $HOME/git/yay && makepkg -si
 
 packagelist=(
   # Window manager
-  polybar rxvt-unicode-truecolor-wide-glyphs lf-bin alternating-layouts-git
+  polybar rxvt-unicode-truecolor-wide-glyphs lf-bin
   # Network
   iwgtk
   # Coreboot
