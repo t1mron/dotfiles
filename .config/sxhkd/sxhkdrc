@@ -58,7 +58,7 @@ super + d
 
 # terminal emulator
 super + Return
-  urxvtc
+  xterm
 
 # CLI File Manager
 super + Tab
