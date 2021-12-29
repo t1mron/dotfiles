@@ -16,17 +16,17 @@ modprobe dm-mod
 # Encrypt and open /dev/sda1
 cryptsetup -v --cipher serpent-xts-plain64 --key-size 512 --hash whirlpool --use-random --verify-passphrase luksFormat --type luks1 /dev/sda1
 
-cryptsetup open /dev/sda1 lvm
+cryptsetup open /dev/sda1 sda1_crypt
 
-pvcreate /dev/mapper/lvm
-vgcreate matrix /dev/mapper/lvm
-lvcreate -l +100%FREE matrix -n rootvol
+pvcreate /dev/mapper/sda1_crypt
+vgcreate vg1 /dev/mapper/sda1_crypt
+lvcreate -l +100%FREE vg1 -n root 
 
 # Formatting the partitions
-mkfs.ext4 /dev/mapper/matrix-rootvol
+mkfs.ext4 /dev/mapper/vg1-root
 
 # Mount partition
-mount /dev/matrix/rootvol /mnt/
+mount /dev/mapper/vg1-root /mnt/
 
 pacstrap /mnt linux-lts base base-devel lvm2 grub
 
@@ -38,9 +38,9 @@ packagelist=(
   # Intel
   mesa libva-utils intel-ucode xf86-video-intel
   # Window manager 
-  bspwm sxhkd rofi thunar xdg-user-dirs slock
+  bspwm sxhkd rofi thunar xdg-user-dirs
   # Laptop
-  acpi acpid tlp powertop lm_sensors libimobiledevice xf86-input-libinput 
+  acpi acpid tlp powertop lm_sensors xf86-input-libinput 
   # Coreboot
   flashrom
   # sound, bluetooth, vpn
@@ -48,24 +48,24 @@ packagelist=(
   # Coding  
   python-pip git gvim
   # Office programs
-  libreoffice-still texlive-most zathura zathura-pdf-mupdf
+  okular
   # Terminal tools 
   pacman-contrib htop openssh man-db gpm wget curl playerctl
   # Multimedia
-  firefox sxiv scrot youtube-dl mpv telegram-desktop discord 
+  firefox mpv telegram-desktop discord 
   # Look and feel
   zsh lxappearance feh neofetch ttf-dejavu ttf-font-awesome
   # Security
   cryptsetup
   # Network
-  dhcpcd iwd reflector
+  iwd reflector
 )
 
 pacman -Syu ${packagelist[@]}
 
 # edit fstab 
 cat << EOF > /etc/fstab
-/dev/mapper/matrix-rootvol / ext4 noatime 0 1
+/dev/mapper/vg1-root / ext4 defaults,noatime 0 0
 EOF
 
 # Create user
@@ -105,21 +105,27 @@ cat << EOF > /etc/hosts
 127.0.1.1    arch.localdomain arch
 EOF
 
+cat << EOF > /etc/systemd/network/20-all.network
+[Match]
+Name=e*
+
+[Network]
+DHCP=yes
+EOF
+
 su user 
 git clone https://aur.archlinux.org/yay.git $HOME/git/yay
 cd $HOME/git/yay && makepkg -si
 
 packagelist=(
   # Window manager
-  polybar rxvt-unicode-truecolor-wide-glyphs lf-bin
+  polybar
   # Network
   iwgtk
   # Coreboot
   coreboot-utils
   # Thinkpad
   libva-intel-driver-g45-h264
-  # Multimedia
-  spotify
 )
 
 yay -Syu ${packagelist[@]}
@@ -130,7 +136,7 @@ git clone --depth=1 https://github.com/woefe/git-prompt.zsh $HOME/.zsh/git-promp
 
 exit
 
-systemctl enable tlp iwd gpm dhcpcd bluetooth slock@user.service
+systemctl enable tlp iwd gpm bluetooth systemd-networkd systemd-resolved
 
 # Don't enter a password twice
 mkdir /root/secrets && chmod 700 /root/secrets
@@ -144,7 +150,7 @@ GRUB_DEFAULT=0
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Arch"
 GRUB_CMDLINE_LINUX="iomem=relaxed cryptdevice=UUID=49891c4f-649e-4601-a0cc-6bb5b571617d:cryptlvm cryptkey=rootfs:/root/secrets/crypto_keyfile.bin"
-GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"
+GRUB_CMDLINE_LINUX_DEFAULT=""
 EOF
 
 # Configure mkinitcpio
