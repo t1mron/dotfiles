@@ -10,27 +10,9 @@ endif
 """""""""""
 
 call plug#begin('$HOME/.vim/autoload/plugged')
-  
-  " Intellisense
-  "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  
-  " Auto pairs for '(' '[' '{'
-  Plug 'jiangmiao/auto-pairs' 
-  " Start screen
-  Plug 'mhinz/vim-startify'
-  Plug 'Yggdroot/indentLine'
-  " Latex
-  Plug 'lervag/vimtex'  
-  
   " Themes
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
-  " Status Line
-  Plug 'itchyny/lightline.vim'
-  " Icons for plugins 
-  Plug 'ryanoasis/vim-devicons'
-
 call plug#end()
-
 
 """""""""
 " BASIC "
@@ -145,58 +127,3 @@ nnoremap <4-MiddleMouse> <Nop>
 
 "nnoremap <Leader>o o<Esc>^Da
 "nnoremap <Leader>O O<Esc>^Da
-
-
-""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""
-" AIRLINE "
-"""""""""""
-
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ }
-
-
-""""""""""""""
-" INDENTLINE "
-""""""""""""""
-
-let g:indentLine_char = '│'
-let g:indentLine_first_char = '│'
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_fileTypeExclude = ['startify']
-
-""""""""""""
-" STARTIFY "
-""""""""""""
-
-" Directory
-let g:startify_session_dir = '$HOME/.vim/session'
-
-" Automatically restart sessions
-let g:startify_session_autoload = 1
-
-" Automatically update Sessions
-let g:startify_session_persistence = 1
-
-" Custom header
-let g:startify_custom_header = []
-
-" Lists
-let g:startify_lists = [
-  \ { 'type': 'files',     'header': ['   Files']            },
-  \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-  \ { 'type': 'sessions',  'header': ['   Sessions']       },
-  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-  \ ]
-
-" Bookmarks
-let g:startify_bookmarks = [
-  \ { 'c': '$HOME/.config/i3/config' },
-  \ { 'v': '$HOME/.vimrc' },
-  \ { 'z': '$HOME/.zshrc' },
-  \ '$HOME/Blog',
-  \ '$HOME/Code',
-  \ '$HOME/Pics',
-  \ ]
