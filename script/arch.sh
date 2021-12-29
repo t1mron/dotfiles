@@ -34,7 +34,7 @@ arch-chroot /mnt
 
 packagelist=(
   # Xorg
-  xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xsel xclip xcalib
+  xorg-server xorg-xinit xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xterm xsel xclip xcalib
   # Intel
   mesa libva-utils intel-ucode xf86-video-intel
   # Window manager 
