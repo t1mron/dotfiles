@@ -149,7 +149,7 @@ cat << EOF > /etc/default/grub
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX="iomem=relaxed cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda1):sda1_crypt"
+GRUB_CMDLINE_LINUX="iomem=relaxed tsc=unstable cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda1):sda1_crypt cryptkey=rootfs:/root/secrets/crypto_keyfile.bin"
 GRUB_CMDLINE_LINUX_DEFAULT=""
 EOF
 
