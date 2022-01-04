@@ -17,7 +17,8 @@ autoload -U colors && colors
 #########
 
 export ZSH=$HOME/.zsh
-export PATH="$PATH:/usr/sbin:/sbin:/bin"
+export PATH="$PATH:/usr/sbin:/usr/bin:/sbin:/bin"
+
 
 #########
 # ALIAS #

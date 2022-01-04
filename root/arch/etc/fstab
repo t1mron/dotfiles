@@ -1,0 +1,2 @@
+/dev/mapper/vg1-root / ext4 defaults,noatime 0 0
+/swapfile none swap defaults 0 0

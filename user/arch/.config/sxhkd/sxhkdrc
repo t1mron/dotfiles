@@ -31,6 +31,10 @@ super + alt + space
 super + shift + s
   bspc node focused -t \~floating
 
+# fullscreen
+super + shift + f 
+  bspc node -t \~fullscreen
+
 # make sxhkd reload its configuration files:
 super + shift + c
   pkill -USR1 -x sxhkd
@@ -46,11 +50,15 @@ super + shift + {End,r}
 
 # rofi
 super + r
-  rofi -modi run,drun -show drun -display-drun "run" -location 2 -yoffset 100 -width 38 -lines 12 -show-icons -drun-icon-theme
+  rofi -show run -theme Arc
+
+# App menu
+super + space
+  jgmenu_run >/dev/null 2>&1 &
 
 # PrtSc
-Print
-  sleep 0.1 && scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'
+super + Print
+  flameshot gui
 
 # discord
 super + d
@@ -60,29 +68,13 @@ super + d
 super + Return
   xterm
 
-# CLI File Manager
+# GUI File Manager
 super + Tab
-  urxvtc -e lf
-
-# GUI File Manager 
-super + n
   thunar
 
-# spotify
-super + s
-  spotify --no-zygote
-
-# vim - code
+# vs code
 super + c
-  urxvtc -name code -e "cd /home/user/code/ && /usr/bin/vim" 
-
-# vim - latex
-super + w
-  xterm -class latex -e 'cd $HOME/latex/ && nvim'
-
-# Office 
-super + o
-  libreoffice
+  code-oss 
 
 # Browser
 super + f
@@ -91,6 +83,10 @@ super + f
 # Telegram
 super + t
   telegram-desktop
+
+# Virtualization
+super + v
+  virt-manager
 
 # Copy url from firefox to mpv
 super + m
@@ -105,6 +101,9 @@ super + Escape
 # MEDIA KEYS #
 #------------#
 
+# Lock screen
+XF86ScreenSaver
+  slock
 # audio controls
 XF86Audio{Lower,Raise}Volume
   pactl -- set-sink-volume 0 {-10%,+10%}
@@ -115,6 +114,10 @@ super + XF86AudioLowerVolume
 
 super + XF86AudioRaiseVolume
   pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Toggle status bar
+XF86Display
+  $HOME/.config/sxhkd/scripts/polybar_toggle.sh
 
 # Toggle play/pause state
 XF86AudioPlay 
@@ -133,7 +136,7 @@ super + Insert
   iwgtk 
 
 super + Home
-  blueman-manager
+  blueberry
 
 super + Prior
   pavucontrol -t 1
