@@ -88,6 +88,10 @@ super + t
 super + v
   virt-manager
 
+# Office
+super + o
+  onlyoffice-desktopeditors
+
 # Copy url from firefox to mpv
 super + m
   $HOME/.config/sxhkd/scripts/youtube.sh

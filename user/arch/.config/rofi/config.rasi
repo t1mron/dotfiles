@@ -1,5 +1,4 @@
 configuration {               
-  theme: "Arc";
   display-drun: "run";
   location: 2;
   yoffset: 150;

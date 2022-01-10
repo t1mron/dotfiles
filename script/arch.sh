@@ -49,15 +49,15 @@ packagelist=(
   # Coreboot
   flashrom
   # sound, bluetooth, vpn
-  pipewire pipewire-alsa pipewire-pulse pipewire-jack pavucontrol bluez bluez-utils blueberry
+  pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack pavucontrol bluez bluez-utils blueberry
   # Coding  
-  python-pip git gvim code
+  python-pip git gvim vi 
   # Office programs
   okular nomacs
   # Terminal tools 
   pacman-contrib htop openssh man-db gpm wget curl playerctl zram-generator mlocate
   # Multimedia
-  firefox mpv telegram-desktop discord qbittorrent
+  firefox mpv telegram-desktop discord qbittorrent flameshot
   # Look and feel
   zsh lxappearance feh neofetch ttf-dejavu ttf-font-awesome 
   # Security
@@ -65,13 +65,13 @@ packagelist=(
   # Network
   iwd reflector
   # Virtualization
-  playonlinux docker docker-compose
+  docker docker-compose virtualbox virtualbox-host-dkms
 )
 
 pacman -Syu ${packagelist[@]}
 
 # Create user
-useradd -G wheel,rfkill -m -d /home/user user
+useradd -G wheel,rfkill,docker,vboxusers -m -d /home/user user
 passwd user
 useradd -G wheel -m -d /home/help help
 passwd help
@@ -96,14 +96,7 @@ su user
 git clone https://aur.archlinux.org/yay.git $HOME/git/yay
 cd $HOME/git/yay && makepkg -si
 
-packagelist=(
-  polybar
-  iwgtk
-  coreboot-utils
-  libva-intel-driver-g45-h264
-)
-
-yay -Syu ${packagelist[@]}
+yay -Syu polybar iwgtk coreboot-utils libva-intel-driver-g45-h264 onlyoffice-bin
 
 git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting $HOME/.zsh/zsh-syntax-highlighting
@@ -114,7 +107,7 @@ cp -r $HOME/git/dotfiles/user/arch/. ~/
 
 exit
 
-systemctl enable tlp iwd gpm bluetooth systemd-networkd systemd-resolved docker
+systemctl enable tlp iwd gpm bluetooth systemd-networkd systemd-resolved docker reflector
 
 # Don't enter a password twice
 mkdir /root/secrets && chmod 700 /root/secrets
@@ -143,5 +136,3 @@ exit
 
 # Reboot into the new system, don't forget to remove the usb
 reboot
-
-sudo systemctl start systemd-zram-setup@zram0
