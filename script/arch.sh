@@ -28,7 +28,7 @@ mkfs.ext4 /dev/mapper/vg1-root
 # Mount partition
 mount /dev/mapper/vg1-root /mnt/
 
-pacstrap /mnt linux-lts base base-devel lvm2 grub
+pacstrap /mnt linux-lts linux-lts-headers base base-devel lvm2 grub
 
 git clone --depth=1 https://github.com/t1mron/dotfiles $HOME/git/dotfiles
 cp -r $HOME/git/dotfiles/root/arch/. /mnt/
@@ -39,7 +39,7 @@ packagelist=(
   # Xorg
   xorg-server xorg-xinit xorg-xrandr xorg-xev xorg-xprop xorg-xsetroot xorg-xkill xterm xsel xclip xcalib
   # Intel
-  mesa vulkan-intel lib32-vulkan-intel libva-utils xf86-video-intel
+  mesa lib32-mesa xf86-video-intel libva-utils 
   # Window manager 
   bspwm sxhkd rofi thunar jgmenu slock xdg-user-dirs
   # Thunar
@@ -57,7 +57,7 @@ packagelist=(
   # Terminal tools 
   pacman-contrib htop openssh man-db gpm wget curl playerctl zram-generator mlocate
   # Multimedia
-  firefox mpv telegram-desktop discord qbittorrent flameshot
+  firefox mpv telegram-desktop discord qbittorrent flameshot gimp
   # Look and feel
   zsh lxappearance feh neofetch ttf-dejavu ttf-font-awesome 
   # Security

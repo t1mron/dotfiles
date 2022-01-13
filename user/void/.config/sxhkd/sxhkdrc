@@ -1,0 +1,146 @@
+#-----------------------------#
+# WINDOW / WORKSPACE COMMANDS #
+#-----------------------------#
+
+# switch to workspace
+super + {1-9,0}
+  desktop='^{1-9,10}'; \
+  bspc query -D -d "$desktop.focused" && bspc desktop -f last || bspc desktop -f "$desktop"
+
+# move focused container to workspace
+super + shift + {1-9,0}
+  bspc node -d '^{1-9,10}'
+
+# close and kill focused window
+super + q
+  bspc node -c
+
+# change focus / move focused window
+super + {_,shift + }{h,j,k,l}
+  bspc node -{f,s} {west,south,north,east}
+
+# preselect focused window
+super + alt + {h,j,k,l}
+  bspc node -p {west,south,north,east}
+
+# cancel the preselection for the focused window
+super + alt + space
+  bspc node -p cancel
+
+# set the window state
+super + shift + s
+  bspc node focused -t \~floating
+
+# fullscreen
+super + shift + f 
+  bspc node -t \~fullscreen
+
+# make sxhkd reload its configuration files:
+super + shift + c
+  pkill -USR1 -x sxhkd
+
+# quit/reload bspwm
+super + shift + {End,r}
+  bspc {quit,wm -r}
+
+
+#----------------#
+# BASIC BINDINGS #
+#----------------#
+
+# rofi
+super + r
+  rofi -show run -theme Arc
+
+# App menu
+super + space
+  jgmenu_run >/dev/null 2>&1 &
+
+# PrtSc
+super + Print
+  flameshot gui
+
+# discord
+super + d
+  discord
+
+# terminal emulator
+super + Return
+  xterm
+
+# GUI File Manager
+super + Tab
+  thunar
+
+# vs code
+super + c
+  code-oss 
+
+# Browser
+super + f
+  firefox
+
+# Telegram
+super + t
+  telegram-desktop
+
+# Virtualization
+super + v
+  virtualbox
+
+# Office
+super + o
+  onlyoffice-desktopeditors
+
+# Copy url from firefox to mpv
+super + m
+  $HOME/.config/sxhkd/scripts/youtube.sh
+
+# kill lag window
+super + Escape
+  xkill
+
+
+#------------#
+# MEDIA KEYS #
+#------------#
+
+# Lock screen
+XF86ScreenSaver
+  slock
+# audio controls
+XF86Audio{Lower,Raise}Volume
+  pactl -- set-sink-volume 0 {-10%,+10%}
+
+# audio/mic mute
+super + XF86AudioLowerVolume
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+super + XF86AudioRaiseVolume
+  pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Toggle status bar
+XF86Display
+  $HOME/.config/sxhkd/scripts/polybar_toggle.sh
+
+# Toggle play/pause state
+XF86AudioPlay 
+  playerctl play-pause
+
+# Skip to the next song in the play list
+XF86AudioNext
+  playerctl next
+
+# Play the previous song in the play list
+XF86AudioPrev
+  playerctl previous
+
+# wi-fi menu
+super + Insert
+  iwgtk 
+
+super + Home
+  blueberry
+
+super + Prior
+  pavucontrol -t 1

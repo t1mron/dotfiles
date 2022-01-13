@@ -1,0 +1,1 @@
+sda1_crypt /dev/sda1 /boot/volume.key luks

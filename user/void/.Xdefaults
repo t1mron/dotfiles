@@ -1,0 +1,50 @@
+!! Appearance
+*VT100*renderFont: true
+*VT100*faceName: xft:Hack Nerd Font
+*VT100*faceSize: 12
+*VT100*utf8: 2
+*VT100*locale: true
+Xcursor.theme: Adwaita
+
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: true
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcdfilter
+
+! enable image image thumbnail
+*VT100*decTerminalID:	vt340
+
+! I like a LOT of scrollback...
+*VT100*savelines: 16384
+
+! copy/past text
+*VT100*Translations: #override \
+                 Ctrl <Key>V:    insert-selection(CLIPBOARD) \n\
+                 Ctrl <Key>C:    copy-selection(CLIPBOARD)
+
+! double-click to select whole URLs :D
+*VT100*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+!! Atom One Light theme
+*VT100*background: #f9f9f9
+*VT100*foreground: #383a42
+*VT100*cursorColor: #d0d0d0
+*VT100*color0: #000000
+*VT100*color1: #E45649
+*VT100*color2: #50A14F
+*VT100*color3: #986801
+*VT100*color4: #4078F2
+*VT100*color5: #A626A4
+*VT100*color6: #0184BC
+*VT100*color7: #A0A1A7
+*VT100*color8: #5c6370
+*VT100*color9: #e06c75
+*VT100*color10: #50A14F
+*VT100*color11: #986801
+*VT100*color12: #4078F2
+*VT100*color13: #A626A4
+*VT100*color14: #0184BC
+*VT100*color15: #ffffff
