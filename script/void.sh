@@ -73,7 +73,7 @@ packagelist=(
   # Look and feel
   zsh lxappearance pfetch
   # Security
-  cryptsetup
+  cryptsetup opendoas
   # Network
   iwd openresolv iwgtk
   # Virtualization
