@@ -2,8 +2,8 @@
 " BASIC "
 """""""""
 set cursorline
+set mouse=a
 set laststatus=2                        " Always display the status line
-set mouse=a                             " Enable your mouse
 set relativenumber                      " Line numbers
 set number                              " Line numbers
 set clipboard=unnamedplus               " Copy paste between vim and everything else

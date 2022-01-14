@@ -12,8 +12,8 @@ super + shift + {1-9,0}
   bspc node -d '^{1-9,10}'
 
 # close and kill focused window
-super + q
-  bspc node -c
+super + {_,shift + }q
+    bspc node -{c,k}
 
 # change focus / move focused window
 super + {_,shift + }{h,j,k,l}
@@ -35,13 +35,18 @@ super + shift + s
 super + shift + f 
   bspc node -t \~fullscreen
 
-# make sxhkd reload its configuration files:
+# reload sxhkd config
 super + shift + c
   pkill -USR1 -x sxhkd
+
+# reload bspwm
+super + shift + r
+    $HOME/.config/bspwm/bspwmrc
 
 # quit/reload bspwm
 super + shift + {End,r}
   bspc {quit,wm -r}
+
 
 
 #----------------#
@@ -62,7 +67,7 @@ super + Print
 
 # discord
 super + d
-  discord
+    flatpak run com.discordapp.Discord
 
 # terminal emulator
 super + Return
@@ -71,10 +76,6 @@ super + Return
 # GUI File Manager
 super + Tab
   thunar
-
-# vs code
-super + c
-  code-oss 
 
 # Browser
 super + f
@@ -90,7 +91,7 @@ super + v
 
 # Office
 super + o
-  onlyoffice-desktopeditors
+    flatpak run org.onlyoffice.desktopeditors
 
 # Copy url from firefox to mpv
 super + m
@@ -140,7 +141,7 @@ super + Insert
   iwgtk 
 
 super + Home
-  blueberry
+  blueman-manager
 
 super + Prior
   pavucontrol -t 1

@@ -32,7 +32,7 @@ wm-restack = bspwm
 # Modules
 modules-left = battery cpu memory temp filesystem
 modules-center = bspwm
-modules-right = wifi sound mic backlight keyboard time
+modules-right = wifi mic backlight keyboard time
 
 
 # LEFT

@@ -10,7 +10,7 @@ $HOME/.config/polybar/scripts/launch.sh
 pactl set-sink-mute @DEFAULT_SINK@ 1 &
 pactl set-source-mute @DEFAULT_SOURCE@ 1 &
 
-polybar-msg cmd show
+#polybar-msg cmd show
 bspc config top_padding 18
 
 #--------#
@@ -34,7 +34,7 @@ bspc config normal_border_color  \#cccccc
 # RULES #
 #-------#
 
-bspc rule -a firefox                 desktop='^2' state=tiled follow=on
+bspc rule -a Firefox                 desktop='^2' state=tiled follow=on
 bspc rule -a code-oss                desktop='^3' state=tiled follow=on
 bspc rule -a okular         	       desktop='^4' state=tiled follow=on
 bspc rule -a DesktopEditors          desktop='^4' state=tiled follow=on
@@ -44,7 +44,7 @@ bspc rule -a mpv                     desktop='^6' state=tiled follow=on
 bspc rule -a VirtualBox              desktop='^7' state=tiled follow=on
 
 bspc rule -a Iwgtk                state=floating center=true rectangle=900x500+0+0
-bspc rule -a Blueberry.py         state=floating center=true rectangle=900x500+0+0
+bspc rule -a Blueman-manager    state=floating center=true rectangle=900x500+0+0
 bspc rule -a Pavucontrol          state=floating center=true rectangle=900x500+0+0
 
 

@@ -26,6 +26,7 @@ export TERM=xterm-256color
 #########
 
 alias ls='ls --color=auto' # colorize the ls output
+alias sudo='doas'
 
 
 ##########
