@@ -1,0 +1,148 @@
+[colors]
+foreground = #333333
+background = #FFFFFF
+primary= #cccccc
+warn = #f00
+
+[bar/top]
+monitor = ${env:MONITOR:}
+enable-ipc = true
+
+# Dimensions
+height = 18
+
+# Fonts
+font-0 = DejaVu Sans Mono:size=9;2
+font-1 = Font Awesome 5 Free:style=Solid:size=9;2
+font-2 = Font Awesome 5 Brands:size=9;2
+font-3 = siji:style=Regular:size=9;2
+
+# Colors
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+# Misc
+fixed-center = true
+padding= 1
+module-margin = 1
+override-redirect = true
+wm-restack = bspwm
+
+# Modules
+modules-left = battery cpu memory temp filesystem update
+modules-center = bspwm
+modules-right = wifi bluetooth head mic backlight keyboard time
+
+# LEFT
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 100
+format-full = <ramp-capacity> <label-full>
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = %{F#999999}<ramp-capacity>%{F-} <label-discharging>
+label-full = 99%
+label-charging = %percentage%%
+label-discharging = %percentage%%
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 =  
+
+[module/cpu]
+type = internal/cpu
+label =  %percentage:3%%
+
+[module/memory]
+type = internal/memory
+label =  %gb_used%
+
+[module/temp]
+type = internal/temperature
+thermal-zone = 0
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp3_input
+warn-temperature = 70
+label =  %temperature-c%
+label-warn =  %temperature-c%
+label-warn-foreground = ${colors.warn}
+
+[module/filesystem]
+type = internal/fs
+mount-0 = /
+label-mounted =  %free%
+
+[module/update]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/update.sh
+interval = 600 
+
+# CENTER
+
+[module/bspwm]
+type = internal/bspwm
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;
+ws-icon-5 = VI;
+ws-icon-6 = VII;
+ws-icon-7 = VIII;
+ws-icon-8 = IX;
+ws-icon-9 = X;
+pin-workspaces = true
+enable-click = false
+enable-scroll = false
+format = <label-state> <label-mode>
+label-mode = %mode%
+label-mode-padding = 2
+label-focused = %icon%
+label-focused-background = ${colors.primary}
+label-focused-padding = 2
+label-occupied = %icon%
+label-occupied-padding = 2
+label-urgent = %icon%
+label-urgent-padding = 2
+label-empty = 
+
+# RIGHT
+
+[module/wifi]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/wifi.sh
+interval = 1 
+
+[module/bluetooth]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/bluetooth.sh
+interval = 1 
+
+[module/head]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/head.sh
+interval = 1
+
+[module/mic]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/mic.sh
+interval = 1 
+
+[module/backlight]
+type = internal/backlight
+card = acpi_video0
+label =  %percentage:3%%
+
+[module/keyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+blacklist-2 = caps lock
+label-layout = %{A1::} %layout%%{A}
+
+[module/time]
+type = internal/date
+date =  %H:%M
+interval = 60

@@ -1,7 +1,0 @@
-configuration {               
-  display-drun: "run";
-  location: 2;
-  yoffset: 150;
-  fixed-num-lines: true;
-  show-icons: true;
-}
