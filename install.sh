@@ -99,8 +99,8 @@ packagelist=(
 xbps-install -Su ${packagelist[@]}
 
 # symlinks
-ln -s /usr/lib/mpv-mpris/mpris.so /etc/mpv/scripts/
-ln -s /bin/telegram-desktop /bin/telegram
+ln -sf /usr/lib/mpv-mpris/mpris.so /etc/mpv/scripts/
+ln -sf /bin/telegram-desktop /bin/telegram
 
 git clone --depth=1 https://github.com/t1mron/dotfiles $HOME/git/dotfiles
 cp -r $HOME/git/dotfiles/etc /
@@ -129,7 +129,7 @@ pip install --user swaytools
 exit
 
 # Set the time zone and a system clock
-ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 hwclock --systohc --utc
 
 # Update current locale
@@ -141,8 +141,8 @@ ln -s /usr/share/alsa/alsa.conf.d/50-pipewire.conf /etc/alsa/conf.d
 ln -s /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf /etc/alsa/conf.d
 
 # Don't enter a password twice
-dd bs=1 count=64 if=/dev/urandom of=/boot/volume.key
-cryptsetup -v luksAddKey -i 1 /dev/${DRIVE}1 /boot/volume.key
+dd bs=512 count=4 if=/dev/urandom of=/boot/volume.key
+cryptsetup luksAddKey /dev/nvme0n1p2 /boot/volume.key
 chmod 000 /boot/volume.key
 chmod -R g-rwx,o-rwx /boot
 
@@ -152,6 +152,9 @@ HOME_UUID=$(blkid -s UUID -o value /dev/mapper/linux-home)
 SWAP_UUID=$(blkid -s UUID -o value /dev/mapper/linux-swap)
 
 echo "linux UUID=$LUKS_UUID /boot/volume.key luks" > /etc/crypttab
+
+# lvm trim support
+sed -i 's/issue_discards = 0/issue_discards = 1/' /etc/lvm/lvm.conf
 
 cat << EOF > /etc/default/grub
 UUID=$ROOT_UUID / btrfs $BTRFS_OPTS,subvol=@ 0 1
@@ -168,7 +171,7 @@ GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Void"
 GRUB_ENABLE_CRYPTODISK=y
 GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 resume=UUID=$SWAP_UUID zswap.enabled=0"
-GRUB_CMDLINE_LINUX="i915.modeset=1 enable_dc=2 i915.enable_rc6=1 i915.enable_psr=1 enable_fbc=1 i915.fastboot=1 i915.lvds_downclock=1 i915.semaphores=1 mitigations=off net.ifnames=0 ipv6.disable=1 modprobe.blacklist=pcspkr zram.num_devices=2 iomem=relaxed rd.lvm.vg=linux rd.luks.uuid=$LUKS_UUID)"
+GRUB_CMDLINE_LINUX="i915.modeset=1 enable_dc=2 i915.enable_rc6=1 i915.enable_psr=1 enable_fbc=1 i915.fastboot=1 i915.lvds_downclock=1 i915.semaphores=1 mitigations=off net.ifnames=0 ipv6.disable=1 modprobe.blacklist=pcspkr zram.num_devices=2 iomem=relaxed rd.auto=1 cryptdevice=UUID=$LUKS_UUID:lvm:allow-discards)"
 EOF
 
 # Install grub and create configuration
