@@ -1,0 +1,129 @@
+###---WM---###
+
+# kill focused window
+bindsym --to-code $mod+q kill
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+# change focus
+bindsym --to-code $mod+k focus up
+bindsym --to-code $mod+j focus down
+bindsym --to-code $mod+h focus left
+bindsym --to-code $mod+l focus right
+
+# move focused window
+bindsym --to-code $mod+Shift+k move up
+bindsym --to-code $mod+Shift+j move down
+bindsym --to-code $mod+Shift+h move left
+bindsym --to-code $mod+Shift+l move right
+
+# new level of tab
+bindsym --to-code $mod+Shift+s splith
+
+# toggle fullscreen / normal
+bindsym --to-code $mod+Shift+f fullscreen toggle
+
+# toggle swaybar
+bindsym $mod+space bar hidden_state show
+bindsym --release $mod+space bar hidden_state hide
+
+# reload i3 config
+bindsym --to-code $mod+Shift+c reload
+
+# exit session
+bindsym $mod+Shift+End exit
+
+
+###---APPS---###
+
+# wofi 
+bindsym --to-code $mod+r exec wofi -Iab -S drun -y 150 -p "" -l 2 
+
+# print screen
+bindsym --to-code $mod+Print exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
+
+# terminal emulator
+bindsym --to-code $mod+Return exec footclient -T=""
+bindsym --to-code $mod+Shift+Return exec $check_exist "f00t-scratchpad" "footclient -a f00t-scratchpad"
+
+# cli file manager
+bindsym --to-code $mod+Tab exec $check_exist "f00t-lf" "footclient -a f00t-lf -T lf -e lf"
+
+# gui file manager
+bindsym --to-code $mod+n exec $check_exist "Thunar" "Thunar"
+
+# web browser
+bindsym --to-code $mod+f exec $check_exist "firefox" "firefox"
+
+# libreoffice
+bindsym --to-code $mod+o exec $check_exist "libreoffice" "libreoffice"
+
+# torrent client
+bindsym --to-code $mod+b exec $check_exist "qbittorrent" "qbittorrent"
+
+# gui qemu
+bindsym --to-code $mod+v exec $check_exist "virt-manager" "virt-manager"
+
+# telegram
+bindsym --to-code $mod+t exec $check_exist "telegram" "telegram"
+
+# pdf readers
+bindsym --to-code $mod+p exec $check_exist_pdf "okular" "zathura"
+
+# mpv
+bindsym --to-code $mod+m exec swaymsg -q "[app_id=mpv] focus"
+
+# copy url from firefox to mpv
+bindsym --to-code $mod+Shift+m exec $mpv_youtube
+
+# wi-fi menu
+bindsym $mod+insert exec iwgtk 
+
+# bluetooth menu
+bindsym $mod+Home exec blueman-manager
+
+# sound/mic menu
+bindsym $mod+Prior exec pavucontrol -t 1
+
+
+###---FN---###
+
+# lock screen
+bindsym XF86ScreenSaver exec playerctl -a pause || true && swaylock
+
+# volume level
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10% 
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10% 
+
+# audio/mic mute
+bindsym $mod+XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym $mod+XF86AudioRaiseVolume exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# skip to the next song in the play list
+bindsym XF86AudioNext exec playerctl -i firefox next
+
+# play the previous song in the play list
+bindsym XF86AudioPrev exec playerctl -i firefox previous
+
+# toggle play/pause state
+bindsym XF86AudioPlay exec playerctl -i firefox play-pause 

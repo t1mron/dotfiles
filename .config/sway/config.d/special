@@ -1,0 +1,27 @@
+# Open new workspace at tabbed mode
+workspace_layout tabbed
+
+# Easy switch beetween workspaces
+workspace_auto_back_and_forth yes
+
+# Disable change window focus by moving mouse (output|container|none)
+focus_follows_mouse no
+
+# hide cursor when typing 
+seat seat0 hide_cursor when-typing enable
+
+# hide cursor after 3 sec
+#seat seat0 hide_cursor 3000
+
+# moved mouse to the middle of the container on switch
+mouse_warping container
+
+# Drag floating windows by holding down $mod and left mouse button.
+floating_modifier $mod normal
+
+# window border
+default_border $pixel_size
+default_floating_border $pixel_size
+
+# hide border on workspace with only one window visible
+hide_edge_borders smart

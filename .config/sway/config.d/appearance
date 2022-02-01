@@ -1,0 +1,13 @@
+# font for title
+font pango:DejaVu Sans Mono $font_size
+
+# background
+output * bg $wallpaper fill
+
+# class                 border backgr text indicator child_border
+client.focused          $blue   $blue   $white $blue $blue
+client.focused_inactive $black  $orange $black $grey $grey
+client.unfocused        $black  $grey   $black $grey $grey
+client.urgent           $grey   $grey   $black $grey $grey
+
+client.background $black

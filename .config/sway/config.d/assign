@@ -1,0 +1,17 @@
+assign [app_id="foot"] $ws1
+
+assign [app_id="firefox"] $ws2
+assign [app_id="org.qbittorrent.qBittorrent"] $ws2
+
+assign [app_id="Thunar"] $ws4
+assign [app_id="f00t-lf"] $ws4
+assign [app_id="org.kde.okular"] $ws4
+assign [app_id="org.pwmt.zathura"] $ws4
+assign [app_id="libreoffice-startcenter"] $ws4
+assign [app_id="org.https://nomacs.nomacs"] $ws4
+
+assign [app_id="org.telegram.desktop.desktop"] $ws5
+
+assign [app_id="mpv"] $ws6
+
+assign [app_id="virt-manager"] $ws7

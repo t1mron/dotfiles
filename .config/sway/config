@@ -1,0 +1,42 @@
+# keys
+set $mod Mod4
+
+set $font_size 8
+
+# status bar
+set $icon_size 10
+set $width_size 40
+set $height_size 21
+
+set $pixel_size pixel 2
+set $window_size resize set 900 500
+
+set $status_bar $HOME/.config/sway/scripts/swaybar.sh
+set $check_exist $HOME/.config/sway/scripts/check_exist.sh
+set $check_exist_pdf $HOME/.config/sway/scripts/check_exist_pdf.sh
+set $wallpaper $HOME/.config/sway/wallpapers/death_life.jpg
+set $mpv_youtube $HOME/.config/sway/scripts/mpv_youtube.sh
+
+set $float_window floating enable,border $pixel_size,$window_size,move position center
+set $scratchpad_window border $pixel_size,move scratchpad,$window_size,scratchpad show
+
+# set workspace name 
+set $ws1 "1:" 
+set $ws2 "2:" 
+set $ws3 "3:" 
+set $ws4 "4:" 
+set $ws5 "5:" 
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:"
+
+# colors
+set $grey #cccccc
+set $blue #3285e5
+set $orange #ffa500
+set $black #000000 
+set $white #ffffff
+
+# load other config files
+include $HOME/.config/sway/config.d/*
