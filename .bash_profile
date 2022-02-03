@@ -12,6 +12,12 @@ export ELM_ENGINE=wayland_egl
 export SDL_VIDEODRIVER=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
 export NO_AT_BRIDGE=1
-
-# qt theme
 export QT_QPA_PLATFORMTHEME=qt5ct
+
+# start wayland session with dbus support
+if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+  exec dbus-run-session sway
+fi
+
+# get the aliases and functions
+[ -f $HOME/.bashrc ] && . $HOME/.bashrc

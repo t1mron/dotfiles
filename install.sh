@@ -1,4 +1,5 @@
 DRIVE="sda"
+EXT4_OPTS="rw,noatime,discard"
 
 # Delete a luks cont. if exist
 head -c 3145728 /dev/urandom > /dev/$DRIVE; sync
@@ -24,68 +25,67 @@ lvcreate -L 8G linux -n swap
 lvcreate -l +100%FREE linux -n home
 
 # Formatting the partitions
-mkfs.btrfs -L void /dev/mapper/linux-void
+mkfs.ext4 /dev/mapper/linux-void
 mkfs.ext4 /dev/mapper/linux-home
 mkswap /dev/mapper/linux-swap
 
-# ... and btrfs subvolumes
-BTRFS_OPTS="rw,noatime,ssd,space_cache,commit=120"
-EXT4_OPTS="rw,noatime,discard"
-mount -o $BTRFS_OPTS /dev/mapper/linux-void /mnt
-btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@snapshots
-
-# Unmount and remount with the corect partitions
-umount /mnt
-
-# Remount the partitions
-mount -o $BTRFS_OPTS,subvol=@ /dev/mapper/linux-void /mnt
-mkdir -p /mnt/{home,.snapshots}
+# Mount partition
+mount -o $EXT4_OPTS /dev/mapper/linux-void /mnt/
+mkdir -p /mnt/home
 mount -o $EXT4_OPTS /dev/mapper/linux-home /mnt/home
-mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/linux-void /mnt/.snapshots
 
-# Nested partitions. Snapshots don't work resursively
-mkdir -p /mnt/var/cache
-btrfs subvolume create /mnt/var/cache/xbps
-btrfs subvolume create /mnt/var/tmp
-btrfs subvolume create /mnt/srv
-
-xbps-install -Su -R https://alpha.de.repo.voidlinux.org/current -r /mnt base-minimal grub-btrfs lvm2 linux dosfstools e2fsprogs btrfs-progs ncurses dhcpcd dbus-elogind dbus-elogind-libs elogind polkit rtkit
+ARCH=x86_64-musl xbps-install -Su -R https://alpha.de.repo.voidlinux.org/current -r /mnt linux base-system base-devel dbus-elogind dbus-elogind-libs elogind polkit rtkit grub lvm2 socklog-void
 
 for dir in dev proc sys run; do mount --rbind /$dir /mnt/$dir; mount --make-rslave /mnt/$dir; done
 
 cp /etc/resolv.conf /mnt/etc/
 
-DRIVE=$DRIVE BTRFS_OPTS=$BTRFS_OPTS EXT4_OPTS=$EXT4_OPTS PS1='(chroot) # ' chroot /mnt/ /bin/bash
+DRIVE=$DRIVE EXT4_OPTS=$EXT4_OPTS PS1='(chroot) # ' chroot /mnt/ /bin/bash
 chown root:root /
 chmod 755 /
+
+cat << EOF > /etc/xbps.d/10-ignore.conf
+ignorepkg=sudo
+ignorepkg=wpa_supplicant
+ignorepkg=linux-firmware-amd
+ignorepkg=linux-firmware-nvidia
+ignorepkg=linux-firmware-broadcom
+ignorepkg=linux-firmware-network
+ignorepkg=ipw2100-firmware
+ignorepkg=ipw2200-firmware
+ignorepkg=zd1211-firmware
+ignorepkg=wifi-firmware
+ignorepkg=void-artwork
+EOF
+
+xbps-remove sudo wpa_supplicant linux-firmware-{amd,nvidia,broadcom,network} ipw2100-firmware ipw2200-firmware zd1211-firmware wifi-firmware void-artwork
 
 # Add repos
 #xbps-install -S void-repo-{nonfree,multilib,multilib-nonfree}
 
 packagelist=(
   # Intel
-  mesa-dri mesa-vulkan-intel vulkan-loader libva-intel-driver libva-intel-utils sysfsutils 
+  mesa-dri mesa-vulkan-intel vulkan-loader libva-intel-driver libva-utils sysfsutils 
   # XDG
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-user-dirs
   # Window manager 
-  sway swaylock swayidle wofi foot wev Thunar lf zsh wl-clipboard
+  sway swaylock swayidle wofi foot wev Thunar lf wl-clipboard lxappearance neofetch
   # Thunar
-  gvfs udiskie file-roller thunar-archive-plugin
+  gvfs udiskie file-roller thunar-archive-plugin tumbler
   # Laptop
   tlp lm_sensors powertop 
   # Coreboot
   coreboot-utils flashrom
   # sound, bluetooth, vpn
-  pipewire alsa-pipewire libjack-pipewire pavucontrol pulseaudio-utils bluez blueman
+  pipewire libspa-bluetooth bluez pulseaudio-utils pulsemixer
   # Coding  
   python3-pip git neovim
   # Office programs
   libreoffice okular zathura-pdf-mupdf nomacs imv
   # Terminal tools 
-  htop gpm
+  htop gpm jq
   # Multimedia
-  firefox mpv mpv-mpris playerctl yt-dlp telegram-desktop qbittorrent grim slurp
+  firefox mpv mpv-mpris playerctl yt-dlp telegram-desktop qbittorrent grim slurp spotify-tui spotifyd
   # IOS
   usbmuxd libimobiledevice
   # Security
@@ -99,50 +99,42 @@ packagelist=(
 xbps-install -Su ${packagelist[@]}
 
 # symlinks
+mkdir -p /etc/mpv/scripts/
 ln -sf /usr/lib/mpv-mpris/mpris.so /etc/mpv/scripts/
-ln -sf /bin/telegram-desktop /bin/telegram
 
 git clone --depth=1 https://github.com/t1mron/dotfiles $HOME/git/dotfiles
 cp -r $HOME/git/dotfiles/etc /
 rm -rf $HOME/git
 
 # Create user
-useradd -G users,wheel,docker,kvm,libvirt -m -d /home/user user
+useradd -G wheel,socklog,storage,video,audio,bluetooth,docker,kvm,libvirt -m -d /home/user user
 passwd user
-useradd -G users,wheel -m -d /home/help help
+useradd -G wheel,storage -m -d /home/help help
 passwd help
 
-chsh -s /bin/zsh user
+chsh -s /bin/bash user
 chsh -s /bin/bash root
 
 # User workflow
 su user 
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting $HOME/.zsh/zsh-syntax-highlighting
-git clone --depth=1 https://github.com/woefe/git-prompt.zsh $HOME/.zsh/git-prompt
 git clone --depth=1 https://github.com/t1mron/dotfiles $HOME/git/dotfiles
 
-ln -sf $HOME/git/dotfiles/{.config,.fonts,.vimrc,.zprofile,.zshrc} ~/
+ln -sf $HOME/git/dotfiles/{.config,.fonts,.gtkrc-2.0,.vimrc,.bash_profile,.bashrc} ~/
 
 # python scripts
 pip install --user swaytools
+
+# create default home folders
+xdg-user-dirs-update
 exit
 
 # Set the time zone and a system clock
 ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-hwclock --systohc --utc
-
-# Update current locale
-xbps-reconfigure -f glibc-locales
-
-# Pipewire - ALSA integration
-mkdir -p /etc/alsa/conf.d
-ln -s /usr/share/alsa/alsa.conf.d/50-pipewire.conf /etc/alsa/conf.d
-ln -s /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf /etc/alsa/conf.d
+hwclock --systohc --localtime
 
 # Don't enter a password twice
 dd bs=512 count=4 if=/dev/urandom of=/boot/volume.key
-cryptsetup luksAddKey /dev/nvme0n1p2 /boot/volume.key
+cryptsetup -v luksAddKey -i 1 /dev/${DRIVE}1 /boot/volume.key
 chmod 000 /boot/volume.key
 chmod -R g-rwx,o-rwx /boot
 
@@ -156,12 +148,10 @@ echo "linux UUID=$LUKS_UUID /boot/volume.key luks" > /etc/crypttab
 # lvm trim support
 sed -i 's/issue_discards = 0/issue_discards = 1/' /etc/lvm/lvm.conf
 
-cat << EOF > /etc/default/grub
-UUID=$ROOT_UUID / btrfs $BTRFS_OPTS,subvol=@ 0 1
-UUID=$ROOT_UUID /.snapshots btrfs $BTRFS_OPTS,subvol=@snapshots 0 2
+cat << EOF > /etc/fstab
+UUID=$ROOT_UUID / ext4 $EXT4_OPTS 0 1
 UUID=$HOME_UUID /home ext4 $EXT4_OPTS 0 2
 UUID=$SWAP_UUID none swap defaults 0 1
-tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0
 EOF
 
 # Grub configuration
@@ -170,8 +160,8 @@ GRUB_DEFAULT=0
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Void"
 GRUB_ENABLE_CRYPTODISK=y
-GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 resume=UUID=$SWAP_UUID zswap.enabled=0"
-GRUB_CMDLINE_LINUX="i915.modeset=1 enable_dc=2 i915.enable_rc6=1 i915.enable_psr=1 enable_fbc=1 i915.fastboot=1 i915.lvds_downclock=1 i915.semaphores=1 mitigations=off net.ifnames=0 ipv6.disable=1 modprobe.blacklist=pcspkr zram.num_devices=2 iomem=relaxed rd.auto=1 cryptdevice=UUID=$LUKS_UUID:lvm:allow-discards)"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 resume=UUID=$SWAP_UUID"
+GRUB_CMDLINE_LINUX="i915.modeset=1 enable_dc=2 i915.enable_rc6=1 i915.enable_psr=1 enable_fbc=1 i915.fastboot=1 i915.lvds_downclock=1 i915.semaphores=1 mitigations=off net.ifnames=0 ipv6.disable=1 modprobe.blacklist=pcspkr zram.num_devices=2 iomem=relaxed rd.luks.options=discard rd.lvm.vg=linux rd.luks.uuid=$LUKS_UUID"
 EOF
 
 # Install grub and create configuration
@@ -179,7 +169,7 @@ mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # enable services
-ln -s /etc/sv/{dbus,polkitd,gpm,iwd,dhcpcd,bluetoothd,docker,libvirtd,virtlockd,virtlogd,tlp,usbmuxd} /etc/runit/runsvdir/current
+ln -s /etc/sv/{dbus,polkitd,socklog-unix,nanoklogd,gpm,iwd,dhcpcd,bluetoothd,libvirtd,virtlockd,virtlogd,tlp,usbmuxd} /etc/runit/runsvdir/current
 
 # Regenerate initrd image
 xbps-reconfigure -fa

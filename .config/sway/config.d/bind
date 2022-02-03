@@ -51,7 +51,7 @@ bindsym --release $mod+space bar hidden_state hide
 bindsym --to-code $mod+Shift+c reload
 
 # exit session
-bindsym $mod+Shift+End exit
+bindsym $mod+Shift+End exec swaymsg exit
 
 
 ###---APPS---###
@@ -63,14 +63,15 @@ bindsym --to-code $mod+r exec wofi -Iab -S drun -y 150 -p "" -l 2
 bindsym --to-code $mod+Print exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
 
 # terminal emulator
-bindsym --to-code $mod+Return exec footclient -T=""
-bindsym --to-code $mod+Shift+Return exec $check_exist "f00t-scratchpad" "footclient -a f00t-scratchpad"
+bindsym --to-code $mod+Return exec footclient
+
+bindsym --to-code $mod+Shift+Return exec $check_exist_scratchpad "footclient -a f00t-terminal -T f00t-scratchpad" "f00t-terminal"
 
 # cli file manager
-bindsym --to-code $mod+Tab exec $check_exist "f00t-lf" "footclient -a f00t-lf -T lf -e lf"
+bindsym --to-code $mod+Tab exec $check_exist "footclient -a f00t-lf -T lf -e lf" "f00t-lf"
 
 # gui file manager
-bindsym --to-code $mod+n exec $check_exist "Thunar" "Thunar"
+bindsym --to-code $mod+n exec $check_exist "thunar" "thunar"
 
 # web browser
 bindsym --to-code $mod+f exec $check_exist "firefox" "firefox"
@@ -85,31 +86,36 @@ bindsym --to-code $mod+b exec $check_exist "qbittorrent" "qbittorrent"
 bindsym --to-code $mod+v exec $check_exist "virt-manager" "virt-manager"
 
 # telegram
-bindsym --to-code $mod+t exec $check_exist "telegram" "telegram"
+bindsym --to-code $mod+t exec $check_exist "telegram-desktop" "telegram"
+
+# spotify-tui
+bindsym --to-code $mod+s exec $check_exist "footclient -a f00t-spotify -T spotify -e spotify-tui" "f00t-spotify"
 
 # pdf readers
 bindsym --to-code $mod+p exec $check_exist_pdf "okular" "zathura"
 
 # mpv
-bindsym --to-code $mod+m exec swaymsg -q "[app_id=mpv] focus"
+bindsym --to-code $mod+m exec $check_exist "mpv" "mpv"
 
 # copy url from firefox to mpv
 bindsym --to-code $mod+Shift+m exec $mpv_youtube
 
 # wi-fi menu
-bindsym $mod+insert exec iwgtk 
+bindsym $mod+insert exec $check_exist_scratchpad "iwgtk" "iwgtk"
 
 # bluetooth menu
-bindsym $mod+Home exec blueman-manager
+bindsym $mod+Home exec $check_exist_scratchpad "footclient -a f00t-bluetoothctl -T f00t-scratchpad -e bluetoothctl" "f00t-bluetoothctl"
 
 # sound/mic menu
-bindsym $mod+Prior exec pavucontrol -t 1
+bindsym $mod+Prior exec $check_exist_scratchpad "footclient -a f00t-pulsemixer -T f00t-scratchpad -e pulsemixer" "f00t-pulsemixer"
 
 
 ###---FN---###
 
 # lock screen
-bindsym XF86ScreenSaver exec playerctl -a pause || true && swaylock
+bindsym XF86ScreenSaver exec playerctl -a pause || true && swaymsg bar hidden_state hide && swaymsg "output * dpms off" && swaylock
+
+bindsym XF86Battery exec swaymsg "output * dpms on"
 
 # volume level
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10% 

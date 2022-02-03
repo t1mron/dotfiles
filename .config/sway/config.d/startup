@@ -1,3 +1,6 @@
+# terminal server mode
+exec foot --server
+
 # sound/mic
 exec pipewire
 exec pipewire-pulse
@@ -9,11 +12,9 @@ exec udiskie
 exec pactl set-sink-mute @DEFAULT_SINK@ 1
 exec pactl set-source-mute @DEFAULT_SOURCE@ 1
 
-# server mode for terminal
-exec foot --server
-
 # lock and turn off screen
 exec swayidle -w \
-    timeout 5 'if pgrep -x swaylock; then swaymsg "output * dpms off"; fi' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep 'playerctl -a pause'
+  resume 'swaymsg "output * dpms on"' \
+  before-sleep 'playerctl -a pause'
+
+exec_always $gtk3_theme

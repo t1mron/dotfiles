@@ -11,11 +11,16 @@ set $height_size 21
 set $pixel_size pixel 2
 set $window_size resize set 900 500
 
+set $wallpaper $HOME/.config/sway/wallpapers/death_life.jpg
+
 set $status_bar $HOME/.config/sway/scripts/swaybar.sh
+
 set $check_exist $HOME/.config/sway/scripts/check_exist.sh
 set $check_exist_pdf $HOME/.config/sway/scripts/check_exist_pdf.sh
-set $wallpaper $HOME/.config/sway/wallpapers/death_life.jpg
+set $check_exist_scratchpad $HOME/.config/sway/scripts/check_exist_scratchpad.sh
+
 set $mpv_youtube $HOME/.config/sway/scripts/mpv_youtube.sh
+set $gtk3_theme $HOME/.config/sway/scripts/gtk3_theme.sh
 
 set $float_window floating enable,border $pixel_size,$window_size,move position center
 set $scratchpad_window border $pixel_size,move scratchpad,$window_size,scratchpad show

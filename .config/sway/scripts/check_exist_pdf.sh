@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
-if [[ $(pgrep -fc "$1") -eq 1 ]]; then
-  if [[ ! $(pgrep -fc "$2") -eq 1 ]]; then
-    swaymsg -q "[app_id=$2] focus"
+. $HOME/.config/sway/scripts/back_and_forth.sh
+
+if [ "$(pgrep -fc "$1")" -eq 2 ]; then
+  if [ ! "$(pgrep -fc "$2")" -eq 2 ]; then
+    back_and_forth "$2"
   fi
 else
-  swaymsg -q "[app_id=$1] focus"
+  back_and_forth "$1"
 fi

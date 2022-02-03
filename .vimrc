@@ -9,6 +9,15 @@ set number                              " Line numbers
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 set hlsearch
 
+" On pressing tab, insert 2 spaces
+set expandtab
+" show existing tab with 2 spaces width
+set tabstop=2
+set softtabstop=2
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
+
+
 " cyrillic support
 set keymap=russian-jcukenwin
 set iminsert=0
@@ -28,14 +37,7 @@ nnoremap <2-MiddleMouse> <Nop>
 nnoremap <3-MiddleMouse> <Nop>
 nnoremap <4-MiddleMouse> <Nop>
 
-" auto-pairs
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
+
 
 """""""""""""""
 " COLORSCHEME "

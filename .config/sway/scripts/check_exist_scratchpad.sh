@@ -5,5 +5,5 @@
 if [ "$(pgrep -fc "$2")" -eq 2 ]; then
   swaymsg -q exec "$1"
 else
-  back_and_forth "$2"
+  back_and_forth_scratchpad "$2"
 fi

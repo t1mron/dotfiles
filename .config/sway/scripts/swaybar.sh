@@ -1,9 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 
-# Firefox addon - add-url-to-window-title (set full path url in settings)
+dir="$HOME/.config/sway/scripts/swaybar"
 
-URL=$(swaymsg -t get_tree | grep -o -E 'https?:[^"]+' | awk '{print $1}' | sed 's/\\//g')
+. "$dir/head.sh"
+. "$dir/mic.sh"
+#. "$dir/temp.sh"
+. "$dir/mem.sh"
+. "$dir/cpu.sh"
+. "$dir/fs.sh"
+. "$dir/lght.sh"
+. "$dir/time.sh"
+. "$dir/kbd.sh"
+. "$dir/bat.sh"
 
-if [[ $URL == *"https://www.youtube.com/watch?v="* ]]; then
-  swaymsg exec mpv "$URL"
-fi
+printf "%b %3d%% | %b | %b %s | %b %2d%% | %b %s | %b %2d | %b %s | %b %s | %b %2d%%" \
+  "$head_icon" "$head" \
+  "$mic_icon" \
+  "$mem_icon" "$mem" \
+  "$cpu_icon" "$cpu" \
+  "$fs_icon" "$fs" \
+  "$lght_icon" "$lght" \
+  "$time_icon" "$time" \
+  "$kbd_icon" "$kbd" \
+  "$bat_icon" "$bat"

@@ -3,16 +3,14 @@ for_window [class=".*"] focus
 for_window [app_id=".*"] focus
 
 # make window with specified app_id scratchpad
-for_window [app_id="f00t-scratchpad"] $scratchpad_window
+for_window [title="f00t-scratchpad"] $scratchpad_window
+for_window [title="iwgtk"] $scratchpad_window
 
 # make window with specified app_id float
 for_window [app_id="imv"] $float_window 
-for_window [app_id="iwgtk"] $float_window 
-for_window [app_id="pavucontrol"] $float_window 
-for_window [app_id="blueman-manager"] $float_window 
 
 # change window title name
-for_window [app_id="Thunar"] title_format "thunar"
+for_window [app_id="thunar"] title_format "thunar"
 for_window [app_id="firefox"] title_format "firefox"
 for_window [app_id="org.kde.okular"] title_format "okular"
 #for_window [app_id="virt-manager"] title_format "virt-manager"

@@ -1,34 +1,34 @@
 # keyboard layout - us/ru
 input * {
-    xkb_layout "us,ru"
-    xkb_options "grp:alt_shift_toggle"
-    xkb_model "pc105"
+  xkb_layout "us,ru"
+  xkb_options "grp:alt_shift_toggle"
+  xkb_model "pc105"
 }
 
 # trackpoint sensitive
 input "2:10:TPPS/2_IBM_TrackPoint" {
-    accel_profile flat
-    pointer_accel 1
+  accel_profile flat
+  pointer_accel 1
 }
 
 # status bar
 bar {
-    mode hide
-    position top
-    modifier none
-    tray_output none
-    hidden_state hide
-    height $height_size
-    pango_markup enabled
-    strip_workspace_numbers yes
-    workspace_min_width $width_size
-    #status_command while $status_bar; do sleep 1; done
-    font "DejaVu Sans Mono","Font Awesome 5 Free $icon_size"
-    colors {
-    	statusline $white
-        background $black
-	focused_workspace $grey $grey $black
-        inactive_workspace $black $black $white
-	urgent_workspace $black $black $white 
-    }
+  mode hide
+  position top
+  modifier none
+  tray_output none
+  hidden_state hide
+  height $height_size
+  pango_markup enabled
+  strip_workspace_numbers yes
+  workspace_min_width $width_size
+  status_command while $status_bar; do sleep 1; done
+  font "DejaVuSansMono","Font Awesome 5 Free $icon_size"
+  colors {
+    statusline $white
+    background $black
+    focused_workspace $grey $grey $black
+    inactive_workspace $black $black $white
+	  urgent_workspace $black $black $white 
+  }
 }
