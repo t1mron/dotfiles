@@ -1,0 +1,6 @@
+[Default Applications]
+x-scheme-handler/tg=userapp-Telegram Desktop-HYVOG1.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-Telegram Desktop-HYVOG1.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;

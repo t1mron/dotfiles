@@ -1,5 +1,5 @@
 export PATH="$PATH:$HOME/.local/bin"
-
+export EDITOR=vim
 
 #########
 # ALIAS #
@@ -16,9 +16,9 @@ alias grep='grep --color=auto'
 
 # prompt
 normal="\[\e[0m\]"
-blue="\[\e[1;34m\]"
+blue="\[\e[0;34m\]"
 
-PS1="$blue\w $normal➜ "
+PS1="$blue\w $normal\n ➜ "
 
 # spawn new terminal in the current cwd
 _urlencode() {

@@ -1,7 +1,7 @@
 #!/bin/sh
 
-bat=$(cat /sys/class/power_supply/BAT0/capacity)
-bat_status=$(cat /sys/class/power_supply/BAT0/status)
+bat="$(cat /sys/class/power_supply/BAT0/capacity)"
+bat_status="$(cat /sys/class/power_supply/BAT0/status)"
 
 if [ "$bat" -ge 80 ] && [ "$bat" -lt 100 ]; then
   bat_icon=""

@@ -1,20 +1,2 @@
-# terminal server mode
-exec foot --server
-
-# sound/mic
-exec pipewire
-exec pipewire-pulse
-
-# auto mount media drive
-exec udiskie
-
-# disable headphone/mic
-exec pactl set-sink-mute @DEFAULT_SINK@ 1
-exec pactl set-source-mute @DEFAULT_SOURCE@ 1
-
-# lock and turn off screen
-exec swayidle -w \
-  resume 'swaymsg "output * dpms on"' \
-  before-sleep 'playerctl -a pause'
-
+exec $startup
 exec_always $gtk3_theme

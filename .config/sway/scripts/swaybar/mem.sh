@@ -1,4 +1,4 @@
 #!/bin/sh
 
 mem_icon=""
-mem=$(free -h | awk '/Mem/ {print $3}')
+mem="$(free -h | awk '/Mem/ {print $3}')"

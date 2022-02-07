@@ -1,5 +1,5 @@
 # font for title
-font pango:DejaVuSansMono $font_size
+font pango:Hack Nerd Font $font_size
 
 # background
 output * bg $wallpaper fill

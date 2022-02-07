@@ -17,19 +17,15 @@ set softtabstop=2
 " when indenting with '>', use 2 spaces width
 set shiftwidth=2
 
-
 " cyrillic support
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
-inoremap <c-l> <c-^>
+
 
 """""""""""
 " MAPPING "
 """""""""""
-" Remap escape
-inoremap jk <Esc>
-inoremap kj <Esc>
 
 " Disable copy-past middle click
 nnoremap <MiddleMouse> <Nop>

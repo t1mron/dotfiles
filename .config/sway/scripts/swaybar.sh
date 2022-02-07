@@ -2,9 +2,11 @@
 
 dir="$HOME/.config/sway/scripts/swaybar"
 
+. "$dir/wifi.sh"
+. "$dir/blth.sh"
 . "$dir/head.sh"
 . "$dir/mic.sh"
-#. "$dir/temp.sh"
+#. "$dir/temp.sh" not important information
 . "$dir/mem.sh"
 . "$dir/cpu.sh"
 . "$dir/fs.sh"
@@ -13,7 +15,9 @@ dir="$HOME/.config/sway/scripts/swaybar"
 . "$dir/kbd.sh"
 . "$dir/bat.sh"
 
-printf "%b %3d%% | %b | %b %s | %b %2d%% | %b %s | %b %2d | %b %s | %b %s | %b %2d%%" \
+printf "%s %b | %b | %b %3d%% | %b | %b %s | %b %2d%% | %b %s | %b %2d | %b %s | %b %s | %b %2d%%\n" \
+  "$wifi_ssid" "$wifi_icon" \
+  "$blth_icon" \
   "$head_icon" "$head" \
   "$mic_icon" \
   "$mem_icon" "$mem" \

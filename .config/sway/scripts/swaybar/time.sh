@@ -1,4 +1,4 @@
 #!/bin/sh
 
 time_icon=""
-time=$(date +'%H:%M')
+time="$(date +'%H:%M')"

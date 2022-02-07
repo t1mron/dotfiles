@@ -14,10 +14,10 @@ set $window_size resize set 900 500
 set $wallpaper $HOME/.config/sway/wallpapers/death_life.jpg
 
 set $status_bar $HOME/.config/sway/scripts/swaybar.sh
-
+set $startup $HOME/.config/sway/scripts/startup.sh
+set $lock $HOME/.config/sway/scripts/lock.sh
 set $check_exist $HOME/.config/sway/scripts/check_exist.sh
-set $check_exist_pdf $HOME/.config/sway/scripts/check_exist_pdf.sh
-set $check_exist_scratchpad $HOME/.config/sway/scripts/check_exist_scratchpad.sh
+set $screenshot $HOME/.config/sway/scripts/screenshot.sh
 
 set $mpv_youtube $HOME/.config/sway/scripts/mpv_youtube.sh
 set $gtk3_theme $HOME/.config/sway/scripts/gtk3_theme.sh
