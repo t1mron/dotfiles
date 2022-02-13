@@ -1,5 +1,6 @@
 export DRIVE="nvme0n1p"
 export EXT4_OPTS="rw,noatime,discard"
+export FAT32_OPTS="defaults,noatime"
 
 # Delete a luks cont. if exist
 head -c 3145728 /dev/urandom > /dev/$DRIVE; sync
@@ -34,7 +35,7 @@ mkswap /dev/mapper/linux-swap
 mount -o $EXT4_OPTS /dev/mapper/linux-void /mnt/
 mkdir -p /mnt/boot/efi
 mkdir -p /mnt/home
-mount -o $EXT4_OPTS /dev/${DRIVE}1 /mnt/boot/efi
+mount -o $FAT32_OPTS /dev/${DRIVE}1 /mnt/boot/efi
 mount -o $EXT4_OPTS /dev/mapper/linux-home /mnt/home
 
 xbps-install -Syu -R https://alpha.de.repo.voidlinux.org/current -r /mnt linux base-system dbus-elogind dbus-elogind-libs elogind polkit rtkit grub-x86_64-efi lvm2 socklog-void chrony
@@ -43,7 +44,7 @@ for dir in dev proc sys run; do mount --rbind /$dir /mnt/$dir; mount --make-rsla
 
 cp /etc/resolv.conf /mnt/etc/
 
-DRIVE=$DRIVE EXT4_OPTS=$EXT4_OPTS PS1='(chroot) # ' chroot /mnt/ /bin/bash
+DRIVE=$DRIVE FAT32_OPTS=$FAT32_OPTS EXT4_OPTS=$EXT4_OPTS PS1='(chroot) # ' chroot /mnt/ /bin/bash
 chown root:root /
 chmod 755 /
 
@@ -140,7 +141,7 @@ sed -i 's/issue_discards = 0/issue_discards = 1/' /etc/lvm/lvm.conf
 cat << EOF > /etc/fstab
 UUID=$ROOT_UUID / ext4 $EXT4_OPTS 0 1
 UUID=$HOME_UUID /home ext4 $EXT4_OPTS 0 2
-UUID=$UEFI_UUID /boot/efi vfat defaults,noatime 0 2
+UUID=$UEFI_UUID /boot/efi vfat $FAT32_OPTS 0 2
 UUID=$SWAP_UUID none swap defaults 0 1
 EOF
 
@@ -173,4 +174,4 @@ exit
 shutdown -r now
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community
+flatpak install flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community com.bitwarden.desktop
