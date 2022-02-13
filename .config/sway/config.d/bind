@@ -81,8 +81,10 @@ bindsym --to-code $mod+Tab exec $check_exist "footclient -a f00t-lf -T lf -e lf"
 bindsym --to-code $mod+n exec $check_exist "thunar" "thunar"
 
 # web browser
-#bindsym --to-code $mod+f exec $check_exist "qutebrowser" "qutebrowser"
-bindsym --to-code $mod+f exec $check_exist "firefox" "firefox"
+bindsym --to-code $mod+f exec $check_exist "flatpak run com.github.micahflee.torbrowser-launcher" "firefox"
+
+# web browser
+bindsym --to-code $mod+w exec $check_exist "flatpak run io.gitlab.librewolf-community" "librewolf"
 
 # libreoffice
 bindsym --to-code $mod+o exec $check_exist "libreoffice" "libreoffice"
@@ -102,41 +104,47 @@ bindsym --to-code $mod+p exec $check_exist "okular" "zathura" "pdf"
 # mpv
 bindsym --to-code $mod+m exec $check_exist "mpv" "mpv"
 
-# copy url from firefox to mpv
-bindsym --to-code $mod+Shift+m exec $mpv_youtube
+# mpv youtube
+bindsym --to-code $mod+shift+m exec $mpv_youtube
 
 # wi-fi menu
-bindsym $mod+insert exec $check_exist "iwgtk" "iwgtk" "scratchpad"
+bindsym $mod+Home exec $check_exist "iwgtk" "iwgtk" "scratchpad"
 
 # bluetooth menu
-bindsym $mod+Home exec $check_exist "footclient -a f00t-bluetoothctl -T f00t-scratchpad -e bluetoothctl" "f00t-bluetoothctl" "scratchpad"
+bindsym $mod+Prior exec $check_exist "footclient -a f00t-bluetoothctl -T f00t-scratchpad -e bluetoothctl" "f00t-bluetoothctl" "scratchpad"
 
 # sound/mic menu
-bindsym $mod+Prior exec $check_exist "footclient -a f00t-pulsemixer -T f00t-scratchpad -e pulsemixer" "f00t-pulsemixer" "scratchpad"
+bindsym $mod+Next exec $check_exist "footclient -a f00t-pulsemixer -T f00t-scratchpad -e pulsemixer" "f00t-pulsemixer" "scratchpad"
 
-
-###---FN---###
+# toggle touchpad
+bindsym $mod+F9 input type:touchpad events toggle enabled disabled
 
 # lock screen
-bindsym XF86ScreenSaver exec $lock 
-bindsym XF86Battery exec swaymsg "output * dpms on"
+bindsym $mod+F1 exec $lock_toggle
+
+# brightness
+bindsym $mod+F3 exec brightnessctl set 10%-
+bindsym $mod+F4 exec brightnessctl set +10%
+
+# hibernation
+bindsym --locked $mod+F12 exec doas /bin/ZZZ
 
 # volume level
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10% 
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10% 
+bindsym --locked $mod+F6 exec pactl set-sink-volume @DEFAULT_SINK@ -10% 
+bindsym --locked $mod+F7 exec pactl set-sink-volume @DEFAULT_SINK@ +10% 
 
 # audio/mic mute
-bindsym --locked $mod+XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym --locked $mod+XF86AudioRaiseVolume exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked $mod+F5 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked $mod+F8 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # skip to the next song in the play list
-bindsym --locked XF86AudioNext exec playerctl -i firefox --follow next
+bindsym --locked $mod+Right exec playerctl next
 
 # play the previous song in the play list
-bindsym --locked XF86AudioPrev exec playerctl -i firefox --follow previous
+bindsym --locked $mod+Left exec playerctl previous
 
 # toggle play/pause state
-bindsym --locked XF86AudioPlay exec playerctl -i firefox play-pause 
+bindsym --locked $mod+Down exec playerctl play-pause 
 
 # stop all players 
-bindsym --locked XF86AudioStop exec playerctl -a pause
+bindsym --locked $mod+Up exec playerctl -a pause

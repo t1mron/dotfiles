@@ -33,6 +33,7 @@ nnoremap <2-MiddleMouse> <Nop>
 nnoremap <3-MiddleMouse> <Nop>
 nnoremap <4-MiddleMouse> <Nop>
 
+imap <F9> <Esc>:w<CR>:!python3 %<CR>
 
 
 """""""""""""""

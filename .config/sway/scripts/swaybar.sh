@@ -15,7 +15,9 @@ dir="$HOME/.config/sway/scripts/swaybar"
 . "$dir/kbd.sh"
 . "$dir/bat.sh"
 
-printf "%s %b | %b | %b %3d%% | %b | %b %s | %b %2d%% | %b %s | %b %2d | %b %s | %b %s | %b %2d%%\n" \
+l=" | "
+
+printf "%s %b$l%b$l%b %3d%%$l%b$l%b %s$l%b %2d%%$l%b %s$l%b %2d%%$l%b %s$l%b %s$l%b %2d%%\n" \
   "$wifi_ssid" "$wifi_icon" \
   "$blth_icon" \
   "$head_icon" "$head" \

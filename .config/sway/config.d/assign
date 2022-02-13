@@ -1,7 +1,7 @@
 assign [app_id="foot"] $ws1
 
 assign [app_id="firefox"] $ws2
-assign [app_id="qutebrowser"] $ws2
+assign [app_id="librewolf"] $ws2
 
 assign [app_id="thunar"] $ws4
 assign [app_id="f00t-lf"] $ws4
@@ -13,6 +13,7 @@ assign [app_id="nomacs"] $ws4
 assign [app_id="qbittorrent"] $ws4
 
 assign [app_id="telegram"] $ws5
+assign [class="discord"] $ws5
 
 assign [app_id="mpv"] $ws6
 

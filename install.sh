@@ -14,7 +14,7 @@ head -c 3145728 /dev/urandom > /dev/$DRIVE; sync
 (echo n;echo ;echo ;echo ;echo w) | fdisk /dev/$DRIVE
 
 # Encrypt and open
-cryptsetup luksFormat --type luks1 /dev/${DRIVE}2
+cryptsetup luksFormat --type luks2 /dev/${DRIVE}2
 cryptsetup open /dev/${DRIVE}2 crypt
 
 # lvm2
@@ -37,7 +37,6 @@ mkdir -p /mnt/home
 mount -o $EXT4_OPTS /dev/${DRIVE}1 /mnt/boot/efi
 mount -o $EXT4_OPTS /dev/mapper/linux-home /mnt/home
 
-export XBPS_ARCH=x86_64-musl
 xbps-install -Syu -R https://alpha.de.repo.voidlinux.org/current -r /mnt linux base-system dbus-elogind dbus-elogind-libs elogind polkit rtkit grub-x86_64-efi lvm2 socklog-void chrony
 
 for dir in dev proc sys run; do mount --rbind /$dir /mnt/$dir; mount --make-rslave /mnt/$dir; done
@@ -58,7 +57,7 @@ xbps-remove sudo wpa_supplicant void-artwork
 
 packagelist=(
   # amd
-  mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau
+  mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau libva-utils
   # XDG
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-user-dirs
   # Window manager 
@@ -66,7 +65,7 @@ packagelist=(
   # Thunar
   gvfs udiskie file-roller thunar-archive-plugin tumbler
   # Laptop
-  tlp lm_sensors powertop 
+  tlp
   # sound, bluetooth, vpn
   pipewire libspa-bluetooth bluez pulseaudio-utils pulsemixer
   # Coding  
@@ -78,15 +77,15 @@ packagelist=(
   # fonts
   font-hack-ttf font-awesome5 dejavu-fonts-ttf
   # Multimedia
-  qutebrowser mpv mpv-mpris playerctl yt-dlp telegram-desktop qbittorrent grim slurp
+  mpv mpv-mpris playerctl yt-dlp telegram-desktop qbittorrent grim slurp
   # IOS
   usbmuxd libimobiledevice
   # Security
-  cryptsetup opendoas
+  cryptsetup opendoas ufw
   # Network
-  iwd openresolv iwgtk wget curl
+  iwd openresolv iwgtk wget curl tor wireguard
   # Virtualization
-  docker docker-compose virt-manager libvirt qemu bridge-utils
+  docker docker-compose flatpak virt-manager libvirt qemu bridge-utils
 )
 
 xbps-install -Syu ${packagelist[@]}
@@ -100,12 +99,11 @@ cp -r $HOME/git/dotfiles/etc /
 rm -rf $HOME/git
 
 # create user
-useradd -G wheel,socklog,storage,video,audio,bluetooth,docker,kvm,libvirt -m -d /home/user user
+useradd -G wheel,socklog,storage,video,audio,input,bluetooth,docker,kvm,libvirt -m -d /home/user user
 passwd user
 useradd -G wheel,storage -m -d /home/help help
 passwd help
 
-chsh -s /bin/bash user
 chsh -s /bin/bash root
 
 # user workflow
@@ -115,10 +113,8 @@ git clone --depth=1 https://github.com/t1mron/dotfiles $HOME/git/dotfiles
 ln -sf $HOME/git/dotfiles/{.config,.fonts,.inputrc,.gtkrc-2.0,.vimrc,.bash_profile,.bashrc} ~/
 
 # python scripts
-pip install --user swaytools
+pip install --user swaytools Jupyter numpy
 
-# create default home folders
-xdg-user-dirs-update
 exit
 
 # set the time zone
@@ -161,10 +157,11 @@ EOF
 # Install grub and create configuration
 mkdir -p /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=void --boot-directory=/boot  --recheck
+grub-install --target=x86_64-efi --boot-directory=/boot --efi-directory=/boot/efi --bootloader-id=BOOT --recheck
 
 # enable services
-ln -s /etc/sv/{dbus,polkitd,socklog-unix,nanoklogd,chronyd,gpm,iwd,dhcpcd,bluetoothd,docker,libvirtd,virtlockd,virtlogd,tlp,usbmuxd} /etc/runit/runsvdir/current
+ufw enable
+ln -s /etc/sv/{dbus,polkitd,socklog-unix,nanoklogd,chronyd,gpm,iwd,dhcpcd,bluetoothd,docker,libvirtd,virtlockd,virtlogd,tlp,usbmuxd,tor,wireguard} /etc/runit/runsvdir/current
 
 # Regenerate initrd image
 xbps-reconfigure -fa
@@ -174,3 +171,6 @@ exit
 
 # Reboot into the new system, don't forget to remove the usb
 shutdown -r now
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community
