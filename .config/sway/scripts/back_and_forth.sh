@@ -1,9 +1,10 @@
 #!/bin/sh
 
 focused_aid="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).app_id' | tr -d '"')"
+focused_class="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).window_properties.class' | tr -d '"')"
 
 back_and_forth() {
-  if [ -z "${focused_aid##*"$1"*}" ]; then
+  if [ -z "${focused_aid##*"$1"*}" ] || [ -z "${focused_class##*"$1"*}" ]; then
     case "$2" in
       "scratchpad")
         swaymsg -q scratchpad show ;;
@@ -11,6 +12,9 @@ back_and_forth() {
         swaymsg -q workspace back_and_forth ;;
     esac
   else
-    swaymsg -q "[app_id=$1] focus"
+    check="$(swaymsg "[app_id=$1] focus" | jq '.[] | .success')"
+    if [ "$check" = "false" ]; then
+      swaymsg "[class=$1] focus"
+    fi
   fi
 } 

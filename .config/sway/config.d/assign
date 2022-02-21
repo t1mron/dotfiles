@@ -11,6 +11,7 @@ assign [app_id="zathura"] $ws4
 assign [app_id="libreoffice-startcenter"] $ws4
 assign [app_id="nomacs"] $ws4
 assign [app_id="qbittorrent"] $ws4
+assign [class="Bitwarden"] $ws4
 
 assign [app_id="telegram"] $ws5
 assign [class="discord"] $ws5

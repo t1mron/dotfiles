@@ -60,13 +60,13 @@ packagelist=(
   # amd
   mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau libva-utils
   # XDG
-  xdg-desktop-portal xdg-desktop-portal-wlr xdg-user-dirs
+  xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-wlr xdg-user-dirs xdg-user-dirs-gtk xdg-utils
   # Window manager 
   sway swaylock swayidle wofi foot wev Thunar lf wl-clipboard lxappearance neofetch
   # Thunar
   gvfs udiskie file-roller thunar-archive-plugin tumbler
   # Laptop
-  tlp
+  tlp brightnessctl
   # sound, bluetooth, vpn
   pipewire libspa-bluetooth bluez pulseaudio-utils pulsemixer
   # Coding  
@@ -174,4 +174,4 @@ exit
 shutdown -r now
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community com.bitwarden.desktop
+flatpak install flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community com.bitwarden.desktop com.discordapp.Discord

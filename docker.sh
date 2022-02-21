@@ -26,7 +26,7 @@ services:
       - INTERNAL_SUBNET=10.13.13.0 #optional
       - ALLOWEDIPS=0.0.0.0/0 #optional
     volumes:
-      - $HOME/wireguard/docker-compose.yml:/config
+      - $HOME/wireguard/config:/config
       - /lib/modules:/lib/modules
     ports:
       - 51820:51820/udp
