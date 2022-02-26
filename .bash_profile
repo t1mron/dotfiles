@@ -18,7 +18,7 @@ export LUTRIS_SKIP_INIT=1
 
 # start wayland session with dbus support
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-  exec dbus-run-session sway
+  exec sway
 fi
 
 # get the aliases and functions

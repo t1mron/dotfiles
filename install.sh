@@ -1,4 +1,4 @@
-export DRIVE="nvme0n1p"
+export DRIVE="nvme0n1"
 export EXT4_OPTS="rw,noatime,discard"
 export FAT32_OPTS="defaults,noatime"
 
@@ -15,8 +15,8 @@ head -c 3145728 /dev/urandom > /dev/$DRIVE; sync
 (echo n;echo ;echo ;echo ;echo w) | fdisk /dev/$DRIVE
 
 # Encrypt and open
-cryptsetup luksFormat --type luks2 /dev/${DRIVE}2
-cryptsetup open /dev/${DRIVE}2 crypt
+cryptsetup luksFormat --type luks1 /dev/${DRIVE}p2
+cryptsetup open /dev/${DRIVE}p2 crypt
 
 # lvm2
 pvcreate /dev/mapper/crypt
@@ -26,7 +26,7 @@ lvcreate -L 16G linux -n swap
 lvcreate -l +100%FREE linux -n home
 
 # Formatting the partitions
-mkfs.fat -F32 /dev/${DRIVE}1
+mkfs.fat -F32 /dev/${DRIVE}p1
 mkfs.ext4 /dev/mapper/linux-void
 mkfs.ext4 /dev/mapper/linux-home
 mkswap /dev/mapper/linux-swap
@@ -35,7 +35,7 @@ mkswap /dev/mapper/linux-swap
 mount -o $EXT4_OPTS /dev/mapper/linux-void /mnt/
 mkdir -p /mnt/boot/efi
 mkdir -p /mnt/home
-mount -o $FAT32_OPTS /dev/${DRIVE}1 /mnt/boot/efi
+mount -o $FAT32_OPTS /dev/${DRIVE}p1 /mnt/boot/efi
 mount -o $EXT4_OPTS /dev/mapper/linux-home /mnt/home
 
 xbps-install -Syu -R https://alpha.de.repo.voidlinux.org/current -r /mnt linux base-system dbus-elogind dbus-elogind-libs elogind polkit rtkit grub-x86_64-efi lvm2 socklog-void chrony
@@ -55,10 +55,11 @@ ignorepkg=void-artwork
 EOF
 
 xbps-remove sudo wpa_supplicant void-artwork
+xbps-install -Syu void-repo-multilib void-repo-multilib-nonfree
 
 packagelist=(
   # amd
-  mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau libva-utils
+  mesa-dri{,-32bit} vulkan-loader{,-32bit} mesa-vulkan-radeon{,-32bit} mesa-vaapi{,-32bit} mesa-vdpau{,-32bit} libva-utils
   # XDG
   xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-wlr xdg-user-dirs xdg-user-dirs-gtk xdg-utils
   # Window manager 
@@ -86,7 +87,7 @@ packagelist=(
   # Network
   iwd openresolv iwgtk wget curl tor wireguard
   # Virtualization
-  docker docker-compose flatpak virt-manager libvirt qemu bridge-utils
+  docker docker-compose flatpak virt-manager libvirt qemu bridge-utils wine{,-32bit}
 )
 
 xbps-install -Syu ${packagelist[@]}
@@ -123,12 +124,12 @@ ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
 # Don't enter a password twice
 dd bs=512 count=4 if=/dev/urandom of=/boot/volume.key
-cryptsetup -v luksAddKey -i 1 /dev/${DRIVE}2 /boot/volume.key
+cryptsetup -v luksAddKey -i 1 /dev/${DRIVE}p2 /boot/volume.key
 chmod 000 /boot/volume.key
 chmod -R g-rwx,o-rwx /boot
 
-export UEFI_UUID=$(blkid -s UUID -o value /dev/${DRIVE}1)
-export LUKS_UUID=$(blkid -s UUID -o value /dev/${DRIVE}2)
+export UEFI_UUID=$(blkid -s UUID -o value /dev/${DRIVE}p1)
+export LUKS_UUID=$(blkid -s UUID -o value /dev/${DRIVE}p2)
 export ROOT_UUID=$(blkid -s UUID -o value /dev/mapper/linux-void)
 export HOME_UUID=$(blkid -s UUID -o value /dev/mapper/linux-home)
 export SWAP_UUID=$(blkid -s UUID -o value /dev/mapper/linux-swap)
@@ -173,5 +174,6 @@ exit
 # Reboot into the new system, don't forget to remove the usb
 shutdown -r now
 
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community com.bitwarden.desktop com.discordapp.Discord
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak update --appstream
+flatpak install --user flathub com.github.micahflee.torbrowser-launcher io.gitlab.librewolf-community com.bitwarden.desktop com.discordapp.Discord

@@ -1,2 +1,8 @@
-exec $startup
+#exec $startup
+exec foot --server
+exec playerctld daemon
+
+exec pactl set-sink-mute @DEFAULT_SINK@ 1 
+exec pactl set-source-mute @DEFAULT_SOURCE@ 1
+
 exec_always $gtk3_theme

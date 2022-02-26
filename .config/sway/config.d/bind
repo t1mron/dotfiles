@@ -104,6 +104,9 @@ bindsym --to-code $mod+t exec $check_exist "telegram-desktop" "telegram"
 # pdf readers
 bindsym --to-code $mod+p exec $check_exist "okular" "zathura" "pdf"
 
+# vscode
+bindsym --to-code $mod+c exec $check_exist "code-oss" "code-oss"
+
 # mpv
 bindsym --to-code $mod+m exec $check_exist "mpv" "mpv"
 
