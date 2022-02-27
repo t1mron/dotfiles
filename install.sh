@@ -52,7 +52,7 @@ DRIVE=$DRIVE FAT32_OPTS=$FAT32_OPTS EXT4_OPTS=$EXT4_OPTS PS1='(chroot) # ' arch-
 
 packagelist=(
   # amd
-  mesa vulkan-radeon libva-mesa-driver libva-utils
+  mesa vulkan-radeon libva-mesa-driver mesa-vdpau libva-utils
   # XDG
   xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-wlr xdg-user-dirs xdg-user-dirs-gtk xdg-utils
   # Window manager 
