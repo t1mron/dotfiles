@@ -84,7 +84,7 @@ bindsym --to-code $mod+n exec $check_exist "thunar" "thunar"
 bindsym --to-code $mod+f exec $check_exist "flatpak run --socket=wayland com.github.micahflee.torbrowser-launcher" "firefox"
 
 # web browser
-bindsym --to-code $mod+w exec $check_exist "flatpak run --socket=wayland io.gitlab.librewolf-community" "librewolf"
+bindsym --to-code $mod+w exec $check_exist "librewolf" "librewolf"
 
 # libreoffice
 bindsym --to-code $mod+o exec $check_exist "libreoffice" "libreoffice"
