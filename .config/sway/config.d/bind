@@ -84,7 +84,7 @@ bindsym --to-code $mod+n exec $check_exist "thunar" "thunar"
 bindsym --to-code $mod+f exec $check_exist "flatpak run --socket=wayland com.github.micahflee.torbrowser-launcher" "firefox"
 
 # web browser
-bindsym --to-code $mod+w exec $check_exist "librewolf" "librewolf"
+bindsym --to-code $mod+w exec $check_exist "flatpak run --socket=wayland io.gitlab.librewolf-community" "librewolf"
 
 # libreoffice
 bindsym --to-code $mod+o exec $check_exist "libreoffice" "libreoffice"
@@ -103,9 +103,6 @@ bindsym --to-code $mod+t exec $check_exist "telegram-desktop" "telegram"
 
 # pdf readers
 bindsym --to-code $mod+p exec $check_exist "okular" "zathura" "pdf"
-
-# vscode
-bindsym --to-code $mod+c exec $check_exist "code-oss" "code-oss"
 
 # mpv
 bindsym --to-code $mod+m exec $check_exist "mpv" "mpv"
