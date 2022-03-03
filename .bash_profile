@@ -14,8 +14,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export NO_AT_BRIDGE=1
 export QT_QPA_PLATFORMTHEME=qt5ct
 
-export LUTRIS_SKIP_INIT=1
-
 # start wayland session with dbus support
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
   exec dbus-run-session sway
