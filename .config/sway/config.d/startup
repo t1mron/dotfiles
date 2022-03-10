@@ -1,2 +1,5 @@
 exec $startup
 exec_always $gtk3_theme
+
+exec swayidle -w \
+  before-sleep '$lock'

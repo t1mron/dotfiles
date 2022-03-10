@@ -5,7 +5,7 @@ input * {
   xkb_model "pc105"
   pointer_accel 0.3
   tap enabled
-  #dwt disabled
+  dwt enabled
 }
 
 # status bar

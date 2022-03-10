@@ -2,22 +2,18 @@
 for_window [class=".*"] focus
 for_window [app_id=".*"] focus
 
-for_window [app_id="qutebrowser"] layout toggle
-
 # make window with specified app_id scratchpad
 for_window [title="f00t-scratchpad"] $scratchpad_window
 for_window [app_id="iwgtk"] $scratchpad_window
+for_window [app_id="pavucontrol"] $scratchpad_window
+for_window [app_id="blueman-manager"] $scratchpad_window
 
 # make window with specified app_id float
 for_window [app_id="imv"] $float_window 
 for_window [title="Network Password"] $float_window 
 
-# change window title name
-for_window [class="discord"] title_format "discord"
-
 for_window [app_id="thunar"] title_format "thunar"
 for_window [app_id="librewolf"] title_format "librewolf"
-for_window [app_id="firefox"] title_format "tor browser"
 for_window [app_id="okular"] title_format "okular"
 #for_window [app_id="virt-manager"] title_format "virt-manager"
 for_window [app_id="nomacs"] title_format "nomacs"

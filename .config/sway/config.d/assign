@@ -2,20 +2,24 @@ assign [app_id="foot"] $ws1
 
 assign [app_id="firefox"] $ws2
 assign [app_id="librewolf"] $ws2
+assign [app_id="qbittorrent"] $ws2
 
-assign [app_id="thunar"] $ws4
-assign [app_id="f00t-lf"] $ws4
-assign [app_id="lxappearance"] $ws4
-assign [app_id="okular"] $ws4
-assign [app_id="zathura"] $ws4
-assign [app_id="libreoffice-startcenter"] $ws4
-assign [app_id="nomacs"] $ws4
-assign [app_id="qbittorrent"] $ws4
-assign [class="Bitwarden"] $ws4
+assign [class="Code"] $ws3
 
-assign [app_id="telegram"] $ws5
-assign [class="discord"] $ws5
+assign [app_id="telegram"] $ws4
 
-assign [app_id="mpv"] $ws6
+assign [app_id="lxappearance"] $ws5
+assign [app_id="okular"] $ws5
+assign [app_id="zathura"] $ws5
+assign [app_id="libreoffice-startcenter"] $ws5
+assign [app_id="nomacs"] $ws5
+assign [instance="gimp"] $ws5
+assign [app_id="kdenlive"] $ws5
 
-assign [app_id="virt-manager"] $ws7
+assign [app_id="thunar"] $ws6
+assign [app_id="f00t-lf"] $ws6
+assign [class="Bitwarden"] $ws6
+
+assign [app_id="mpv"] $ws7
+
+assign [app_id="virt-manager"] $ws9

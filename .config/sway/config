@@ -15,26 +15,26 @@ set $wallpaper $HOME/.config/sway/wallpapers/death_life.jpg
 
 set $status_bar $HOME/.config/sway/scripts/swaybar.sh
 set $startup $HOME/.config/sway/scripts/startup.sh
-set $lock_toggle $HOME/.config/sway/scripts/lock_toggle.sh
-set $check_exist $HOME/.config/sway/scripts/check_exist.sh
+set $lock $HOME/.config/sway/scripts/lock.sh
+set $check_exist /etc/scripts/check_exist.sh
 set $screenshot $HOME/.config/sway/scripts/screenshot.sh
 
 set $mpv_youtube $HOME/.config/sway/scripts/mpv_youtube.sh
 set $gtk3_theme $HOME/.config/sway/scripts/gtk3_theme.sh
 
 set $float_window floating enable,border $pixel_size,$window_size,move position center
-set $scratchpad_window border $pixel_size,move scratchpad,$window_size,scratchpad show
+set $scratchpad_window border $pixel_size,move scratchpad,$window_size
 
 # set workspace name 
 set $ws1 "1:" 
 set $ws2 "2:" 
 set $ws3 "3:" 
-set $ws4 "4:" 
-set $ws5 "5:" 
-set $ws6 "6:"
-set $ws7 "7:"
-set $ws8 "8:"
-set $ws9 "9:"
+set $ws4 "4:" 
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:"
 
 # colors
 set $grey #cccccc

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. "$HOME"/.config/sway/scripts/back_and_forth.sh
+. /etc/scripts/back_and_forth.sh
 
 case "$3" in
   "pdf")
@@ -14,6 +14,8 @@ case "$3" in
   "scratchpad")
     if [ "$(pgrep -fc "$2")" -eq 1 ]; then
       swaymsg -q exec "$1"
+      sleep 0.5
+      swaymsg "[app_id=$2] focus"
     else
       back_and_forth "$2" "scratchpad"
     fi ;;

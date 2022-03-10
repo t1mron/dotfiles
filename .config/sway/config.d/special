@@ -8,7 +8,7 @@ workspace_auto_back_and_forth yes
 focus_follows_mouse no
 
 # hide cursor when typing 
-seat seat0 hide_cursor when-typing enable
+seat seat0 hide_cursor when-typing enabled
 
 # hide cursor after 3 sec
 #seat seat0 hide_cursor 3000

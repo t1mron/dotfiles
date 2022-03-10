@@ -1,0 +1,7 @@
+[2022-03-10 18:49:01.230] [sharedprocess] [info] Deleted from disk pkief.material-icon-theme /home/user/.vscode-oss/extensions/pkief.material-icon-theme-4.13.0
+[2022-03-10 18:49:05.151] [sharedprocess] [info] Installing extension: golang.go
+[2022-03-10 18:49:10.160] [sharedprocess] [info] Downloaded extension: golang.go /home/user/.config/Code - OSS/CachedExtensionVSIXs/golang.go-0.32.0
+[2022-03-10 18:49:10.229] [sharedprocess] [info] Extracted extension to /home/user/.vscode-oss/extensions/.6d849426-5789-4e59-bf56-3d81fa570aa5: golang.go
+[2022-03-10 18:49:10.235] [sharedprocess] [info] Renamed to /home/user/.vscode-oss/extensions/golang.go-0.32.0
+[2022-03-10 18:49:10.238] [sharedprocess] [info] Extracting completed. golang.go
+[2022-03-10 18:49:10.243] [sharedprocess] [info] Extension installed successfully: golang.go

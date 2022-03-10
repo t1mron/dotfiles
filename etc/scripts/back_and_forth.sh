@@ -1,7 +1,7 @@
 #!/bin/sh
 
 focused_aid="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).app_id' | tr -d '"')"
-focused_class="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).window_properties.class' | tr -d '"')"
+focused_class="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true).window_properties.instance' | tr -d '"')"
 
 back_and_forth() {
   if [ -z "${focused_aid##*"$1"*}" ] || [ -z "${focused_class##*"$1"*}" ]; then
@@ -14,7 +14,7 @@ back_and_forth() {
   else
     check="$(swaymsg "[app_id=$1] focus" | jq '.[] | .success')"
     if [ "$check" = "false" ]; then
-      swaymsg "[class=$1] focus"
+      swaymsg "[instance=$1] focus"
     fi
   fi
 } 

@@ -1,14 +1,10 @@
-export PATH="$PATH:$HOME/.local/bin"
-export EDITOR=vim
-
 #########
 # ALIAS #
 #########
 
-alias sudo='doas'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-
+alias yt-dlp='torify yt-dlp'
 
 ##########
 # CUSTOM #
